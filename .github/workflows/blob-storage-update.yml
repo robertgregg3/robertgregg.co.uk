@@ -1,0 +1,16 @@
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v1
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.100'
+    - uses: lauchacarro/Azure-Storage-Action@master
+      with:
+        enabled-static-website: 'true'
+        folder: '$web'
+        index-document: 'index.html'
+        error-document: 'error.html'
+        connection-string: ${{ secrets.CONNECTION_STRING }}
