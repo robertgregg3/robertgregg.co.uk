@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@100;300;400;700&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+    margin:0;
+}
+
+.hero-container{
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    padding: 2rem;
+    max-width: 1000px;
+}
+
+.full-width-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+
+}
+
+footer{
+    display: none;
+}
