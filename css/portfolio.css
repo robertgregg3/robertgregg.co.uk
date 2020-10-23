@@ -1,6 +1,6 @@
 body{
     background: rgb(46,50,135);
-background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rgba(9,9,9,1) 100%);
+    background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rgba(9,9,9,1) 100%);
     min-height: 100vh;
     width: 100vw;
 }
@@ -41,7 +41,7 @@ background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rg
 
 .p-header {
     background: rgb(252,252,252);
-background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 100%);
+    background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 100%);
     padding: 0.5rem;
     text-align: center;
     color: #717070;
@@ -82,6 +82,7 @@ background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 
     min-width: 400px;
 }
 
+
 .p-main {
     position: relative;
 }
@@ -109,5 +110,10 @@ background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 
 
 .p-item-img::after {
 
+}
+
+
+.p-item img {
+    max-width: 100%;
 }
 
