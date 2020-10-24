@@ -1,0 +1,131 @@
+.spring:hover {
+    animation: none;
+  }
+  
+  @keyframes spring { 
+    0% {
+      transform: scale(1) translateY(0); 
+    }
+    10% {
+      transform: scale(1.2, 0.6); 
+    }
+    30% { 
+      transform: scale(0.8, 1.1) translateY(-10px); 
+    }
+    50% { 
+      transform: scale(1) translateY(0); 
+    }
+    100% { 
+      transform: translateY(0); 
+    }
+  }
+  
+  .spring {
+    animation: spring 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+  }
+
+.p-item-nav span.icon {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 0.4rem;
+}
+
+.icon-html {
+    background: url('../images/icons/html-5.svg');
+}
+
+.icon-css {
+    background: url('../images/icons/css3.svg');
+}
+
+.icon-javascript {
+    background: url('../images/icons/javascript.svg');
+}
+
+.icon-wordpress {
+    background: url('../images/icons/wordpress.svg');
+}
+
+.icon-angular {
+    background: url('../images/icons/angular.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-nodejs {
+    background: url('../images/icons/nodejs.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-photoshop {
+    background: url('../images/icons/photoshop.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-premiere-pro {
+    background: url('../images/icons/premiere-pro.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-react-native {
+    background: url('../images/icons/react-native.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-graphql {
+    background: url('../images/icons/graphql.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-php {
+    background: url('../images/icons/php.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-typescript {
+    background: url('../images/icons/typescript.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-mongodb {
+    background: url('../images/icons/mongodb.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-mysql {
+    background: url('../images/icons/mysql.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-sprinkles {
+    background: url('../images/icons/sprinkles.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-uiux {
+    background: url('../images/icons/uiux.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-websites {
+    background: url('../images/icons/websites.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-show-all {
+    background: url('../images/icons/show-all.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-front-end {
+    background: url('../images/icons/front-end.svg');
+    background-repeat: no-repeat;
+}
+
+.icon-back-end {
+    background: url('../images/icons/backend.png');
+    background-repeat: no-repeat;
+}
