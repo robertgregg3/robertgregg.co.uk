@@ -110,12 +110,12 @@ body{
     top: 0;
     height: 0;
     transition: height 300ms;
+    width: 100%;
 }
 
 .height{
-    height: 100%;
+    height: 100% !important;
     transition: height 300ms;
-    transform: translateX(0%) !important;
 }
 
 .p-item img {
@@ -125,8 +125,9 @@ body{
 #p-tags-1 {
     overflow: hidden;
     position: absolute;
-    transform: translateX(100%);
-    transition: transform 700ms;
+    top: 0;
+    height: 0;
+    transition: height 300ms;
     background-color: #33333375;
     width: 100%;
     box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
@@ -154,6 +155,7 @@ body{
     margin: 0.1rem;
     padding: 0.5rem;
     display: flex;
+    font-size: 0.7rem;
     border: 1px solid;
     cursor: pointer;
     border-radius: 14px;
@@ -161,4 +163,31 @@ body{
 
 
 
+.spring:hover {
+    animation: none;
+  }
+  
+  @keyframes spring { 
+    0% {
+      transform: scale(1) translateY(0); 
+    }
+    10% {
+      transform: scale(1.2, 0.6); 
+    }
+    30% { 
+      transform: scale(0.8, 1.1) translateY(-10px); 
+    }
+    50% { 
+      transform: scale(1) translateY(0); 
+    }
+    100% { 
+      transform: translateY(0); 
+    }
+  }
+  
+  .spring {
+    animation: spring 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+  }
 
