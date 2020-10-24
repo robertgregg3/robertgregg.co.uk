@@ -3,6 +3,7 @@ body{
     background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rgba(9,9,9,1) 100%);
     min-height: 100vh;
     width: 100vw;
+    position: relative;
 }
 
 .hero-container--portfolio {
@@ -85,7 +86,20 @@ body{
 
 .p-main {
     position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
+
+.p-main:before {
+    content: "";
+    position: absolute;
+    box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 
 .p-item img {
     max-width: 100%;
@@ -101,19 +115,50 @@ body{
 .height{
     height: 100%;
     transition: height 300ms;
+    transform: translateX(0%) !important;
 }
-
-
-.p-item-img::before {
-
-}
-
-.p-item-img::after {
-
-}
-
 
 .p-item img {
     max-width: 100%;
 }
+
+#p-tags-1 {
+    overflow: hidden;
+    position: absolute;
+    transform: translateX(100%);
+    transition: transform 700ms;
+    background-color: #33333375;
+    width: 100%;
+    box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
+
+}
+
+#p-tags-1 ul li:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+
+#p-tags-1 ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0.5rem;
+    flex-wrap: wrap;
+    height: 100%;
+    align-content: center;
+}
+
+#p-tags-1 ul li {
+    margin: 0.1rem;
+    padding: 0.5rem;
+    display: flex;
+    border: 1px solid;
+    cursor: pointer;
+    border-radius: 14px;
+}
+
+
+
 
