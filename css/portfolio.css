@@ -2,8 +2,8 @@ body{
     background: rgb(46,50,135);
     background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rgba(9,9,9,1) 100%);
     min-height: 100vh;
-    width: 100vw;
     position: relative;
+    transition: all 300ms;
 }
 
 .hero-container--portfolio {
@@ -11,7 +11,7 @@ body{
     flex-direction: column;
 }
 
-#portfolio-items{
+#pf-categories{
     list-style-type: none;
     display: flex;
     justify-content: center;
@@ -20,27 +20,30 @@ body{
     padding: 0;
 }
 
-.p-item-nav {
-    padding: 0.5rem 1rem;
+.pf-category{
+    padding: 1rem 1rem;
     border: 1px solid;
-    margin: 0.5rem 1rem;
+    margin: 0.5rem 0.5rem;
     flex-wrap: wrap;
     cursor: pointer;
     border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
 }
 
-.p-item-nav:hover {
-    background-color: #fff;
-    color: #000000;
+.pf-category span {
+    text-transform: uppercase;
 }
 
-#portfolio {
+#pf {
     color: #fff;
     position: relative;
-    padding: 2rem;
+    transition: all 300ms;
 }
 
-.p-header {
+.pf-header {
     background: rgb(252,252,252);
     background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 100%);
     padding: 0.5rem;
@@ -75,22 +78,24 @@ body{
     top: 0;
 }
 
-.p-item {
+.pf-item {
     display: flex;
     flex-direction: column;
     width: 25%;
     padding: 1rem;
     min-width: 400px;
+    height: 100%;
+    transition: height 300ms;
 }
 
 
-.p-main {
+.pf-main {
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
 
-.p-main:before {
+.pf-main:before {
     content: "";
     position: absolute;
     box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
@@ -101,11 +106,11 @@ body{
 }
 
 
-.p-item img {
+.pf-item img {
     max-width: 100%;
 }
 
-.p-item-hover-img {
+.pf-item-hover-img {
     position: absolute;
     top: 0;
     height: 0;
@@ -118,11 +123,11 @@ body{
     transition: height 300ms;
 }
 
-.p-item img {
+.pf-item img {
     max-width: 100%;
 }
 
-#p-tags-1 {
+#pf-tags-1 {
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -134,13 +139,7 @@ body{
 
 }
 
-#p-tags-1 ul li:hover {
-    background-color: #fff;
-    color: #000;
-}
-
-
-#p-tags-1 ul {
+#pf-tags-1 ul {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -151,43 +150,61 @@ body{
     align-content: center;
 }
 
-#p-tags-1 ul li {
+#pf-tags-1 ul li {
     margin: 0.1rem;
     padding: 0.5rem;
     display: flex;
     font-size: 0.7rem;
-    border: 1px solid;
     cursor: pointer;
-    border-radius: 14px;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: transparent;
 }
 
+.hidden {
+    transition: all 1000ms ease-in-out;
+    height: 0;
+    visibility: hidden;
+}
 
+/* -----------  PORTFOLIO FILTER / PAGE ANIMATIONS AND TRANSITIONS ------ */
 
-.spring:hover {
-    animation: none;
-  }
-  
-  @keyframes spring { 
-    0% {
-      transform: scale(1) translateY(0); 
-    }
-    10% {
-      transform: scale(1.2, 0.6); 
-    }
-    30% { 
-      transform: scale(0.8, 1.1) translateY(-10px); 
-    }
-    50% { 
-      transform: scale(1) translateY(0); 
-    }
-    100% { 
-      transform: translateY(0); 
-    }
-  }
-  
-  .spring {
-    animation: spring 2s;
-    animation-timing-function: ease;
-    animation-iteration-count: 1;
-  }
+#pf-filter-page-animation {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    top: 0;
+    margin-left: -100%;
+    -webkit-transition: all 1s cubic-bezier(0, 0.99, 1, 0.02);
+    transition: all 1.5s cubic-bezier(0, 0.99, 1, 0.02);
+}
 
+.pf-filter-page-effects {
+    margin-left: 100% !important;
+
+}
+
+#pf-filter-title {
+    color: #fff;
+}
+
+#pf-filter-title::before {
+    content: "Filtering ";
+    color: #fff;
+}
+
+#pf-filter-title::after {
+    content: " Items";
+    color: #fff;
+}
+
+.pf-category-clicked, 
+.pf-category:hover {
+    background-color: #fff;
+    color: #000000;
+}
