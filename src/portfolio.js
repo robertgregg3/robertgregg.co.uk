@@ -1,40 +1,59 @@
-const portfolioContainer        = document.getElementById('portfolio');
-const portfolioItem1            = document.getElementById('p-item-1');
-const portfolioItem1Hover       = document.getElementById('p-item-1-hover');
-const portfolioTags1            = document.getElementById('p-tags-1');
-const portfolioFrontEnd         = document.getElementById('p-nav-front-end');
-const portfolioItem             = portfolioContainer.querySelectorAll('.p-item');
-const portfolioPageAnimate      = document.getElementById('p-filter-page-animation');
-const portfolioPageAnimateTitle = document.getElementById('p-filter-title');
-const portfolioFilterItemTitle  = document.getElementById('p-nav-front-end');
+// function filterPortfolio(){} - btings it all together
+    //add class hidden to the divs that don't contain the class of the selected element value
+    // removes all selected classes
+    // triggers page animation transtion
+    // then re adds selected class to category
+// function addHiddenClasses()
+// function removeSelectedClasses()
+// function addSelectedClasses()
+// function pageAnimation()
+// 
 
-portfolioItem1.addEventListener('mouseover', () => {
+
+
+
+
+const portfolioContainer        = document.getElementById('pf'); // container
+const portfolioItem1            = document.getElementById('pf-item-1'); // the ID we have used for testing
+const portfolioItem1Hover       = document.getElementById('pf-item-1-hover'); 
+const portfolioTags1            = document.getElementById('pf-tags-1');
+const portfolioFrontEnd         = document.getElementById('pf-nav-front-end'); // portfolio category
+const portfolioItem             = portfolioContainer.querySelectorAll('.pf-item'); // each portfolio item
+const portfolioPageAnimate      = document.getElementById('pf-filter-page-animation');
+const portfolioPageAnimateTitle = document.getElementById('pf-filter-title'); // TITLE ON PAGE ANIMATION
+const portfolioFilterItemTitle  = document.getElementById('pf-nav-front-end'); // category navigation
+
+portfolioItem1.addEventListener('mouseover', () => {  
+    // portfolio item is hovered it shows the tags and other image
    portfolioItem1Hover.classList.add('height');
    portfolioTags1.classList.add('height');
 });
 
 portfolioItem1.addEventListener('mouseout', () => {
+    // Above tags and image dissappear when the mouse is off the item
     portfolioItem1Hover.classList.remove('height');
     portfolioTags1.classList.remove('height');
  });
 
+ console.log(portfolioFrontEnd.innerText)
+ 
  portfolioFrontEnd.addEventListener('click', () => {
- // when the button is clicked, store the id    
-    for (let item of portfolioItem) {
-        if(!item.classList.contains(portfolioFrontEnd.innerText)){
+     
+     for (let item of portfolioItem) {
+         if(!item.classList.contains(portfolioFrontEnd.innerText))
+         {
              item.classList.add('hidden');
-             portfolioPageAnimate.classList.add('p-filter-page-effects');
+             
+             portfolioPageAnimate.classList.add('pf-filter-page-effects'); 
+             
              setTimeout(addNavClass, 1000);
+             
              function addNavClass() {
-                 portfolioFilterItemTitle.classList.add('p-item-nav-clicked');
-             }
-        }
-        portfolioPageAnimateTitle.innerText = portfolioFrontEnd.innerText;
+                 portfolioFilterItemTitle.classList.add('pf-category-clicked');
+                }
+            }
+            portfolioPageAnimateTitle.innerText = portfolioFrontEnd.innerText;
     }
  });
 
 
- // have ids for all of the possible nav ideas
- // give every portfolio item a class of any languages involved
- // when you click the id, if any element doen't have a class of the value of the id, 
- // add class hidden

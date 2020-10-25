@@ -11,7 +11,7 @@ body{
     flex-direction: column;
 }
 
-#portfolio-items{
+#pf-categories{
     list-style-type: none;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@ body{
     padding: 0;
 }
 
-.p-item-nav {
+.pf-category{
     padding: 1rem 1rem;
     border: 1px solid;
     margin: 0.5rem 0.5rem;
@@ -33,13 +33,17 @@ body{
     font-size: 0.9rem;
 }
 
-#portfolio {
+.pf-category span {
+    text-transform: uppercase;
+}
+
+#pf {
     color: #fff;
     position: relative;
     transition: all 300ms;
 }
 
-.p-header {
+.pf-header {
     background: rgb(252,252,252);
     background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 100%);
     padding: 0.5rem;
@@ -74,7 +78,7 @@ body{
     top: 0;
 }
 
-.p-item {
+.pf-item {
     display: flex;
     flex-direction: column;
     width: 25%;
@@ -85,13 +89,13 @@ body{
 }
 
 
-.p-main {
+.pf-main {
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
 
-.p-main:before {
+.pf-main:before {
     content: "";
     position: absolute;
     box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
@@ -102,11 +106,11 @@ body{
 }
 
 
-.p-item img {
+.pf-item img {
     max-width: 100%;
 }
 
-.p-item-hover-img {
+.pf-item-hover-img {
     position: absolute;
     top: 0;
     height: 0;
@@ -119,11 +123,11 @@ body{
     transition: height 300ms;
 }
 
-.p-item img {
+.pf-item img {
     max-width: 100%;
 }
 
-#p-tags-1 {
+#pf-tags-1 {
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -135,7 +139,7 @@ body{
 
 }
 
-#p-tags-1 ul {
+#pf-tags-1 ul {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -146,7 +150,7 @@ body{
     align-content: center;
 }
 
-#p-tags-1 ul li {
+#pf-tags-1 ul li {
     margin: 0.1rem;
     padding: 0.5rem;
     display: flex;
@@ -155,6 +159,7 @@ body{
     border-radius: 50%;
     width: 48px;
     height: 48px;
+    color: transparent;
 }
 
 .hidden {
@@ -165,7 +170,7 @@ body{
 
 /* -----------  PORTFOLIO FILTER / PAGE ANIMATIONS AND TRANSITIONS ------ */
 
-#p-filter-page-animation {
+#pf-filter-page-animation {
     position: absolute;
     height: 100vh;
     width: 100%;
@@ -176,29 +181,30 @@ body{
     top: 0;
     margin-left: -100%;
     -webkit-transition: all 1s cubic-bezier(0, 0.99, 1, 0.02);
-    transition: all 1.2s cubic-bezier(0, 0.99, 1, 0.02);
+    transition: all 1.5s cubic-bezier(0, 0.99, 1, 0.02);
 }
 
-.p-filter-page-effects {
+.pf-filter-page-effects {
     margin-left: 100% !important;
 
 }
 
-#p-filter-title {
+#pf-filter-title {
     color: #fff;
 }
 
-#p-filter-title::before {
+#pf-filter-title::before {
     content: "Filtering ";
     color: #fff;
 }
 
-#p-filter-title::after {
+#pf-filter-title::after {
     content: " Items";
     color: #fff;
 }
 
-.p-item-nav-clicked {
+.pf-category-clicked, 
+.pf-category:hover {
     background-color: #fff;
     color: #000000;
 }
