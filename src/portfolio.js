@@ -2,8 +2,7 @@
             1) create a function of Lis and map to the menu nav so I don'y repeat the code and have to edit the menu once
             2) add correct portfolio data and skills and titles
             3) add correctly numbered images
-            4) make page transition div wider
-            5) add links to the actual portfolio pages to the pf items
+            4) add links to the actual portfolio pages to the pf items
 */
 // portfolioCategoryData
 const portfolioCategoryData = [ 
@@ -113,7 +112,7 @@ function addPortfolioCategory() {
             removeClickedClass(); // remove every pfCategory clicked class before adding it
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
-            setTimeout(filterPortfolioItems, 200);             
+            setTimeout(filterPortfolioItems, 100);             
         });
 
         function filterPortfolioItems(){

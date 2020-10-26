@@ -4,7 +4,6 @@ body{
     min-height: 100vh;
     position: relative;
     transition: all 300ms;
-    overflow: hidden;
 }
 
 .hero-container--portfolio {
@@ -77,6 +76,11 @@ body{
     left: 32px;
     background-color: #28ca41;
     top: 0;
+}
+
+#pf-items {
+    max-width: 1200px;
+    margin: auto;
 }
 
 .pf-item {
@@ -174,20 +178,20 @@ body{
 #pf-filter-page-animation {
     position: absolute;
     height: 100vh;
-    width: 100%;
+    width: 130%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #333;
     top: 0;
-    margin-left: -100%;
+    margin-left: -155%;
     -webkit-transition: all 1s cubic-bezier(0, 0.99, 1, 0.02);
-    transition: all 1.7s cubic-bezier(0, 0.99, 1, 0.02);
+    transition: all 1.2s cubic-bezier(0, 0.99, 1, 0.02);
     text-transform: uppercase;
 }
 
 .pf-filter-page-effects {
-    margin-left: 100% !important;
+    margin-left: 115% !important;
 
 }
 
