@@ -26,11 +26,11 @@
     animation-iteration-count: 1;
   }
 
-.pf-category span.icon {
+.icon {
     width: 48px;
     height: 48px;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover !important;
     margin-right: 0.4rem;
 }
 
@@ -38,7 +38,7 @@
     background: url('../images/icons/html-5.svg');
 }
 
-.icon-css {
+.icon-css3 {
     background: url('../images/icons/css3.svg');
 }
 
@@ -128,4 +128,8 @@
 .icon-back-end {
     background: url('../images/icons/backend.png');
     background-repeat: no-repeat;
+}
+
+.icon-undefined {
+    display: none !important;
 }

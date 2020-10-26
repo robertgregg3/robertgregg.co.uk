@@ -4,6 +4,7 @@ body{
     min-height: 100vh;
     position: relative;
     transition: all 300ms;
+    overflow: hidden;
 }
 
 .hero-container--portfolio {
@@ -127,7 +128,7 @@ body{
     max-width: 100%;
 }
 
-#pf-tags-1 {
+.pf-tags {
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -135,31 +136,31 @@ body{
     transition: height 300ms;
     background-color: #33333375;
     width: 100%;
-    box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
+    box-shadow: 0 0 100px rgba(0,0,0,.75) inset;
 
 }
 
-#pf-tags-1 ul {
+.pf-tags ul {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     list-style: none;
-    padding: 0.5rem;
+    padding: 4.5rem;
     flex-wrap: wrap;
     height: 100%;
     align-content: center;
 }
 
-#pf-tags-1 ul li {
+.pf-tags ul li {
     margin: 0.1rem;
     padding: 0.5rem;
     display: flex;
     font-size: 0.7rem;
     cursor: pointer;
-    border-radius: 50%;
     width: 48px;
     height: 48px;
     color: transparent;
+    background-size: cover;
 }
 
 .hidden {
@@ -181,7 +182,8 @@ body{
     top: 0;
     margin-left: -100%;
     -webkit-transition: all 1s cubic-bezier(0, 0.99, 1, 0.02);
-    transition: all 1.5s cubic-bezier(0, 0.99, 1, 0.02);
+    transition: all 1.7s cubic-bezier(0, 0.99, 1, 0.02);
+    text-transform: uppercase;
 }
 
 .pf-filter-page-effects {
@@ -203,8 +205,14 @@ body{
     color: #fff;
 }
 
-.pf-category-clicked, 
+.pf-category-clicked{
+    background-color: #fff;
+    color: #000000;
+    transition-delay: 1000ms;
+}
+
 .pf-category:hover {
     background-color: #fff;
     color: #000000;
 }
+
