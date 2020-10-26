@@ -1,4 +1,4 @@
-Filter i/*  Todo
+/*  Todo
             1) create a function of Lis and map to the menu nav so I don'y repeat the code and have to edit the menu once
             2) add correct portfolio data and skills and titles
             3) add correctly numbered images
