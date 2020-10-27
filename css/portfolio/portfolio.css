@@ -98,6 +98,7 @@ body{
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    height: 185px;
 }
 
 .pf-main:before {
