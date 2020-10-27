@@ -1,87 +1,221 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
-
-*   {
-    box-sizing: border-box;
-}
-
 body{
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #7BDAF3;
-    display: flex;
-    flex-wrap: wrap;
+    background: rgb(46,50,135);
+    background: linear-gradient(90deg, rgba(46,50,135,1) 0%, rgba(68,13,83,1) 0%, rgba(9,9,9,1) 100%);
+    min-height: 100vh;
+    position: relative;
+    transition: all 300ms;
 }
 
-.add-note{
+.hero-container--portfolio {
+    color: #eee;
+    flex-direction: column;
+}
+
+#pf-categories{
+    list-style-type: none;
     display: flex;
-    position: absolute;
-    right: 1.2rem;
-    top: 1rem;
-    background-color: #9ec862;
-    border: none;
-    padding: 0.7rem 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.pf-category{
+    padding: 1rem 1rem;
+    border: 1px solid;
+    margin: 0.5rem 0.5rem;
+    flex-wrap: wrap;
+    cursor: pointer;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.pf-category span {
+    text-transform: uppercase;
+}
+
+#pf {
     color: #fff;
+    position: relative;
+    transition: all 300ms;
+}
+
+.pf-header {
+    background: rgb(252,252,252);
+    background: radial-gradient(circle, rgba(252,252,252,1) 0%, rgba(200,225,255,1) 100%);
+    padding: 0.5rem;
+    text-align: center;
+    color: #717070;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.circles, .circles:before, .circles:after {
+    background-color: #f55858;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: 0.5rem;
+    top: 10px;
+    border-radius: 50%;
+}
+
+.circles:before{
+    content: " ";
+    left: 16px;
+    background-color: #ffbd2e;
+    top: 0;
+}
+
+.circles:after {
+    content: " ";
+    left: 32px;
+    background-color: #28ca41;
+    top: 0;
+}
+
+#pf-items {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.pf-item {
     display: flex;
-    justify-content: space-between;
-    width: 110px;
+    flex-direction: column;
+    width: 25%;
+    padding: 1rem;
+    min-width: 400px;
+    height: 100%;
+    transition: height 300ms;
+}
+
+
+.pf-main {
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
 }
 
-.add-note:focus{
-    outline-offset: 0px;
-    outline: none;
+.pf-main:before {
+    content: "";
+    position: absolute;
+    box-shadow: 0 0 50px rgba(0,0,0,.75) inset;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.notes {
-    margin: 2rem 0rem 0rem 2rem;
-    width: 400px;
+
+.pf-item img {
+    max-width: 100%;
 }
 
-.notes .hidden {
-    display: none;
+.pf-item-hover-img {
+    position: absolute;
+    top: 0;
+    height: 0;
+    transition: height 300ms;
+    width: 100%;
 }
 
-.tools {
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(226,255,237,1) 0%, rgba(255,255,255,1)100%);
+.height{
+    height: 100% !important;
+    transition: height 300ms;
+}
+
+.pf-item img {
+    max-width: 100%;
+}
+
+.pf-tags {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    height: 0;
+    transition: height 300ms;
+    background-color: #33333375;
+    width: 100%;
+    box-shadow: 0 0 100px rgba(0,0,0,.75) inset;
+
+}
+
+.pf-tags ul {
     display: flex;
-    justify-content: flex-end;
-    padding: 1.5rem;
-}   
-
-.tool button {
-    background-color:transparent;
-    border: none;
-    color: #9ec862;
-    font-size: 1.2rem;
-    margin-left: 0.5rem;
+    flex-direction: row;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 4.5rem;
+    flex-wrap: wrap;
+    height: 100%;
+    align-content: center;
 }
 
-button.save {
-    margin-left: 13px;
+.pf-tags ul li {
+    margin: 0.1rem;
+    padding: 0.5rem;
+    display: flex;
+    font-size: 0.7rem;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    color: transparent;
+    background-size: cover;
 }
 
-.main {
-    width: 100%;
-    min-height: 346px;
-    padding: 1rem 2rem 0rem;
+.hidden {
+    transition: all 1000ms ease-in-out;
+    height: 0;
+    visibility: hidden;
+}
+
+/* -----------  PORTFOLIO FILTER / PAGE ANIMATIONS AND TRANSITIONS ------ */
+
+#pf-filter-page-animation {
+    position: absolute;
+    height: 100vh;
+    width: 130%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    top: 0;
+    margin-left: -155%;
+    -webkit-transition: all 1s cubic-bezier(0, 0.99, 1, 0.02);
+    transition: all 1.2s cubic-bezier(0, 0.99, 1, 0.02);
+    text-transform: uppercase;
+}
+
+.pf-filter-page-effects {
+    margin-left: 115% !important;
+
+}
+
+#pf-filter-title {
+    color: #fff;
+}
+
+#pf-filter-title::before {
+    content: "Filtering ";
+    color: #fff;
+}
+
+#pf-filter-title::after {
+    content: " Items";
+    color: #fff;
+}
+
+.pf-category-clicked{
     background-color: #fff;
+    color: #000000;
+    transition-delay: 1000ms;
 }
 
-.notes textarea {
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(226,255,237,1) 0%, rgba(255,255,255,1)100%);
-    width: 100%;
-    min-height: 347px;
-    border: none;
-    padding: 3rem;
-    font-family: inherit;
-    font-size: 1rem;
+.pf-category:hover {
+    background-color: #fff;
+    color: #000000;
 }
-
-textarea:focus {
-    outline-offset: 0px;
-    outline: none;
-    } 
-
-  
