@@ -1,8 +1,6 @@
 /*  Todo
             1) create a function of Lis and map to the menu nav so I don'y repeat the code and have to edit the menu once
-            2) add correct portfolio data and skills and titles
-            3) add correctly numbered images
-            4) add links to the actual portfolio pages to the pf items
+            2) add correctly numbered images
 */
 // portfolioCategoryData
 const portfolioCategoryData = [ 
@@ -79,7 +77,64 @@ const portfolioItemData = [
         skill4: 'uiux',
         skill7: 'wordpress',
         skill8: 'websites'   
-    }     
+    },
+    {
+        title: 'recipe-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },         
+    {
+        title: 'note-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },
+    {
+        title: 'movie-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'password-generator',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'drawing-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'todo-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'github-profiles',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'countdown-timer',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },    {
+        title: 'quiz-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    }
 ];
 
 const pfItemContainer       = document.getElementById('pf-items');
@@ -135,8 +190,7 @@ function addPortfolioCategory() {
             pfPageTransition.classList.toggle('pf-filter-page-effects'); // add class to trigger page transition
             pfPageTransitionTitle.innerHTML = key; // make the h3 text = the button text that was clicked. 
         }
-        
-        }  
+    }  
 }
 
 
@@ -145,15 +199,19 @@ function addPortfolioCategory() {
 function addPortfolioItem() {
     for (let key in portfolioItemData)
     {
+        
         const currentPfItemData = portfolioItemData[currentPfItem];  // index of the portfolioItemData
         const pfItem = document.createElement('div');
         
         pfItem.classList.add('pf-item');
-
+        
         pfItem.classList.add('show-all',
-            currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17);
-            
+        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17);
+        
+        let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create url
+        
         pfItem.innerHTML = `
+        <a href="/portfolio/${url}.html">
             <div class="pf-header">
                 <i class="circles"></i>
                 <span class="title">${currentPfItemData.title}</span>
@@ -184,6 +242,7 @@ function addPortfolioItem() {
             <img src="https://www.robertgregg.co.uk/images/p${img2}.jpg" alt="" class="pf-item-img" />
             </div>
         </div>
+        </a>
         `;
         
         // hover to show the tags and additional image
