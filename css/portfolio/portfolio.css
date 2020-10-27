@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+*   {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #7BDAF3;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add-note{
+    display: flex;
+    position: absolute;
+    right: 1.2rem;
+    top: 1rem;
+    background-color: #9ec862;
+    border: none;
+    padding: 0.7rem 1rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+    cursor: pointer;
+}
+
+.add-note:focus{
+    outline-offset: 0px;
+    outline: none;
+}
+
+.notes {
+    margin: 2rem 0rem 0rem 2rem;
+    width: 400px;
+}
+
+.notes .hidden {
+    display: none;
+}
+
+.tools {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(226,255,237,1) 0%, rgba(255,255,255,1)100%);
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem;
+}   
+
+.tool button {
+    background-color:transparent;
+    border: none;
+    color: #9ec862;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+button.save {
+    margin-left: 13px;
+}
+
+.main {
+    width: 100%;
+    min-height: 346px;
+    padding: 1rem 2rem 0rem;
+    background-color: #fff;
+}
+
+.notes textarea {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(226,255,237,1) 0%, rgba(255,255,255,1)100%);
+    width: 100%;
+    min-height: 347px;
+    border: none;
+    padding: 3rem;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+textarea:focus {
+    outline-offset: 0px;
+    outline: none;
+    } 
+
+  
