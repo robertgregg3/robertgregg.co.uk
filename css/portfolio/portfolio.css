@@ -198,6 +198,9 @@ body{
 
 #pf-filter-title {
     color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 5%;
 }
 
 #pf-filter-title::before {
