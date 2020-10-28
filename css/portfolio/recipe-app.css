@@ -27,7 +27,7 @@ header{
 }
 
 .header__logo {
-    background: url(/recipe-app-images/recipe-app-logo.png);
+    background: url(/images/recipe-app-images/recipe-app-logo.png);
     width: 120px;
     height: 53px;
     background-size: cover;
