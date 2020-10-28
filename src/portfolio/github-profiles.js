@@ -1,10 +1,10 @@
 const api_url = 'https://api.github.com/users/';
 
-const main = document.getElementById('main');
-const form = document.getElementById('form');
+const main   = document.getElementById('main');
+const form   = document.getElementById('form');
 const search = document.getElementById('search');
 
-getUser('florinpop17');
+getUser('robertgregg3');
 
 async function getUser(username){
     const response = await fetch(api_url + username);
@@ -64,8 +64,6 @@ function addReposToCard(repos) {
 
         reposEl.appendChild(repoEl);
     })
-
-    console.log(repos);
 }
 
 form.addEventListener('submit', (e) => {
