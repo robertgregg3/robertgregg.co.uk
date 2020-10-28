@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="Robert Gregg">
+	<link rel="stylesheet" href="../css/reusable-components.css">
+	<link rel="stylesheet" href="../css/main-nav.css">
+	<link rel="stylesheet" href="../css/footer.css">
+	<link rel="stylesheet" href="../css/portfolio/recipe-app.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+ 	<title>Movie App</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header__logo"></div>
+            <div class="search-bar">
+                <input type="text" id="search-term" />
+                <button id="search"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+        <div class="fav-container">
+            <h3>Favorite Meals</h3>
+            <ul class="fav-meals" id="fav-meals"></ul>
+        </div>
+        <div class="meals" id="meals"></div>
+    </div>
+
+    <div class="popup-container hidden" id="meal-popup">
+        <div class="popup">
+            <button id="close-popup" class="close-popup">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="meal-info" id="meal-info"></div>
+        </div>
+    </div>
+
+<footer>
+	<ul class="nav__container">
+		<li><strong>Links</strong><p>LinkedIn</p></li>
+		<li><strong>Get in touch</strong><p><btn class="btn--highlight">Contact me</btn></p></li>
+	</ul>
+</footer>
+    <script src="../src/responsive_menu.js"></script>
+    <script src="../src/utils.js"></script>
+    <script src="../src/portfolio/recipe-app.js"></script>
+</body>
+</html>
