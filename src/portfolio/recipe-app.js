@@ -80,7 +80,7 @@ function addMeal(mealData, random = false) {
 
 // add meals to local Storage
 function addMealLS(mealId) {
-    const mealIds = getMealsLS();
+    const mealIds = getMealsLS(); // the array of meals from LS
     localStorage.setItem('mealIds', JSON.stringify([...mealIds, mealId]));
 }
 
@@ -99,7 +99,7 @@ function getMealsLS() {
     return mealIds === null ? [] : mealIds;
 }
 
-// add the hearted meal to the favorite meals panel.
+// retrieves the meal ID's in local storage, as an array, with each meal ID as an element
 async function fetchFavoriteMeals() {
     favoriteContainer.innerHTML = '';
 
@@ -107,7 +107,7 @@ async function fetchFavoriteMeals() {
 
     for(let i = 0; i < mealIds.length; i++){
         const mealId = mealIds[i];
-        meal = await getMealById(mealId);
+        meal = await getMealById(mealId);  // fetches the meal IDs from the api and store in meal. 
         addMealToFav(meal);
     }
 }
