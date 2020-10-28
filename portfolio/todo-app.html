@@ -6,31 +6,29 @@
 	<link rel="stylesheet" href="../css/reusable-components.css">
 	<link rel="stylesheet" href="../css/main-nav.css">
 	<link rel="stylesheet" href="../css/footer.css">
-	<link rel="stylesheet" href="../css/portfolio/movie-app.css">
+	<link rel="stylesheet" href="../css/portfolio/todo-app.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
- 	<title>Movie App</title>
+ 	<title>Todo App</title>
 </head>
 <body>
-    <header>
+    <small>Type and press enter to add note. Click note to complete it.</small>
+    <div class="todo">
+        <div class="notes-info-container">
+        </div>
+      
         <form id="form">
-            <input 
-                type="text" 
-                id="search"
-                placeholder="Search"
-                class="search"
-            />
+          <input 
+            id="item" 
+            type="text" 
+            placeholder="New Todo"
+            autocomplete="off">
         </form>
-    </header>
-    <main id="main"></main>
+        <ul class="todos" id="todos">
+        </ul>
+      </div>
 
-<footer>
-	<ul class="nav__container">
-		<li><strong>Links</strong><p>LinkedIn</p></li>
-		<li><strong>Get in touch</strong><p><btn class="btn--highlight">Contact me</btn></p></li>
-	</ul>
-</footer>
     <script src="../src/utils.js"></script>
-    <script src="../src/portfolio/movie-app.js"></script>
+    <script src="../src/portfolio/todo-app.js"></script>
 </body>
 </html>
