@@ -1,3 +1,12 @@
+/*  Code Logic
+
+    To get a password we need to see what boxes are ticked. 
+    When a box is ticked we need to generate a random number/letter/symbol etc.
+    There is a function which adds to an array these elements when the box is checked.
+    You then return the value of that array in the size of teh input length. 
+
+*/
+
 const pwEl         = document.getElementById('pw');
 const copyEl       = document.getElementById('copy');
 const lengthEl     = document.getElementById('length');
