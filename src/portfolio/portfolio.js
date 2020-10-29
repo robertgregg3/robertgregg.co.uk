@@ -274,7 +274,7 @@ function addPortfolioItem() {
                 <span class="title">${currentPfItemData.title}</span>
             </div>
             <div class="pf-main">
-                <img src="/images/${url+1}.jpg" alt="" class="pf-item-hover-img" />
+                <img src="/images/${url+1}.jpg" alt="${currentPfItemData.title}" class="pf-item-hover-img" />
             <div class="pf-tags">
                 <ul>
                     <li class="pf-tag spring icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
@@ -332,14 +332,15 @@ function displayPortfolioDetails(currentPfItemData) {
     const pfPopupEl = document.createElement('div');
     
     pfPopupEl.classList.add('popup-info');
-    // let url = portfolioItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create url
+
+    let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create  
     
     pfPopupEl.innerHTML = `
             <div id="close"><i class="fas fa-times"></i></div>
             <div class="pf-info-header">
             <h3 class="pf-info-title">${currentPfItemData.title}</h3>
             </div>
-            <img src="https://www.robertgregg.co.uk/images/${currentPfItemData.title+2}.jpg" alt="">
+            <img src="/images/${url+2}.jpg" alt="${currentPfItemData.title}">
             <ul class="pf-info-tags">
                 <li class="pf-tag spring icon icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
                 <li class="pf-tag spring icon icon-${currentPfItemData.skill2}">${currentPfItemData.skill2}</li>
