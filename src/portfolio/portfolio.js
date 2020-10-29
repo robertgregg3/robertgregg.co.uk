@@ -1,29 +1,35 @@
-/*  Todo
-            1) create a function of Lis and map to the menu nav so I don'y repeat the code and have to edit the menu once
-            2) add correctly numbered images
-            3) add coming soon project for mongodb etc
+/*  Adding a new portfolio item:
+    1) add the css, js etc pages.
+    2) add the images 
+    3) add item to portfolioItemData
 */
+
+/*  Adding a new portfolio skill:
+    1) add skill to portfolioCategoryData
+    2) add a new skill number to both sections of addPortfolioItem
+*/
+
 // portfolioCategoryData
 const portfolioCategoryData = [ 
-    'show-all',
-    'front-end',
+    'all',
     'back-end',
-    'html',
     'css3',
+    'front-end',
+    'html',
     'javascript',
-    'nodejs',
     'mongodb',
-    'typescript',
-    'php',
-    'mysql',
+    'nodejs',
     'graphql',
+    'mysql',
+    // 'php',
     'photoshop',
     'premiere-pro',
+    'react',
+    'typescript',
     'uiux',
     'websites',
     'wordpress',
-    'react',
-    'angular'
+    // 'angular'
 ]
 
 // portfolio Item
@@ -155,7 +161,19 @@ const portfolioItemData = [
         title: 'boostrap-dashboard',
         skill1: 'front-end',
         skill2: 'html',
-        skill3: 'css3'    }
+        skill3: 'css3'    
+    },
+    {
+        title: 'In progress',
+        skill1: 'front-end',
+        skill2: 'back-end',
+        skill3: 'html',
+        skill4: 'css3',
+        skill5: 'react',
+        skill6: 'typescript',
+        skill7: 'nodejs',
+        skill8: 'graphql'
+    }
 ];
 
 const pfItemContainer       = document.getElementById('pf-items');
@@ -225,7 +243,7 @@ function addPortfolioItem() {
         pfItem.classList.add('pf-item');
         
         pfItem.classList.add('show-all',
-        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17, currentPfItemData.skill18, currentPfItemData.skill19);
+        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17);
         
         let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create url
         
@@ -256,8 +274,6 @@ function addPortfolioItem() {
                     <li class="pf-tag spring icon-${currentPfItemData.skill15}">${currentPfItemData.skill15}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill17}">${currentPfItemData.skill17}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill18}">${currentPfItemData.skill18}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill19}">${currentPfItemData.skill19}</li>
                 </ul>
             </div>
             <img src="https://www.robertgregg.co.uk/images/p${img2}.jpg" alt="" class="pf-item-img" />
