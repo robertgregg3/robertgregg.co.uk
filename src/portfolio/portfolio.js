@@ -17,7 +17,7 @@ const portfolioCategoryData = [
     'front-end',
     'html',
     'javascript',
-    'mongodb',
+    // 'mongodb',
     'nodejs',
     'graphql',
     'mysql',
@@ -161,7 +161,8 @@ const portfolioItemData = [
         title: 'boostrap-dashboard',
         skill1: 'front-end',
         skill2: 'html',
-        skill3: 'css3'    
+        skill3: 'css3',
+        skill4: 'uiux'    
     },
     {
         title: 'In progress',
@@ -172,7 +173,8 @@ const portfolioItemData = [
         skill5: 'react',
         skill6: 'typescript',
         skill7: 'nodejs',
-        skill8: 'graphql'
+        skill8: 'graphql',
+        skill9: 'mysql'
     }
 ];
 
@@ -242,8 +244,8 @@ function addPortfolioItem() {
         
         pfItem.classList.add('pf-item');
         
-        pfItem.classList.add('show-all',
-        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17);
+        pfItem.classList.add('all',
+        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16);
         
         let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create url
         
@@ -273,7 +275,6 @@ function addPortfolioItem() {
                     <li class="pf-tag spring icon-${currentPfItemData.skill14}">${currentPfItemData.skill14}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill15}">${currentPfItemData.skill15}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill17}">${currentPfItemData.skill17}</li>
                 </ul>
             </div>
             <img src="https://www.robertgregg.co.uk/images/p${img2}.jpg" alt="" class="pf-item-img" />
@@ -327,7 +328,3 @@ function removeClickedClass(){
 
 addPortfolioCategory();
 addPortfolioItem();
-
-
-
-
