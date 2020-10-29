@@ -116,6 +116,10 @@ body{
     max-width: 100%;
 }
 
+.pf-item-img {
+    height: inherit;
+}
+
 .pf-item-hover-img {
     position: absolute;
     top: 0;

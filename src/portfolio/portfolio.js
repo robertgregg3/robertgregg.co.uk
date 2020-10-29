@@ -148,7 +148,12 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    }
+    },
+    {
+        title: 'boostrap-dashboard',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3'    }
 ];
 
 const pfItemContainer       = document.getElementById('pf-items');
