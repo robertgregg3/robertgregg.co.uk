@@ -29,7 +29,7 @@ const menuData = [
 	},
 	{
 		page_title: 'CV',
-		url: root + `pdf/cv.pdf`,
+		url: root + `images/pdf/cv.pdf`,
 		alt: 'View My CV!'
 	},
 	{
