@@ -117,7 +117,8 @@ body{
 }
 
 .pf-item-img {
-    height: inherit;
+    height: 185px;
+    width: 100%;
 }
 
 .pf-item-hover-img {

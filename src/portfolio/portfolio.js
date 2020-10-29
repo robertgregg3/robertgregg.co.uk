@@ -21,7 +21,9 @@ const portfolioCategoryData = [
     'premiere-pro',
     'uiux',
     'websites',
-    'wordpress'
+    'wordpress',
+    'react',
+    'angular'
 ]
 
 // portfolio Item
@@ -223,7 +225,7 @@ function addPortfolioItem() {
         pfItem.classList.add('pf-item');
         
         pfItem.classList.add('show-all',
-        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17);
+        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16,currentPfItemData.skill17, currentPfItemData.skill18, currentPfItemData.skill19);
         
         let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create url
         
@@ -254,6 +256,8 @@ function addPortfolioItem() {
                     <li class="pf-tag spring icon-${currentPfItemData.skill15}">${currentPfItemData.skill15}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
                     <li class="pf-tag spring icon-${currentPfItemData.skill17}">${currentPfItemData.skill17}</li>
+                    <li class="pf-tag spring icon-${currentPfItemData.skill18}">${currentPfItemData.skill18}</li>
+                    <li class="pf-tag spring icon-${currentPfItemData.skill19}">${currentPfItemData.skill19}</li>
                 </ul>
             </div>
             <img src="https://www.robertgregg.co.uk/images/p${img2}.jpg" alt="" class="pf-item-img" />
