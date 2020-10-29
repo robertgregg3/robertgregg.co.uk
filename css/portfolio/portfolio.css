@@ -93,6 +93,9 @@ body{
     transition: height 300ms;
 }
 
+.pf-item a {
+    text-decoration: none;
+}
 
 .pf-main {
     position: relative;
@@ -183,7 +186,7 @@ body{
 /* -----------  PORTFOLIO FILTER / PAGE ANIMATIONS AND TRANSITIONS ------ */
 
 #pf-filter-page-animation {
-    position: absolute;
+    position: fixed;
     height: 100vh;
     width: 130%;
     display: flex;
@@ -204,9 +207,7 @@ body{
 
 #pf-filter-title {
     color: #fff;
-    position: absolute;
-    left: 50%;
-    top: 5%;
+
 }
 
 #pf-filter-title::before {
