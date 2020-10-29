@@ -44,7 +44,7 @@ const portfolioItemData = [
         skill6: 'premiere-pro',
         skill7: 'wordpress',
         skill8: 'websites',
-        details: 'This website was created with a wordpress theme but heavily customized to fit our UI UX needs. It includes connecting various 3rd party apps together.  This site is the sales page for the members area (members.howtostreetdance.com) where there are hundreds of courses and lesson that we created, filmed, edited and added to the site. The membership area uses a membership app combined with an email service provider which provides access through tags added upon signup/completion of the questionnaire. The platform is free at the time of writing so you can take a look. A theme was used for the initial setup and was then customized with css.',
+        details: 'I have built and designed many sites but here are 4 examples.  This website was created with a wordpress theme but heavily customized to fit our UI UX needs. It includes connecting various 3rd party apps together.  This site is the sales page for the members area (members.howtostreetdance.com) where there are hundreds of courses and lesson that we created, filmed, edited and added to the site. The membership area uses a membership app combined with an email service provider which provides access through tags added upon signup/completion of the questionnaire. The platform is free at the time of writing so you can take a look. A theme was used for the initial setup and was then customized with css.',
         url: 'http://www.howtostreetdance.com'
     },
     {
@@ -59,17 +59,6 @@ const portfolioItemData = [
         skill8: 'websites',
         details: 'This website was created with a wordpress drag and drop builder customized to fit our UI UX needs.  We added a woocommerce shop, payment providers, timetable for the classes run which was linked to the club management software.',
         url: 'http://www.s3studios.co.uk'
-    },
-    {
-        title: 'SS4A',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'uiux',
-        skill5: 'photoshop',
-        skill6: 'premiere-pro',
-        skill7: 'wordpress',
-        skill8: 'websites'
     },
     {
         title: 'BARTONSTEIN',
@@ -186,7 +175,7 @@ const portfolioItemData = [
         url: '/portfolio/scroll-animation.html'
     },
     {
-        title: 'boostrap-dashboard',
+        title: 'bootstrap-dashboard',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
@@ -217,9 +206,6 @@ const pfPageTransitionTitle = document.getElementById('pf-filter-title'); // pag
 const pfPPopupContainer     = document.getElementById('popup-container'); // container for portfolio popup
 const pfPPopupInfoEl        = document.getElementById('popup-info'); // container for portfolio popup
 
-
-let img1          = 1;
-let img2          = 2;
 let currentPfItem = 0;  // index of portfolioItemData. Increases when 
 
 // function for the portfolio category navigation
@@ -280,14 +266,15 @@ function addPortfolioItem() {
         pfItem.classList.add('all',
         currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16);
                 
-        // <a href="/portfolio/${url}.html">
+        let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase();
+        
         pfItem.innerHTML = `   
         <div class="pf-header">
                 <i class="circles"></i>
                 <span class="title">${currentPfItemData.title}</span>
             </div>
             <div class="pf-main">
-                <img src="https://www.robertgregg.co.uk/images/p${img1}.jpg" alt="" class="pf-item-hover-img" />
+                <img src="/images/${url+1}.jpg" alt="" class="pf-item-hover-img" />
             <div class="pf-tags">
                 <ul>
                     <li class="pf-tag spring icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
@@ -308,7 +295,7 @@ function addPortfolioItem() {
                     <li class="pf-tag spring icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
                 </ul>
             </div>
-            <img src="https://www.robertgregg.co.uk/images/p${img2}.jpg" alt="" class="pf-item-img" />
+            <img src="/images/${url+2}.jpg" alt="" class="pf-item-img" />
             </div>
         </div>
         `;
@@ -333,7 +320,6 @@ function addPortfolioItem() {
         
         pfItemContainer.appendChild(pfItem);
         currentPfItem++;
-        increaseImgNum(); 
     }
 }
 
@@ -353,7 +339,7 @@ function displayPortfolioDetails(currentPfItemData) {
             <div class="pf-info-header">
             <h3 class="pf-info-title">${currentPfItemData.title}</h3>
             </div>
-            <img src="https://www.robertgregg.co.uk/images/${currentPfItemData.title}.jpg" alt="">
+            <img src="https://www.robertgregg.co.uk/images/${currentPfItemData.title+2}.jpg" alt="">
             <ul class="pf-info-tags">
                 <li class="pf-tag spring icon icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
                 <li class="pf-tag spring icon icon-${currentPfItemData.skill2}">${currentPfItemData.skill2}</li>
@@ -385,8 +371,6 @@ function displayPortfolioDetails(currentPfItemData) {
             popupCloseBtn.addEventListener('click', () => {
                 pfPPopupContainer.classList.add('hidden');
             });
-
-            
         }
         
         const pfPopupItems = document.querySelectorAll('.pf-item');
@@ -398,12 +382,6 @@ pfPopupItems.forEach(pfPopupItem => {
         pfPPopupContainer.classList.remove('hidden');
     });
 });
-
-// for every portfolio item increase the numbers of the images.  
-function increaseImgNum(){
-    img1 += 2;
-    img2 += 2;
-}
 
 // remove every clicked class before adding it
 function removeClickedClass(){
