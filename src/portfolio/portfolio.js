@@ -99,38 +99,51 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'password-generator',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'drawing-app',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'todo-app',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'github-profiles',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'countdown-timer',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript'
-    },    {
+    },    
+    {
         title: 'quiz-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript'
+    },
+    {
+        title: 'scroll-animation',
         skill1: 'front-end',
         skill2: 'html',
         skill3: 'css3',
@@ -193,8 +206,6 @@ function addPortfolioCategory() {
         }
     }  
 }
-
-
 
 // function to add the portfolio items, getting the data from the array
 function addPortfolioItem() {
@@ -267,7 +278,6 @@ function addPortfolioItem() {
     }
 }
 
-
 function checkPfItem() {
     const allPfItems = document.querySelectorAll('.pf-item');
     
@@ -289,26 +299,6 @@ function removeClickedClass(){
         }
     });
 }
-
-// function filterPortfolioItems() {
-//     const pfFilterCategories = document.querySelectorAll('.pf-category');
-    
-  
-//     // pfFilterCategories.forEach(category => {
-//     //     console.log(category.innerText)
-//     //     pfFilterItems.forEach(item => {
-//     //         if(!item.classList.contains(category.innerText)) {
-//     //             item.style.display= 'none';
-//     //         }
-//     //     });
-//     // });
-
-// }
-    
-    // console.log(value.innerText)
-
-  
-
 
 addPortfolioCategory();
 addPortfolioItem();
