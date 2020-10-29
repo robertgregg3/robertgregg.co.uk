@@ -25,7 +25,7 @@ const quizData = [
         correct: 'b',
     }
 ];
-const quiz = document.getElementById('quiz'); // container for displaying the results
+const quiz       = document.getElementById('quiz'); // container for displaying the results
 const answerEls  = document.querySelectorAll(".answer"); // find out of a selection has been made
 const questionEl = document.getElementById('question'); // the question title
 const a_text     = document.getElementById('a_text'); // answer 1

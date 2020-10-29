@@ -1,0 +1,48 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    /* background: url('/images/countdown-timer-images/countdown-bg.jpg'); */
+    background: url('https://live.staticflickr.com/4231/35414183781_6581dab9f2_b.jpg');
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+#timer {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    align-items: center;
+    justify-items: center;
+    color: #fff;
+    text-align: center;
+    border-radius: 100px;
+    padding: 0 2rem 0;
+    width: 100%;
+    max-width: 628px;
+}
+
+@media (max-width:500px){
+    #timer{
+        grid-template-columns: 50% 50%;
+    }
+}
+
+.days,
+.hours,
+.mins,
+.seconds {
+    padding: 2rem;
+}
+
+h3 {
+    font-size: 4rem;
+    text-shadow: 0 0 20px rgb(0,0,0,1);
+}
+
