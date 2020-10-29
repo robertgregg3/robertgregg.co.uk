@@ -172,6 +172,7 @@ body{
     transition: all 1000ms ease-in-out;
     height: 0;
     visibility: hidden;
+    display: none;
 }
 
 /* -----------  PORTFOLIO FILTER / PAGE ANIMATIONS AND TRANSITIONS ------ */
