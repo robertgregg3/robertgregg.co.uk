@@ -21,7 +21,7 @@ body{
 }
 
 .pf-category{
-    padding: 1rem 1rem;
+    padding: 1rem 0.8rem;
     border: 1px solid;
     margin: 0.5rem 0.5rem;
     flex-wrap: wrap;
