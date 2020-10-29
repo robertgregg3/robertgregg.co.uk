@@ -5,6 +5,13 @@
     pointer-events: none;
 }
 
+#nav-container {
+    color: #ffffff;
+    width: 100%;
+    position: absolute;
+    height: 100vh;
+    top: 0px;
+}
 
 .nav__container {
     max-width: 100%;
@@ -31,20 +38,22 @@ nav ul {
     height: 100vh;
     top: 0px;
     margin: 0;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     z-index: 2;
     transition: opacity 400ms ease-in-out;
 }
 
 nav li {
-    opacity: 1;
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
 }
 
 nav li a {
     color: #ffffff;
     text-decoration: none;
-    padding: 1rem;
+    padding: 2rem 4rem;
     font-size: 1.2rem;
 }
 
