@@ -77,7 +77,7 @@ nav li a {
 
 .nav__toggle__line-top--selected {
     transform: rotate(-225deg);
-    top: 1rem;
+    top: 1.09rem;
 }
 
 .nav__toggle__line-middle {

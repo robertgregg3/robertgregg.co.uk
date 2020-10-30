@@ -114,9 +114,7 @@ header button {
 
 .fav-meal {
     font-size: 0.8rem;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .fav-meal:hover {
