@@ -42,15 +42,16 @@ function generatePassword() {
 
     let password = '';
 
+ // get the length and then do this for each position/character etc   
     for (let i=0; i<len; i++) {
         const x = generateX();
-        password += x;
+        password += x; // basically the password equals generateX 
     }
 
     pwEl.innerText = password;
-    console.log(password)
 }
 
+// this takes adds one to an array xs, of either letter/number/symbol
 function generateX() {
     const xs = [];
     if(upperEl.checked) {
@@ -68,7 +69,7 @@ function generateX() {
     if(symbolEl.checked) {
         xs.push(getSymbol());
     }
-
+// then get the total array and return the array in the length of the password
     return xs[Math.floor(Math.random() * xs.length)];
 }
 
@@ -79,21 +80,21 @@ generatePwEl.addEventListener('click', () => {
         !symbolEl.checked) {
             alert('please check something')
         } else {
-            
             generatePassword();
         }
     });
 
+    // to copy something it needs to be in an input or text area etc. 
+    // as we haven't got one of those we create on, set the value of 
+    // it to the value of the password and then copy to clipboard
 copyEl.addEventListener('click', () => {
     const textarea = document.createElement('textarea');
     const password = pwEl.innerText;
     
     if(!password) { return; }
     
-    textarea.value = password;
-    document.body.appendChild(textarea);
     textarea.select();
     document.execCommand('copy');
-    textarea.remove();
+    textarea.remove(); // remove the text area because we only need it for the password
     alert('Password copied to clipboard');
 });

@@ -53,6 +53,28 @@ button{
     overflow: hidden;
 }
 
+@media(max-width:470px){
+    .notes {
+        margin: 2rem 0rem 0rem 1rem;
+    }
+}
+
+@media(max-width:430px){
+    .notes {
+        margin: 2rem 0rem 0rem 0rem;
+    }
+}
+
+@media(max-width:400px){
+    .note {
+        width: 100%;
+    }
+    .notes {
+        margin: 2rem 0rem 0rem 0rem;
+        width: 100%;
+    }
+}
+
 .notes .hidden {
     display: none;
 }

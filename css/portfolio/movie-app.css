@@ -49,6 +49,30 @@ main{
     position: relative;
 }
 
+@media (max-width:650px) {
+    .movie {
+        width: 180px;
+    }
+}
+
+@media (max-width:600px) {
+    .movie {
+        width: 160px;
+    }
+}
+
+@media (max-width:530px) {
+    .movie {
+        width: 200px;
+    }
+}
+
+@media (max-width:433px) {
+    .movie {
+        width: 285px;
+    }
+}
+
 .movie img{
     width: 100%;
 }
