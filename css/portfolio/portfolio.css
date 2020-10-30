@@ -273,6 +273,12 @@ body{
     border-radius: 33px;
     align-items: center;
 }
+@media (max-width:700px){
+    .pf-popup, 
+    .popup-info{
+        border-radius: 0;
+    }
+}
 
 .popup-info img {
     width: 100%;

@@ -126,7 +126,7 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript',
-        details: 'Using the canvas element I created a simple drawing app allwing you to change the size of the pen and the color.',
+        details: 'Using the canvas element I created a simple drawing app allwing you to change the size of the pen and the color.  Currently this is not for mobile/touch screen.',
         url: '/portfolio/drawing-app.html'
     },    
     {

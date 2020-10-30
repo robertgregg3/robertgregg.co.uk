@@ -35,6 +35,18 @@ ul li{
     cursor: pointer;
 }
 
+@media (max-width:450px) {
+    ul li{
+        margin: 1rem 0rem; 
+    }
+    ul {
+        padding: 0rem 0rem 2rem;
+    }
+    .quiz-container{
+        margin: 0 0.5rem;
+    }
+}
+
 ul li label {
     cursor: pointer;
 }
