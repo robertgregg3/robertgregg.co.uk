@@ -14,6 +14,11 @@
 // parsing teh json file with the notes
 const notes = JSON.parse(localStorage.getItem('notes'));
 
+if(notes.length === 0) {
+    addNewNote();
+}
+
+
 
 // if there are notes then make a new note with thr JSON note data
 if(notes){
@@ -25,10 +30,22 @@ if(notes){
 // green button at the top right
 const addBtn = document.querySelector('.add-note');
 
-//create new EMPTY note from that button
-    addBtn.addEventListener('click', () => {    
+addBtn.addEventListener('click', () => {    
+    //create new EMPTY note from that button but ONLY if an empty note doesnt already exist.  This stops creating endless empty notes.
+        const textareas    = document.querySelectorAll('textarea');
+        let textAreasValue = true;
+
+        textareas.forEach(textareaEl => {
+            if(textareaEl.value === ''){
+                textAreasValue = false;
+            }
+            return textAreasValue;
+        });
+        
+        if(textAreasValue) {
             addNewNote();
-      });
+        }
+});
 
 // setting the variable "text" which will hold the data in the text area
 function addNewNote(text = '') {

@@ -253,7 +253,7 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 35px;
+    border-radius: 3px;
     border-bottom: 1px solid #000;
 }
 
@@ -270,8 +270,14 @@ body{
     flex-direction: column;
     color: #eee;
     background-color:rgb(17 0 29 / 95%);
-    border-radius: 33px;
+    border-radius: 3px;
     align-items: center;
+}
+@media (max-width:700px){
+    .pf-popup, 
+    .popup-info{
+        border-radius: 0;
+    }
 }
 
 .popup-info img {

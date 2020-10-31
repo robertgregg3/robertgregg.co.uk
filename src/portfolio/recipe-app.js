@@ -14,13 +14,18 @@ const popupCloseBtn     = document.getElementById('close-popup');
 const mealInfoEl        = document.getElementById('meal-info');
 const searchTerm        = document.getElementById('search-term');
 const searchBtn         = document.getElementById('search');
+const changeRanMealBtn  = document.getElementById('change-ran-meal');
+
+changeRanMealBtn.addEventListener('click', () => {
+    window.location.reload();
+});
 
 async function getRandomMeal() {
     const resp = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
     const responseData = await resp.json();
     const randomMeal = responseData.meals[0];
 
-    addMeal(randomMeal, true );
+    addMeal(randomMeal);
 }
 
 async function getMealById(id) {
@@ -40,13 +45,11 @@ async function getMealsBySearchTerm(term) {
 }
 
 // add the random meal to the page
-function addMeal(mealData, random = false) {
+function addMeal(mealData) {
     const meal = document.createElement('div');
     meal.classList.add('meal');
     meal.innerHTML = `
         <div class="meal-header">
-                ${random ? `
-                <span class="random"> Random Recipe </span>` : ''}
                 <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}">
         </div>
         <div class="meal-body">
@@ -56,9 +59,9 @@ function addMeal(mealData, random = false) {
             </button>
         </div>
     `;
-   
+    
     const btn = meal.querySelector('.meal .far');
-   
+    
     btn.addEventListener('click', () => {
         if (btn.classList.contains('fas')) {
             removeMealLS(mealData.idMeal);
@@ -69,12 +72,17 @@ function addMeal(mealData, random = false) {
         }
         fetchFavoriteMeals();
     });
-   
+    
     const mealHeader = meal.querySelector('.meal-header');
     mealHeader.addEventListener('click', () => {
+        btn.classList.add('heart-popup');
         showMealInfo(mealData);
     });
 
+    popupCloseBtn.addEventListener('click', () => {
+        btn.classList.remove('heart-popup');
+    });
+    
     meals.appendChild(meal);
 }
 
@@ -122,7 +130,7 @@ function addMealToFav(mealData) {
     <span class="fav-meal">${mealData.strMeal}</span>
     <button class="clear"><i class="fas fa-window-close"></i></button>
     `;
-   
+
     const btn = favMeal.querySelector('.clear');
    
     btn.addEventListener('click', () => {
@@ -199,3 +207,4 @@ popupCloseBtn.addEventListener('click', () => {
 });
 
 fetchFavoriteMeals();
+
