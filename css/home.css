@@ -37,6 +37,7 @@ button{
 .hero-container__left h1{
     font-family: 'Bangers', Roboto;
     font-size: 3rem;
+    letter-spacing: 1px;
 }
 
 .hero-container__right{
