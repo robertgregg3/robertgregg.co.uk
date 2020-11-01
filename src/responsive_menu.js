@@ -50,7 +50,12 @@ function addMenuData(menuData) {
 	menuEl.classList.add('display')
 
 	menuEl.innerHTML = `
-			<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
+			<div class="nav-popup-left">
+				<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
+				< class="contact-icons">
+					<span class="spring icon-linkedin icon"></span>
+					<span class="spring icon-linkedin2 icon"></span></div>
+			</div>
 			<ul>
 				<li class="nav-item"><a href="${menuData[0].url}" title="${menuData[0].page_title}">${menuData[0].page_title}</a></li>
 				<li class="nav-item"><a href="${menuData[1].url}" title="${menuData[1].page_title}">${menuData[1].page_title}</a></li>

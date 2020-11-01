@@ -257,9 +257,8 @@ function addPortfolioCategory() {
 function addPortfolioItem() {
     for (let key in portfolioItemData)
     {
-        
         const currentPfItemData = portfolioItemData[currentPfItem];  // index of the portfolioItemData
-        const pfItem = document.createElement('div');
+        const pfItem            = document.createElement('div');
         
         pfItem.classList.add('pf-item');
         
