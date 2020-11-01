@@ -37,10 +37,51 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate( -50%, -50%);
-    display: flex;
-    justify-content: center;
+    display: grid;
     align-items: center;
+    grid-template-columns: 50% 50%;
 }
+
+@media(max-width: 400px) {
+    .main-nav{
+        display: flex;    flex-direction: column-reverse;
+        justify-content: center;
+    }
+    .nav-popup-right {
+        max-width: 300px;
+    }
+    .nav-popup-right {
+        border-left: none !important;
+    }
+    .nav-popup-left {
+        padding-right: 0 !important;
+    }
+}
+
+.nav-popup-left {
+    position: relative;
+    justify-self: flex-end;
+    padding-right: 2rem;
+}
+
+.nav-popup-right {
+    width: 100%;
+    max-width: 300px;
+    border-left: 1px solid #ffffff;
+}
+
+@media(max-width: 800px) {
+    .nav-popup-right {
+        max-width: 400px;
+    }
+}
+
+@media(max-width: 500px) {
+    .nav-popup-right {
+        max-width: 250px;
+    }
+}
+
 .main-nav ul{
     list-style-type: none;
     padding: 0;
@@ -118,7 +159,6 @@ nav li a {
     background-repeat: no-repeat;
 }
 
-
 #contact-button{
     cursor: pointer;
     color: #ffffff;
@@ -187,9 +227,7 @@ nav li a {
 }
 
 .rob-head-shot {
-    height: 60%;
     width: 100%;
-    border-right: 1px solid #ccc;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -213,6 +251,15 @@ nav li a {
         height: 125px;
     }
 }
+
+@media (max-width: 400px){
+    .rob-head-shot img {
+        width: 100px;
+        margin-left: auto;
+        height: 100px;
+    }
+}
+
 @media (max-width:650px) {
     .nav-item {
         max-height: 100px;

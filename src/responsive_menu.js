@@ -52,31 +52,31 @@ function addMenuData(menuData) {
 	menuEl.innerHTML = `
 			<div class="nav-popup-left">
 				<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
-				< class="contact-icons">
-					<span class="spring icon-linkedin icon"></span>
-					<span class="spring icon-linkedin2 icon"></span></div>
+				<span class="spring icon-linkedin icon"></span>
 			</div>
-			<ul>
-				<li class="nav-item"><a href="${menuData[0].url}" title="${menuData[0].page_title}">${menuData[0].page_title}</a></li>
-				<li class="nav-item"><a href="${menuData[1].url}" title="${menuData[1].page_title}">${menuData[1].page_title}</a></li>
-				<li class="nav-item"><a href="${menuData[2].url}" title="${menuData[2].page_title}">${menuData[2].page_title}</a></li>
-				<li id="contact-button">${menuData[3].page_title}<span class="nav-item-arrow"><i class="far fa-arrow-alt-circle-right"></i></span</li>
-				<li>
-					<div id="contact-container" class="hidden">
-						<form 
-						action="https://formspree.io/f/xrgokqda" 
-						method="POST" 
-						id="contact-form"
-						>
-							<input id="name" type="text" placeholder="name" name="name"/>
-							<input id="email" type="email" placeholder="email" name="email" />
-							<textarea id="textarea" placeholder="message" name="message"></textarea>
-							<div id="my-form-status"></div>
-							<input id="submit-btn" type="submit" value="Send">
-						</form>
-					</div>
-				</li>
-			</ul>
+			<div class="nav-popup-right">
+				<ul>
+					<li class="nav-item"><a href="${menuData[0].url}" title="${menuData[0].page_title}">${menuData[0].page_title}</a></li>
+					<li class="nav-item"><a href="${menuData[1].url}" title="${menuData[1].page_title}">${menuData[1].page_title}</a></li>
+					<li class="nav-item"><a href="${menuData[2].url}" title="${menuData[2].page_title}">${menuData[2].page_title}</a></li>
+					<li id="contact-button">${menuData[3].page_title}<span class="nav-item-arrow"><i class="far fa-arrow-alt-circle-right"></i></span</li>
+					<li>
+						<div id="contact-container" class="hidden">
+							<form 
+							action="https://formspree.io/f/xrgokqda" 
+							method="POST" 
+							id="contact-form"
+							>
+								<input id="name" type="text" placeholder="name" name="name"/>
+								<input id="email" type="email" placeholder="email" name="email" />
+								<textarea id="textarea" placeholder="message" name="message"></textarea>
+								<div id="my-form-status"></div>
+								<input id="submit-btn" type="submit" value="Send">
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
 				`;
 
 	mainNav.appendChild(menuEl);
