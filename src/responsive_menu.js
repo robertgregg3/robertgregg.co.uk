@@ -1,4 +1,11 @@
 const mainNav = document.getElementById('nav-container');
+const inputName      = document.getElementById('name');
+const inputEmail     = document.getElementById('email');
+const inputTextarea  = document.getElementById('textarea');
+const statusName     = document.getElementById('status-name');
+const statusEmail    = document.getElementById('status-email');
+const statusTextarea = document.getElementById('status-textarea');
+const submitBtn      = document.getElementById('submit-btn');	
 
 let root = 'http://www.robertgregg.co.uk/';
 
@@ -86,6 +93,7 @@ function addMenuData(menuData) {
 		const contactBtn       = document.getElementById('contact-button');
 		const menuItems        = document.querySelectorAll('.nav-item'); 
 		const menuItemArrow    = document.querySelector('.nav-item-arrow'); 
+		const formInputs       = document.querySelectorAll('input')
 	
 		contactBtn.addEventListener('click', () => {
 			contactContainer.classList.toggle('hidden');
@@ -93,6 +101,10 @@ function addMenuData(menuData) {
 
 			menuItems.forEach(item => {
 				item.classList.toggle('hidden');
+
+				formInputs.forEach(input => {
+					input.classList.toggle('form-resp-padding');
+				});
 			});
 		});	
 	}
@@ -101,15 +113,6 @@ function addMenuData(menuData) {
 }
 
 addMenuData(menuData);
-
-const inputName      = document.getElementById('name');
-const inputEmail     = document.getElementById('email');
-const inputTextarea  = document.getElementById('textarea');
-const statusName     = document.getElementById('status-name');
-const statusEmail    = document.getElementById('status-email');
-const statusTextarea = document.getElementById('status-textarea');
-const submitBtn      = document.getElementById('submit-btn');	
-
 
 window.addEventListener("DOMContentLoaded", function() {
 

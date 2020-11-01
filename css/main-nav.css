@@ -40,6 +40,7 @@ nav {
     display: grid;
     align-items: center;
     grid-template-columns: 50% 50%;
+    justify-content: center;
 }
 
 @media(max-width: 400px) {
@@ -60,14 +61,16 @@ nav {
 
 .nav-popup-left {
     position: relative;
-    justify-self: flex-end;
-    padding-right: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .nav-popup-right {
     width: 100%;
-    max-width: 300px;
     border-left: 1px solid #ffffff;
+    height: 100%;
+    max-height: 350px;
 }
 
 @media(max-width: 800px) {
@@ -90,7 +93,6 @@ nav {
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    max-width: 500px;
 }
 
 .main-nav ul li {
@@ -98,6 +100,7 @@ nav {
     text-align: center;
     padding: 1rem;
 }
+
 
 nav li a {
     color: #ffffff;
@@ -214,6 +217,11 @@ nav li a {
     opacity: 0 !important;
     pointer-events: none;
     transition: opacity 500ms ease-in-out;
+    padding: 0 !important;
+}
+
+.form-resp-padding {
+    padding: 0.5rem !important;
 }
 
 .nav-item-arrow {
@@ -227,11 +235,9 @@ nav li a {
 }
 
 .rob-head-shot {
-    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    max-width: 200px;
 }
 
 .rob-head-shot img {
