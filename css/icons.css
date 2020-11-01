@@ -130,6 +130,13 @@
     background-repeat: no-repeat;
 }
 
+.icon-linkedin {
+    background: url('../images/icons/linkedin.svg');
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 25%;
+}
+
 .icon-undefined {
     display: none !important;
 }
