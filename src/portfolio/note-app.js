@@ -14,7 +14,7 @@
 // parsing teh json file with the notes
 const notes = JSON.parse(localStorage.getItem('notes'));
 
-if(notes.length === 0) {
+if(notes) {
     addNewNote();
 }
 

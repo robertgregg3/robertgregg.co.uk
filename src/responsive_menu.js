@@ -1,4 +1,4 @@
-const mainNav          = document.getElementById('nav-container');
+const mainNav = document.getElementById('nav-container');
 
 let root = 'http://www.robertgregg.co.uk/';
 
@@ -27,17 +27,21 @@ const menuData = [
 
 function toggleNav() {
 	const nav              = document.querySelector('nav .main-nav');
+	const getInTouchBtn    = document.getElementById('get-in-touch');
 	const navToggle        = document.querySelector('nav .nav__toggle');
 	const toggleTopLine    = document.querySelector('nav .nav__toggle__line-top');
 	const toggleMiddleLine = document.querySelector('nav .nav__toggle__line-middle')
 	const toggleBottomLine = document.querySelector('nav .nav__toggle__line-bottom');
 	
-	navToggle.addEventListener('click', () => {
+	navToggle.addEventListener('click', openMenu);
+	getInTouchBtn.addEventListener('click', openMenu);
+
+	function openMenu() {
 		nav.classList.toggle('display');
 		toggleTopLine.classList.toggle('nav__toggle__line-top--selected');
 		toggleBottomLine.classList.toggle('nav__toggle__line-bottom--selected');
 		toggleMiddleLine.classList.toggle('display');
-	});
+	};
 }
 
 function addMenuData(menuData) {
