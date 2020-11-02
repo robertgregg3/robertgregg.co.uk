@@ -208,7 +208,8 @@ nav li a {
     cursor: pointer;
     margin: 1rem 0;
     font-family: inherit;
-    width: 200px;
+    width: 100%;
+    max-width: 150px;
 }
 
 
