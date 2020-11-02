@@ -59,7 +59,7 @@ function addMenuData(menuData) {
 	menuEl.innerHTML = `
 			<div class="nav-popup-left">
 				<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
-				<span class="spring icon-linkedin icon"></span>
+				<a href="https://www.linkedin.com/in/robert-gregg-b1a66a32/"><span class="spring icon-linkedin icon"></span></a>
 			</div>
 			<div class="nav-popup-right">
 				<ul>
