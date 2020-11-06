@@ -62,7 +62,6 @@ function addTodo(el){
         todosUl.appendChild(todoItem);
 
         // create the sidebar element
-
         const sidebarEl =  document.createElement('div');
 
         sidebarEl.classList.add('sb-todo-item');
@@ -72,28 +71,33 @@ function addTodo(el){
         `;
 
         todoSidebar.appendChild(sidebarEl);
-    
+
+        // when retrieving from local storage make the check box checked if it was before    
         const todoItemCheckbox = todoItem.querySelector('input');
         if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
             todoItemCheckbox.checked = true;
         }
 
+        // make the X appear when you hover the li
         const closeTodo = todoItem.querySelector('.close-todo');
         todoItem.addEventListener('mouseover', () => {
             closeTodo.classList.remove('hidden');
         });
 
+        // remove the X when you are not hovering the item
         todoItem.addEventListener('mouseout', () => {
             closeTodo.classList.add('hidden');
         });
 
+        // delete the todo and remove from local storage
         closeTodo.addEventListener('click', () => {
             todoItem.remove();
             updateLS();
         });
 
+        // make the uinput text editable and remove the new line when enter is pressed
         const toDoInputText = todoItem.querySelector('.input-text');
-        
+
         todosUl.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || event.keyCode === 13) {
                 e.preventDefault();
@@ -103,10 +107,17 @@ function addTodo(el){
               }
         });
 
+        // show the sidebar
+        todoItem.addEventListener('click', () => {
+            showSidebar();
+        });
+
+        // run these functions
         markComplete();
         countTodos();
         toolbarButtons();
 
+        //  clear the input
         input.value ='';
     }
 }
