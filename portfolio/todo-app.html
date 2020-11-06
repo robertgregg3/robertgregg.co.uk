@@ -14,7 +14,7 @@
     <title>Todo App</title>
 </head>
 <body>
-    <div id="todos-container">
+    <div id="todos-container" class="grid-no-sidebar">
       <div id="todo-col">
         <div id="toolbar">
           <div id="count-total-todos" class="toolbar-item"></div>
@@ -33,11 +33,8 @@
         <ul class="todos-ul" id="todos-ul">
         </ul>
       </div>
-      <div id="sb-todo">
-        <div class="sb-todo-item">
-          <input type="checkbox" class="spring"/>
-          <h2 class="sb-todo-title">This is the todo title</h2>
-        </div>
+      <div id="sb-todo" class="hidden">
+        
       </div>
     </div>
     <script src="../src/utils.js"></script>

@@ -13,6 +13,7 @@ const countTotalTodos     = document.getElementById('count-total-todos');
 const countRemainingTodos = document.getElementById('count-remaining-todos');
 const countCompletedTodos = document.getElementById('count-completed-todos');
 const toolbar             = document.getElementById('toolbar');
+const todoSidebar         = document.getElementById('sb-todo');
 const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
 
 toolbar.classList.add('hidden');
@@ -42,22 +43,35 @@ function addTodo(el){
     }
 
     if(todoText) {
+        // create the todo element
         const todoItem = document.createElement('li');
-        if(el && el.completed) {
-            todoItem.classList.add('completed');
-            
-        }
+
         todoItem.classList.add('todo-item', 'draggable'); 
-        todoItem.contentEditable = true;
         todoItem.setAttribute('draggable', 'true');
+
+        if(el && el.completed) {
+            todoItem.classList.add('completed');  
+        }
+
         todoItem.innerHTML = `
-            <input type="checkbox" class="spring"/>${todoText}
+            <input type="checkbox" class="spring"/><span class="input-text" contenteditable="true">${todoText}</span>
                 <i class="fas fa-times close-todo hidden"></i>
             </li>
         `; 
         
-       
         todosUl.appendChild(todoItem);
+
+        // create the sidebar element
+
+        const sidebarEl =  document.createElement('div');
+
+        sidebarEl.classList.add('sb-todo-item');
+        sidebarEl.innerHTML = `
+                <input type="checkbox" class="spring"/>
+                <h2 class="sb-todo-title">${todoText}</h2>
+        `;
+
+        todoSidebar.appendChild(sidebarEl);
     
         const todoItemCheckbox = todoItem.querySelector('input');
         if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
@@ -78,17 +92,13 @@ function addTodo(el){
             updateLS();
         });
 
-        todoItem.addEventListener('click', () => {
-            todoItem.removeAttribute('contenteditable', 'false');
-            todoItem.setAttribute('contenteditable', 'true');
-            updateLS();
-        });
-
+        const toDoInputText = todoItem.querySelector('.input-text');
+        
         todosUl.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || event.keyCode === 13) {
                 e.preventDefault();
-                todoItem.removeAttribute('contenteditable', 'true');
-                todoItem.setAttribute('contenteditable', 'false');
+                toDoInputText.setAttribute('contenteditable', 'false');
+                toDoInputText.setAttribute('contenteditable', 'true');
                 updateLS();
               }
         });
@@ -161,7 +171,7 @@ function toolbarButtons(){
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
                 totalTodo.classList.remove('hidden');
-                completedTodo.classList.remove('margin-difference');
+                totalTodo.classList.remove('margin-difference');
         });
     });
 
@@ -232,7 +242,6 @@ function dragItems() {
             const box    = child.getBoundingClientRect();
             const offset = y - box.top - box.height / 2;
             if(offset < 0 && offset > nearest.offset) {
-                console.log(offset, nearest);
                 return { offset: offset, element: child }
             } else {
                 return nearest;
@@ -243,3 +252,7 @@ function dragItems() {
 
 dragItems();
 
+function showSidebar() {
+    todoSidebar.classList[todoSidebar.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    todosContainer.classList[todoSidebar.classList.contains('hidden') ? 'add' : 'remove']('grid-no-sidebar');
+}

@@ -197,6 +197,11 @@ input[type="checkbox"]:before {
     outline-offset: none;
 }
 
+.input-text {
+    cursor: pointer;
+    padding: 1rem 1rem 1.3rem 0;
+}
+
 .close-todo {
     position: absolute;
     right: 2rem;
@@ -223,7 +228,7 @@ input[type="checkbox"]:before {
 }
 
 .margin-difference{
-    margin-top: -0.4rem;
+    margin-bottom: -0.4rem;
 }
 
 /* ------ SIDE BAR ------ */
@@ -231,4 +236,9 @@ input[type="checkbox"]:before {
 .sb-todo-item {
     display: flex;
     align-items: center;
+}
+
+.grid-no-sidebar{
+    grid-template-columns: 100% !important;
+    justify-items: center !important;
 }
