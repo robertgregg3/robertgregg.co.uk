@@ -7,17 +7,18 @@
 body{
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #ff7700;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc0000' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23aa0000' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b10022' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23b2003d' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23ac0057' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239e0071' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23880088' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
-    background-attachment: fixed;
+    background-color: #ffffff;
+    background: url('/images/bg/sunset-mountains.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-h1{
-    color: rgb(207, 151, 151);
-    font-style: 4rem;
-    text-align: center;
-    opacity: 0.4;
+#todos-container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
 }
 
 small {
@@ -30,62 +31,168 @@ small {
     padding: 0.5rem 1rem 0rem;
 }
 
+#toolbar{
+    margin-top: 2rem;
+    background-color: #fff;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem;
+    box-shadow: 0 1px 2px rgb(0,0,0,0.4);
+}
+
+.toolbar-item{
+    padding: 0.5rem 0rem 0.5rem 0.5rem;
+    font-size: 0.9rem;
+    border-right: 1px solid #e1e9ec;
+}
+
+.toolbar-item:last-child{
+    border: none;
+}
+
+#toolbar button{
+    border:1px solid #efc871;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 0.3rem;
+}
+
+#toolbar button:focus {
+    outline:none;
+    outline-offset: 0px;
+}
+
+#toolbar button:hover{
+    background-color: #fbf5f4cf;
+}
+
 form {
     margin: auto;
     max-width: 100%;
 }
 
-input#item {
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
-    display: block;
-    width: 100%;
-    border: 5px solid #ff4f02;
+h1{
+    color: rgb(207, 151, 151);
+    font-style: 4rem;
+    text-align: center;
+    opacity: 0.4;
 }
 
-input#item::placeholder {
+#item {
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    background-color: #33333399;
+    color: #fff;
+}
+
+#item::placeholder {
     color: #b5b5b550;
 }
 
-input#item:focus {
+#item:focus {
     outline-offset: 0px;
     outline: none;
 }
 
 .todo {
-    box-shadow: 0 4px 10px rgb(0,0,0,0.3);
     width: 100%;
     max-width: 500px;
-    margin: 2rem auto;
+    margin: 1rem auto;
 }
 
-.todos{
-    background-color: #fff;
-    list-style-type: none;
-    padding: 0;
+#todos-ul {
+    list-style: none;
     margin: 0;
-    position: relative;
+    padding: 0;
 }
 
-.todos li {
+#todos-ul:focus{
+    outline: none;
+    outline-offset: 0px;
+}
+
+.todo-item {
+    width: 100%;
+    background-color: #f4f9f8;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgb(0,0,0,0.4);
+    margin-bottom: 0.4rem;
+    height: 60px;
+    transition: all 200ms ease-in-out;
+    position: relative;
     font-size: 1rem;
-    padding: 1rem 2rem;
-    border-top: 1px solid #b5b5b550;
+    cursor: move;
+}
+
+input[type="checkbox"] {
+    margin-right: 1rem;
+}
+
+input[type="checkbox"]:before {
+    border: 1px solid #33333370;
+    content: "\00a0";
+    display: inline-block;
+    font: 16px/1em sans-serif;
+    height: 16px;
+    margin: 0 .25em 0 0;
+    padding: 0;
+    vertical-align: top;
+    width: 16px;
+    background-color: #fff;
+    border-radius: 3px;
+    transition: font-size 500ms ease;
+  }
+
+  input[type="checkbox"]:checked:before {
+    background: #fff;
+    color: rgb(112, 49, 0);
+    content: "\2713";
+    text-align: center;
+    font-size: 1.5rem;
+    transition: font-size 500ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  input[type="checkbox"]:checked:after {
+    font-weight: bold;
+    animation: none;
+  }
+  
+  input[type="checkbox"]:focus::before {
+      outline: 0px;
+      outline-offset: none;
+  }
+
+  input[type="checkbox"]:focus::after {
+    outline: 0px;
+    outline-offset: none;
 }
 
 .close-todo {
     position: absolute;
-    right: 1rem;
-    font-size: 1.2rem;
-    color: #00000099;
+    right: 2rem;
+    top: 1.2rem;
     cursor: pointer;
+}
+
+.hidden{
+    height: 0px;
+    transition: height 200ms ease-in-out;
+    font-size: 0rem;
 }
 
 .completed {
     text-decoration: line-through;
-    color: #33333366;
-}
-
-.hidden{
-    display: none;
+    color: #00000070;
 }

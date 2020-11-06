@@ -6,7 +6,6 @@
     <meta name="author" content="Robert Gregg">
     <link rel="stylesheet" href="../css/reusable-components.css">
     <link rel="stylesheet" href="../css/main-nav.css">
-    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/portfolio/todo-app.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
@@ -15,22 +14,24 @@
     <title>Todo App</title>
 </head>
 <body>
-    <small>Type and press enter to add note. Click note to complete it.</small>
-    <div class="todo">
-        <div class="notes-info-container">
-        </div>
-      
-        <form id="form">
-          <input 
-            id="item" 
-            type="text" 
-            placeholder="New Todo"
-            autocomplete="off">
-        </form>
-        <ul class="todos" id="todos">
-        </ul>
+    <div id="todos-container">
+      <div id="toolbar">
+        <div id="count-total-todos" class="toolbar-item"></div>
+        <div id="count-remaining-todos" class="toolbar-item"></div>
+        <div id="count-completed-todos" class="toolbar-item"></div>
       </div>
-
+      <div class="todo">
+          <form id="form">
+            <input 
+              id="item" 
+              type="text" 
+              placeholder="New Todo"
+              autocomplete="off">
+          </form>
+      </div>
+      <ul class="todos-ul" id="todos-ul">
+      </ul>
+    </div>
     <script src="../src/utils.js"></script>
     <script src="../src/portfolio/todo-app.js"></script>
 </body>

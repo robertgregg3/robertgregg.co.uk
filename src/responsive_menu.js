@@ -41,7 +41,10 @@ function toggleNav() {
 	const toggleBottomLine = document.querySelector('nav .nav__toggle__line-bottom');
 	
 	navToggle.addEventListener('click', openMenu);
-	getInTouchBtn.addEventListener('click', openMenu);
+
+	if(getInTouchBtn){ // this button is just on the home page
+		getInTouchBtn.addEventListener('click', openMenu);
+	}
 
 	function openMenu() {
 		nav.classList.toggle('display');
