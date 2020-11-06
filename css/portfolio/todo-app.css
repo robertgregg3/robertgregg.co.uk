@@ -196,3 +196,10 @@ input[type="checkbox"]:before {
     text-decoration: line-through;
     color: #00000070;
 }
+
+.draggable.dragging{
+    border: 2px solid rgb(255, 153, 0);
+    transform: rotate(0.5deg);
+    box-shadow: 0 10px 14px rgb(0, 0, 0, 0.5);
+    transition: transform 100ms ease;
+}
