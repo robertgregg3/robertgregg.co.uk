@@ -16,9 +16,23 @@ body{
 
 #todos-container {
     width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: flex-end;
+}
+
+#todo-col {
+    width: 100%;
+    max-width: 450px;
+}
+
+#sb-todo {
+    width: 100%;
     max-width: 500px;
-    margin: auto;
-    position: relative;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 0 0 14px rgb(0, 0, 0, 0.3);
+    padding: 1.5rem;
 }
 
 small {
@@ -210,4 +224,11 @@ input[type="checkbox"]:before {
 
 .margin-difference{
     margin-top: -0.4rem;
+}
+
+/* ------ SIDE BAR ------ */
+
+.sb-todo-item {
+    display: flex;
+    align-items: center;
 }
