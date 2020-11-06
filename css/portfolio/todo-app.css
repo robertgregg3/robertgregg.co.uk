@@ -63,6 +63,10 @@ small {
     margin-top: 0.3rem;
 }
 
+#delete-completed{
+    border: 1px solid #fd8787 !important;
+}
+
 #toolbar button:focus {
     outline:none;
     outline-offset: 0px;
@@ -202,4 +206,8 @@ input[type="checkbox"]:before {
     transform: rotate(0.5deg);
     box-shadow: 0 10px 14px rgb(0, 0, 0, 0.5);
     transition: transform 100ms ease;
+}
+
+.margin-difference{
+    margin-top: -0.4rem;
 }

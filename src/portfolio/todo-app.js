@@ -28,7 +28,7 @@ form.addEventListener('submit', (e) => {
     addTodo();
     updateLS();
     countTodos();
-    showTodos();
+    toolbarButtons();
 });
 
 //  add the todo, and if a todo already exists then us the value from local storage as the input.value
@@ -56,8 +56,9 @@ function addTodo(el){
             </li>
         `; 
         
+       
         todosUl.appendChild(todoItem);
-
+    
         const todoItemCheckbox = todoItem.querySelector('input');
         if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
             todoItemCheckbox.checked = true;
@@ -94,7 +95,7 @@ function addTodo(el){
 
         markComplete();
         countTodos();
-        showTodos();
+        toolbarButtons();
 
         input.value ='';
     }
@@ -106,7 +107,7 @@ function markComplete() {
     todosElCheckbox.forEach(checkbox => {
         checkbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');
-            showTodos();
+            toolbarButtons();
             countTodos();
             updateLS();
         });
@@ -127,7 +128,7 @@ function updateLS() {
     
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
-    showTodos();
+    toolbarButtons();
 }
 
 function countTodos() {
@@ -144,18 +145,23 @@ function countTodos() {
 
     countTotalTodos.innerHTML     = `All items: ${totalTodos.length} <br /><button id="show-all">Show</button>`;
     countRemainingTodos.innerHTML = `remaining: ${sum}<br /><button id="show-remaining">Show</button>`;
-    countCompletedTodos.innerHTML = `completed: ${totalTodos.length - sum}<br /><button id="show-completed">Show</button>`;
+    countCompletedTodos.innerHTML = `
+        completed: ${totalTodos.length - sum}<br />
+            <button id="show-completed">Show</button>
+            <button id="delete-completed">Delete</button>`;
 }
 
-function showTodos(){
-    const totalTodos       = document.querySelectorAll('.todo-item');// all of the todos on the screen
-    const showAllBtn       = document.querySelector('#show-all');
-    const showRemainingBtn = document.querySelector('#show-remaining');
-    const showCompletedBtn = document.querySelector('#show-completed');
+function toolbarButtons(){
+    const totalTodos         = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    const showAllBtn         = document.querySelector('#show-all');
+    const showRemainingBtn   = document.querySelector('#show-remaining');
+    const showCompletedBtn   = document.querySelector('#show-completed');
+    const deleteCompletedBtn = document.querySelector('#delete-completed');
 
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
                 totalTodo.classList.remove('hidden');
+                completedTodo.classList.remove('margin-difference');
         });
     });
 
@@ -177,49 +183,63 @@ function showTodos(){
             }
             if(completedTodo.classList.contains('completed')){
                 completedTodo.classList.remove('hidden');
+                completedTodo.classList.add('margin-difference');
+            }
+        });
+    });
+
+    deleteCompletedBtn.addEventListener('click', () => {
+        totalTodos.forEach(todoToDelete => {
+            if(todoToDelete.classList.contains('completed')){
+                todoToDelete.remove();
+                updateLS();
             }
         });
     });
 }
 
-const draggables = document.querySelectorAll('.draggable');
-const container  = document.getElementById('todos-ul');
+function dragItems() {
+    const draggables = document.querySelectorAll('.draggable');
+    const container  = document.getElementById('todos-ul');
 
-draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-        draggable.classList.add('dragging');
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging');
+        });
+
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging');
+        });
     });
 
-    draggable.addEventListener('dragend', () => {
-        draggable.classList.remove('dragging');
-    });
-});
-
-container.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows teh Y position of the mouse
-    const draggable = document.querySelector('.dragging');
-    if(afterElement == null ){
-        container.appendChild(draggable);
-        updateLS();
-    } else {
-        container.insertBefore(draggable, afterElement);
-        updateLS();
-    }
-});
-
-function placeElementWhereDragging(container, y) {
-    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
-    
-    return draggableElements.reduce((nearest, child) => {
-        const box    = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if(offset < 0 && offset > nearest.offset) {
-            console.log(offset, nearest);
-            return { offset: offset, element: child }
+    container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows teh Y position of the mouse
+        const draggable = document.querySelector('.dragging');
+        if(afterElement == null ){
+            container.appendChild(draggable);
+            updateLS();
         } else {
-            return nearest;
+            container.insertBefore(draggable, afterElement);
+            updateLS();
         }
-    }, { offset: Number.NEGATIVE_INFINITY }).element;
+    });
+
+    function placeElementWhereDragging(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+        
+        return draggableElements.reduce((nearest, child) => {
+            const box    = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > nearest.offset) {
+                console.log(offset, nearest);
+                return { offset: offset, element: child }
+            } else {
+                return nearest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
 }
+
+dragItems();
 

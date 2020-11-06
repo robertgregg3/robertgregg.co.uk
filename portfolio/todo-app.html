@@ -15,22 +15,31 @@
 </head>
 <body>
     <div id="todos-container">
-      <div id="toolbar">
-        <div id="count-total-todos" class="toolbar-item"></div>
-        <div id="count-remaining-todos" class="toolbar-item"></div>
-        <div id="count-completed-todos" class="toolbar-item"></div>
+      <div id="todo-col">
+        <div id="toolbar">
+          <div id="count-total-todos" class="toolbar-item"></div>
+          <div id="count-remaining-todos" class="toolbar-item"></div>
+          <div id="count-completed-todos" class="toolbar-item"></div>
+        </div>
+        <div class="todo">
+            <form id="form">
+              <input 
+                id="item" 
+                type="text" 
+                placeholder="New Todo"
+                autocomplete="off">
+            </form>
+        </div>
+        <ul class="todos-ul" id="todos-ul">
+        </ul>
       </div>
-      <div class="todo">
-          <form id="form">
-            <input 
-              id="item" 
-              type="text" 
-              placeholder="New Todo"
-              autocomplete="off">
-          </form>
+      <div #="sb-todo">
+        <div class="sb-todo-item">
+          <input type="checkbox" class="spring"/>
+          <h2 class="sb-todo-title">This is the todo title</h2>
+        </div>
       </div>
-      <ul class="todos-ul" id="todos-ul">
-      </ul>
+    </div>
     <script src="../src/utils.js"></script>
     <script src="../src/portfolio/todo-app.js"></script>
 </body>
