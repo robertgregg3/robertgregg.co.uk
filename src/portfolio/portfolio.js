@@ -126,7 +126,7 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript',
-        details: 'Using the canvas element I created a simple drawing app allwing you to change the size of the pen and the color.  Currently this is not for mobile/touch screen.',
+        details: 'Using the canvas element I created a simple drawing app allowing you to change the size of the pen and the color.  Currently this is not for mobile/touch screen.',
         url: '/portfolio/drawing-app.html'
     },    
     {
@@ -257,48 +257,43 @@ function addPortfolioCategory() {
 function addPortfolioItem() {
     for (let key in portfolioItemData)
     {
-        const currentPfItemData = portfolioItemData[currentPfItem];  // index of the portfolioItemData
-        const pfItem            = document.createElement('div');
-        
-        pfItem.classList.add('pf-item');
-        
-        pfItem.classList.add('all',
-        currentPfItemData.skill1, currentPfItemData.skill2,currentPfItemData.skill3, currentPfItemData.skill4,currentPfItemData.skill5, currentPfItemData.skill6,currentPfItemData.skill7, currentPfItemData.skill8,currentPfItemData.skill9, currentPfItemData.skill10,currentPfItemData.skill11, currentPfItemData.skill12,currentPfItemData.skill13, currentPfItemData.skill4,currentPfItemData.skill15, currentPfItemData.skill16);
+        // how to know which portfolio item ha sbeen clicked
+        const currentPfItemData = portfolioItemData[currentPfItem];  // index of the portfolioItemData 
+        const pfItem            = document.createElement('div'); // create a div
                 
-        let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase();
+        let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase();  // remove spaces etc to make good URLS
         
+        pfItem.classList.add('pf-item', 'all');  // add the css style class pf-item and the "all" category to every item.
+        
+        let tagSkillsEl = [];  // empty array to put all of the tags in when we iterate through the data
+        
+        for (let i = 1; i < portfolioCategoryData.length; i++) {  // if I is less than the number of skills in the category data
+            if(currentPfItemData['skill' + i]) {  // if there is no element with the key of skill and the value of I then break. Otherwise:
+                tagSkillsEl.push(`${currentPfItemData['skill' + i]}`);  //  push that key to the empty tag array above
+                pfItem.classList.add(`${currentPfItemData['skill' + i]}`);    // add that skill as a class to the portfolio item
+            } else{ 
+                break;
+            }
+        }
+        
+        // display the portfolio item with images and tags
         pfItem.innerHTML = `   
-        <div class="pf-header">
+            <div class="pf-header">
                 <i class="circles"></i>
                 <span class="title">${currentPfItemData.title}</span>
             </div>
             <div class="pf-main">
                 <img src="/images/${url+1}.jpg" alt="${currentPfItemData.title}" class="pf-item-hover-img" />
-            <div class="pf-tags">
-                <ul>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill2}">${currentPfItemData.skill2}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill3}">${currentPfItemData.skill3}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill4}">${currentPfItemData.skill4}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill5}">${currentPfItemData.skill5}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill6}">${currentPfItemData.skill6}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill7}">${currentPfItemData.skill7}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill8}">${currentPfItemData.skill8}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill9}">${currentPfItemData.skill9}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill10}">${currentPfItemData.skill0}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill11}">${currentPfItemData.skill11}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill12}">${currentPfItemData.skill12}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill13}">${currentPfItemData.skill13}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill14}">${currentPfItemData.skill14}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill15}">${currentPfItemData.skill15}</li>
-                    <li class="pf-tag spring icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
-                </ul>
-            </div>
-            <img src="/images/${url+2}.jpg" alt="" class="pf-item-img" />
+                <div class="pf-tags">
+                    <ul>
+                        ${tagSkillsEl.map((tag) => `<li class="pf-tag spring icon-${tag}">${tag}</li>`).join('')}
+                    </ul>
+                </div>
+                <img src="/images/${url+2}.jpg" alt="" class="pf-item-img" />
             </div>
         </div>
         `;
-
+   
         // hover to show the tags and additional image
         const pfItemHoverImg = pfItem.querySelector('.pf-item-hover-img');
         const pfItemTags     = pfItem.querySelector('.pf-tags');
@@ -322,7 +317,6 @@ function addPortfolioItem() {
     }
 }
 
-
 function displayPortfolioDetails(currentPfItemData) {
     // clean the container beofre showing the pop up otherwise you get duplicates
     pfPPopupContainer.innerHTML = '';
@@ -333,30 +327,24 @@ function displayPortfolioDetails(currentPfItemData) {
     pfPopupEl.classList.add('popup-info');
 
     let url = currentPfItemData.title.replace(/\s+/g, '').toLowerCase(); // remove spaces etc from title to create  
+
+    let tagSkillsPopupEl = [];
+
+    for (let i = 1; i <= portfolioCategoryData.length; i++)  // as above
+        if(currentPfItemData['skill' + i]){
+            tagSkillsPopupEl.push(currentPfItemData['skill' + i]);
+        }
     
     pfPopupEl.innerHTML = `
-            <div id="close"><i class="fas fa-times"></i></div>
+            <div id="close">
+                <i class="fas fa-times"></i>
+            </div>
             <div class="pf-info-header">
-            <h3 class="pf-info-title">${currentPfItemData.title}</h3>
+                <h3 class="pf-info-title">${currentPfItemData.title}</h3>
             </div>
             <img src="/images/${url+2}.jpg" alt="${currentPfItemData.title}">
             <ul class="pf-info-tags">
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill1}">${currentPfItemData.skill1}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill2}">${currentPfItemData.skill2}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill3}">${currentPfItemData.skill3}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill4}">${currentPfItemData.skill4}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill5}">${currentPfItemData.skill5}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill6}">${currentPfItemData.skill6}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill7}">${currentPfItemData.skill7}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill8}">${currentPfItemData.skill8}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill9}">${currentPfItemData.skill9}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill10}">${currentPfItemData.skill0}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill11}">${currentPfItemData.skill11}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill12}">${currentPfItemData.skill12}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill13}">${currentPfItemData.skill13}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill14}">${currentPfItemData.skill14}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill15}">${currentPfItemData.skill15}</li>
-                <li class="pf-tag spring icon icon-${currentPfItemData.skill16}">${currentPfItemData.skill16}</li>
+                ${tagSkillsPopupEl.map((tag)=>`<li class="pf-tag spring icon icon-${tag}">${tag}</li>`).join('')}
             </ul>
             <p class="details">${currentPfItemData.details}</p>
             <a href="${currentPfItemData.url}"><button id="pf-info-btn">Go to project</button></a>
@@ -394,5 +382,6 @@ function removeClickedClass(){
     });
 }
 
+// on page load display the categories and the portfolio items
 addPortfolioCategory();
 addPortfolioItem();
