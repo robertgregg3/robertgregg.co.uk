@@ -63,11 +63,12 @@ function addTodo(el){
 
         // create the sidebar element
         const sidebarEl =  document.createElement('div');
+        let sideBarText = todoText;
 
         sidebarEl.classList.add('sb-todo-item');
         sidebarEl.innerHTML = `
                 <input type="checkbox" class="spring"/>
-                <h2 class="sb-todo-title">${todoText}</h2>
+                <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
         `;
 
         todoSidebar.appendChild(sidebarEl);
@@ -103,6 +104,8 @@ function addTodo(el){
                 e.preventDefault();
                 toDoInputText.setAttribute('contenteditable', 'false');
                 toDoInputText.setAttribute('contenteditable', 'true');
+                sideBarText = todoText.value;
+                todoText = sideBarText.value;
                 updateLS();
               }
         });
@@ -116,7 +119,7 @@ function addTodo(el){
         markComplete();
         countTodos();
         toolbarButtons();
-
+        updateLS();
         //  clear the input
         input.value ='';
     }
@@ -267,3 +270,26 @@ function showSidebar() {
     todoSidebar.classList[todoSidebar.classList.contains('hidden') ? 'remove' : 'add']('hidden');
     todosContainer.classList[todoSidebar.classList.contains('hidden') ? 'add' : 'remove']('grid-no-sidebar');
 }
+
+
+const toDoInputText = document.querySelector('.input-text');
+
+  // when you edit the todo the side bar text changes too
+  const sidebarTitle = document.querySelector('.sb-todo-title');
+  const observer     = new MutationObserver((mutationRecords) => {
+      sidebarTitle.textContent = mutationRecords[0].target.data
+      updateLS();
+  })
+    observer.observe(toDoInputText, {
+      characterData: true,
+      subtree: true,
+    });
+
+    const observer2     = new MutationObserver((mutationRecords) => {
+      toDoInputText.textContent = mutationRecords[0].target.data
+      updateLS();
+  })
+    observer2.observe(sidebarTitle, {
+      characterData: true,
+      subtree: true,
+    });
