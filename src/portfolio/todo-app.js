@@ -93,10 +93,12 @@ function addTodo(el){
         // delete the todo and remove from local storage
         closeTodo.addEventListener('click', () => {
             todoItem.remove();
+            sidebarEl.remove();
+            todoSidebar.classList[todoSidebar.classList.contains('hidden') ? 'remove' : 'add']('hidden');
             updateLS();
         });
 
-        // make the uinput text editable and remove the new line when enter is pressed
+        // remove the new line when enter is pressed on the main todo element
         const toDoInputText = todoItem.querySelector('.input-text');
 
         todosUl.addEventListener('keypress', (e) => {
@@ -108,6 +110,7 @@ function addTodo(el){
               }
         });
 
+        // remove the new line when enter is pressed on the sidebar todo
         const sideBarTextEl = sidebarEl.querySelector('.sb-todo-title')
 
         sidebarEl.addEventListener('keypress', (e) => {
@@ -180,8 +183,9 @@ function countTodos() {
     countRemainingTodos.innerHTML = `remaining: ${sum}<br /><button id="show-remaining">Show</button>`;
     countCompletedTodos.innerHTML = `
         completed: ${totalTodos.length - sum}<br />
-            <button id="show-completed">Show</button>
-            <button id="delete-completed">Delete</button>`;
+        <button id="show-completed">Show</button>
+        <button id="delete-completed">Delete</button>
+    `;
 }
 
 function toolbarButtons(){
