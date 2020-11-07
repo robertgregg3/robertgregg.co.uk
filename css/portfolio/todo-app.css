@@ -29,7 +29,7 @@ body{
     left: 2rem;
 }
 
-#sb-todo {
+.sb-todo {
     width: 100%;
     max-width: 500px;
     height: 100vh;
@@ -221,6 +221,8 @@ input[type="checkbox"]:before {
     width: 0px !important;
     opacity: 0 !important;
     pointer-events: none;
+    margin: 0;
+    padding: 0;
 }
 
 .completed {
@@ -235,18 +237,28 @@ input[type="checkbox"]:before {
     transition: transform 100ms ease;
 }
 
-.margin-difference{
-    margin-bottom: -0.4rem;
-}
-
 /* ------ SIDE BAR ------ */
 
 .sb-todo-item {
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #cccccc80;
+    padding: 1rem;
 }
 
 .grid-no-sidebar{
     grid-template-columns: 100% !important;
     justify-items: center !important;
+}
+
+input[type="date"] {
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border: 1px solid #ff9900;
+    border-radius: 4px;
+}
+
+.date-text {
+    margin-left: 1rem;
+    font-size: 1rem;
 }
