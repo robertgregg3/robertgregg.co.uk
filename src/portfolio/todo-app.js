@@ -104,8 +104,17 @@ function addTodo(el){
                 e.preventDefault();
                 toDoInputText.setAttribute('contenteditable', 'false');
                 toDoInputText.setAttribute('contenteditable', 'true');
-                sideBarText = todoText.value;
-                todoText = sideBarText.value;
+                updateLS();
+              }
+        });
+
+        const sideBarTextEl = sidebarEl.querySelector('.sb-todo-title')
+
+        sidebarEl.addEventListener('keypress', (e) => {
+            if (e.code === 'Enter' || event.keyCode === 13) {
+                e.preventDefault();
+                sideBarTextEl.setAttribute('contenteditable', 'false');
+                sideBarTextEl.setAttribute('contenteditable', 'true');
                 updateLS();
               }
         });
@@ -113,7 +122,7 @@ function addTodo(el){
         // show the sidebar
         todoItem.addEventListener('click', () => {
             showSidebar();
-        });
+        });      
 
         // run these functions
         markComplete();
@@ -272,24 +281,39 @@ function showSidebar() {
 }
 
 
-const toDoInputText = document.querySelector('.input-text');
 
-  // when you edit the todo the side bar text changes too
-  const sidebarTitle = document.querySelector('.sb-todo-title');
-  const observer     = new MutationObserver((mutationRecords) => {
-      sidebarTitle.textContent = mutationRecords[0].target.data
-      updateLS();
-  })
-    observer.observe(toDoInputText, {
-      characterData: true,
-      subtree: true,
-    });
+// when you edit the todo the side bar text changes too
+const toDoInputTexts        = document.querySelectorAll('.input-text');
+const sidebarTodoInputTexts = document.querySelectorAll('.sb-todo-title')       
 
-    const observer2     = new MutationObserver((mutationRecords) => {
-      toDoInputText.textContent = mutationRecords[0].target.data
-      updateLS();
-  })
-    observer2.observe(sidebarTitle, {
-      characterData: true,
-      subtree: true,
+toDoInputTexts.forEach(toDoInputText => {
+    sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
+        if(toDoInputText.textContent === sidebarTodoInputText.textContent){
+            const observer     = new MutationObserver((mutationRecords) => {
+                sidebarTodoInputText.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+
+            observer.observe(toDoInputText, {
+                characterData: true,
+                subtree: true,
+            });
+        }
     });
+});
+
+sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
+    toDoInputTexts.forEach(toDoInputText => {
+        if(sidebarTodoInputText.textContent === toDoInputText.textContent){
+            const observer     = new MutationObserver((mutationRecords) => {
+                toDoInputText.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+
+            observer.observe(sidebarTodoInputText, {
+                characterData: true,
+                subtree: true,
+            });
+        }
+    });
+});
