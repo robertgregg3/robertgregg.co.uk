@@ -74,12 +74,24 @@ function addTodo(el){
         sidebarEl.classList.add('sb-todo', 'hidden');
         
         sidebarEl.innerHTML = `
-        <div class="sb-todo-item">
-        <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
-        </div>
-        <div class="sb-todo-item sb-todo-date">
-        <input type="date" class="date" name="date" /><span class="date-text2"></span>
-        </div>
+            <div class="sb-todo-item">
+                <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
+            </div>
+            <div class="sb-todo-item sb-todo-date">
+                <input type="date" class="date" name="date" /><span class="date-text2"></span>
+            </div>
+            <div class="sb-todo-item sb-sub-tasks">
+                <form id="sub-task-form">
+                    <input 
+                    id="sub-task-item" 
+                    type="text" 
+                    placeholder="New sub task"
+                    autocomplete="off"
+                    maxlength="50"
+                    >
+                </form>
+            </div>
+            <ul class="sub-tasks-ul"></ul>
         `;
         
         todosContainer.appendChild(sidebarEl);
@@ -104,6 +116,29 @@ function addTodo(el){
             dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
             updateLS();
         });
+
+        // add sub-tasks to the sidebar
+        const subtaskForm  = document.getElementById('sub-task-form');
+
+        subtaskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            addSubtask();
+            updateLS();
+        });
+
+        function addSubtask() {
+            // const subTaskText = subtaskInput.value;
+
+            // const subTaskEl = document.createElement('li');
+
+            // subTaskEl.innerHTML = `
+            //     <input type="checkbox" class="spring"/><span class="input-text" contenteditable="true">${subTaskText}</span>
+            //     <i class="fas fa-times close-todo hidden"></i>
+            //     `;
+
+            // subtaskUl.appendChild(subTaskEl);
+            alert('hellow subtasks!')
+        }
 
         // make the checkbox checked when loaded from local storage
         const todoItemCheckbox = todoItem.querySelector('input');
@@ -153,9 +188,14 @@ function addTodo(el){
               }
         });
 
+        if(el && el.completed) {
+            sideBarTextEl.classList.add('completed');
+        }  
+
         todoItemCheckbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
-            sideBarTextEl.classList.add('completed');  
+            sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');  
+            updateLS();
             toolbarButtons();
             countTodos();
             updateLS();
@@ -188,7 +228,7 @@ function updateLS() {
 
         todos.push({
             text: todoTexts.innerText,
-            completed: todoTexts.classList.contains('completed'),
+            completed: todo.classList.contains('completed'),
             duedate: todoDate.innerText
         });
     });
