@@ -181,7 +181,6 @@ function showMealInfo(mealData) {
         }
     }
 
-
     mealEl.innerHTML = `
         <h1>${mealData.strMeal}</h1>
         <img
