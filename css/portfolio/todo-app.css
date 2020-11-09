@@ -256,9 +256,28 @@ input[type="date"] {
     margin: 1rem 0;
     border: 1px solid #ff9900;
     border-radius: 4px;
+    color: transparent;
+    width: 40px;
+    font-size: 1.5rem;
+}
+
+input[type=date]::-webkit-clear-button,
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-calendar-picker-indicator {
+    display: block;
+    position: absolute;
+    left: 1.35rem;
 }
 
 .date-text {
+    position: absolute;
+    right: 3rem;
+    color: #de9a01;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.date-text2 {
     margin-left: 1rem;
     font-size: 1rem;
 }

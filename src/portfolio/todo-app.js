@@ -5,6 +5,8 @@
 
 */
 
+// TODO: add a favorite star icon and add a view favorites button
+
 const form                = document.getElementById('form');
 const input               = document.getElementById('item');
 const todosContainer      = document.getElementById('todos-container');
@@ -16,16 +18,19 @@ const toolbar             = document.getElementById('toolbar');
 const todoSidebar         = document.getElementById('sb-todo');
 const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
 
+// when there are no todos the toolbar is hidden
 toolbar.classList.add('hidden');
 
+// if there are todos in LS then add todos and the text input is el.
 if(todosFromLS) {
     todosFromLS.forEach(el => {
         addTodo(el);
     });
 } 
 
+// when you add a todo, perform these actions
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     addTodo();
     updateLS();
     countTodos();
@@ -34,60 +39,73 @@ form.addEventListener('submit', (e) => {
 
 //  add the todo, and if a todo already exists then us the value from local storage as the input.value
 function addTodo(el){
-    toolbar.classList.remove('hidden');
+    toolbar.classList.remove('hidden'); // make the tool bar visible
 
-    let todoText = input.value;
+    let todoText = input.value; // assign the todo text to the variable todoText
 
-    if(el){
-        todoText = el.text;
+    if(el){  // if there is a todo from LS then the variable todoText will now = el.text.
+        todoText = el.text; // the .text is from the object that comes from local Storage
     }
 
-    if(todoText) {
-        // create the todo element
-        const todoItem = document.createElement('li');
+    if(todoText) {  // if any kind of todoText exists either from LS or that has just been created...
+        const todoItem = document.createElement('li');  // create the todo element
 
         todoItem.classList.add('todo-item', 'draggable'); 
         todoItem.setAttribute('draggable', 'true');
-
-        if(el && el.completed) {
-            todoItem.classList.add('completed');  
+        
+        if(el && el.completed) {  // if there is a todo from LS and it has the completed key value pair
+            todoItem.classList.add('completed');  // then add the completed class 
         }
-
-        todoItem.innerHTML = `
+        
+        // add the todo to the li
+        todoItem.innerHTML = ` 
             <input type="checkbox" class="spring"/><span class="input-text" contenteditable="true">${todoText}</span>
                 <i class="fas fa-times close-todo hidden"></i>
-            </li>
+            </li><span class="date-text"></span>
         `; 
         
+        // append the li to the ul
         todosUl.appendChild(todoItem);
 
         // create the sidebar element
         let sideBarText = todoText;
         
         const sidebarEl =  document.createElement('div');
-        sidebarEl.classList.add('sb-todo', 'hidden')
+        sidebarEl.classList.add('sb-todo', 'hidden');
         
         sidebarEl.innerHTML = `
         <div class="sb-todo-item">
         <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
         </div>
         <div class="sb-todo-item sb-todo-date">
-        <input type="date" placeholder="Set a due date?"/><span class="date-text"></span>
+        <input type="date" class="date" name="date" /><span class="date-text2"></span>
         </div>
         `;
         
         todosContainer.appendChild(sidebarEl);
-    
-        // const dueDate     = document.querySelector('.sb-todo-date input');
-        // const dueDateText = document.querySelector('.sb-todo-date .date-text');
 
-        // if(dueDate){
-        //     dueDateText.innerText = dueDate.value;
-        // } else {
-        //     dueDateText.innerText = 'Set a due date?';
-        // }
+        // add a due date to sidebar and main todo
+        let dueDate   = sidebarEl.querySelector('.sb-todo-item input');
+        let dateText  = todoItem.querySelector('.date-text');
+        let dateText2 = sidebarEl.querySelector('.date-text2');
+        let months    = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        // when retrieving from local storage make the check box checked if it was before    
+        dateText2.innerText = 'Set a due date?';
+
+        if(el && el.duedate) {
+            dateText.innerText  = el.duedate;
+            dateText2.innerText = el.duedate;
+        }
+        
+        dueDate.addEventListener('change', () => {
+            let inputDate = dueDate.value;
+            let inputtedDate = new Date(inputDate);
+            dateText.innerText = 'Due Date: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            updateLS();
+        });
+
+        // make the checkbox checked when loaded from local storage
         const todoItemCheckbox = todoItem.querySelector('input');
         if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
             todoItemCheckbox.checked = true;
@@ -160,14 +178,18 @@ function addTodo(el){
 }
 
 function updateLS() {
-    const todosEl = document.querySelectorAll('.todo-item');// all of the todos on the screen
-        
+    const todosEl   = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    
     const todos = []; // create the array to push all of the todos into when I save to local storage
-
+    
     todosEl.forEach(todo => {
+        const todoTexts = todo.querySelector('.input-text');// the todo input text
+        const todoDate  = todo.querySelector('.date-text'); // the todo date text
+
         todos.push({
-            text: todo.innerText,
-            completed: todo.classList.contains('completed')
+            text: todoTexts.innerText,
+            completed: todoTexts.classList.contains('completed'),
+            duedate: todoDate.innerText
         });
     });
     
