@@ -6,6 +6,8 @@
 */
 
 // TODO: add a favorite star icon and add a view favorites button
+// TODO: refactor the keypress enter code
+// TODO: add hover styles to the sidebar
 
 const form                = document.getElementById('form');
 const input               = document.getElementById('item');
@@ -74,24 +76,17 @@ function addTodo(el){
         sidebarEl.classList.add('sb-todo', 'hidden');
         
         sidebarEl.innerHTML = `
-            <div class="sb-todo-item">
-                <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
+            <div class="sb-todo-item" draggable="false">
+                <h2 class="sb-todo-title" contenteditable="true" draggable="false">${sideBarText}</h2>
             </div>
-            <div class="sb-todo-item sb-todo-date">
-                <input type="date" class="date" name="date" /><span class="date-text2"></span>
+            <div class="sb-todo-item sb-todo-date" draggable="false">
+                <input type="date" class="date" name="date" draggable="false" /><span class="date-text2" draggable="false"></span>
             </div>
-            <div class="sb-todo-item sb-sub-tasks">
-                <form id="sub-task-form">
-                    <input 
-                    id="sub-task-item" 
-                    type="text" 
-                    placeholder="New sub task"
-                    autocomplete="off"
-                    maxlength="50"
-                    >
-                </form>
-            </div>
-            <ul class="sub-tasks-ul"></ul>
+            <div class="sb-todo-item sub-task-items" draggable="false">
+               <i class="fas fa-plus" draggable="false"></i><span class="sub-task-item" contenteditable="true" data-text="Add a subtask" draggable="false"></span>
+               </div>
+               <ul class="sub-tasks-items-ul" draggable="false">
+               <ul>
         `;
         
         todosContainer.appendChild(sidebarEl);
@@ -103,42 +98,22 @@ function addTodo(el){
         let months    = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         dateText2.innerText = 'Set a due date?';
+        dateText2.style.color = '#aaaaaa';
 
         if(el && el.duedate) {
             dateText.innerText  = el.duedate;
             dateText2.innerText = el.duedate;
+            dateText2.style.color = '#333333';
         }
         
         dueDate.addEventListener('change', () => {
             let inputDate = dueDate.value;
             let inputtedDate = new Date(inputDate);
-            dateText.innerText = 'Due Date: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
             dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText2.style.color = '#333333';
             updateLS();
         });
-
-        // add sub-tasks to the sidebar
-        const subtaskForm  = document.getElementById('sub-task-form');
-
-        subtaskForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            addSubtask();
-            updateLS();
-        });
-
-        function addSubtask() {
-            // const subTaskText = subtaskInput.value;
-
-            // const subTaskEl = document.createElement('li');
-
-            // subTaskEl.innerHTML = `
-            //     <input type="checkbox" class="spring"/><span class="input-text" contenteditable="true">${subTaskText}</span>
-            //     <i class="fas fa-times close-todo hidden"></i>
-            //     `;
-
-            // subtaskUl.appendChild(subTaskEl);
-            alert('hellow subtasks!')
-        }
 
         // make the checkbox checked when loaded from local storage
         const todoItemCheckbox = todoItem.querySelector('input');
@@ -188,9 +163,29 @@ function addTodo(el){
               }
         });
 
+        const sideBarSubtaskEl = sidebarEl.querySelector('.sub-task-item')
+
+        sideBarSubtaskEl.addEventListener('keypress', (e) => {
+            if (e.code === 'Enter' || event.keyCode === 13) {
+                e.preventDefault();
+                sideBarSubtaskEl.setAttribute('contenteditable', 'false');
+                sideBarSubtaskEl.setAttribute('contenteditable', 'true');
+                addNewSubtask()
+                updateLS();
+              }
+        });
+
         if(el && el.completed) {
             sideBarTextEl.classList.add('completed');
         }  
+
+        // add sub-tasks to the sidebar
+        if(el && el.subtask1){
+            sideBarSubtaskEl.innerText = el.subtask1;
+            updateLS();
+        } else {
+            sideBarSubtaskEl.innerText = '';
+        }
 
         todoItemCheckbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
@@ -200,6 +195,18 @@ function addTodo(el){
             countTodos();
             updateLS();
         });
+
+        // function to add new Subtask
+        function addNewSubtask() {
+            const subtasksUl = sidebarEl.querySelector('.sub-tasks-items-ul');
+            const subtaskEl  = document.createElement('li');
+
+            subtaskEl.classList.add('.sub-task-item-li');
+            subtaskEl.setAttribute('draggable', 'false');
+            subtaskEl.innerHTML = sideBarSubtaskEl.innerText;
+            subtasksUl.appendChild(subtaskEl);
+            sideBarSubtaskEl.innerText = '';
+        }
 
         // show the sidebar
         todoItem.addEventListener('click', () => {
@@ -232,6 +239,10 @@ function updateLS() {
             duedate: todoDate.innerText
         });
     });
+
+    // OPTION 1 I could log the subtasks within the todo Item just like the date but make them invisible
+    // OPTION 2 Each todoItem could have an id of the date created and the subtasks could have the same attributes
+
     
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
