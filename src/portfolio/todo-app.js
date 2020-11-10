@@ -179,14 +179,6 @@ function addTodo(el){
             sideBarTextEl.classList.add('completed');
         }  
 
-        // add sub-tasks to the sidebar
-        if(el && el.subtask1){
-            sideBarSubtaskEl.innerText = el.subtask1;
-            updateLS();
-        } else {
-            sideBarSubtaskEl.innerText = '';
-        }
-
         todoItemCheckbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
             sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');  
@@ -197,15 +189,45 @@ function addTodo(el){
         });
 
         // function to add new Subtask
-        function addNewSubtask() {
+        
+        if(el && el.subtasks){
+            for (let i = 1; i <= el.subtasks.length; i++) {
+                addNewSubtask();
+            }                
+        }
+
+        // if(el && el.subtasks){
+        //     el.subtasks.forEach(subtask => {
+        //         for (let key in el.subtasks){
+        //             subtaskEl.innerText = subtask[key];
+        //         }
+        //     });
+        // } else {
+        //     subtaskEl.innerText = sideBarSubtaskEl.innerText;
+        // }
+
+
+        
+        function addNewSubtask() {      
             const subtasksUl = sidebarEl.querySelector('.sub-tasks-items-ul');
             const subtaskEl  = document.createElement('li');
-
-            subtaskEl.classList.add('.sub-task-item-li');
+            
+            subtaskEl.classList.add('sub-task-item-li');
             subtaskEl.setAttribute('draggable', 'false');
-            subtaskEl.innerHTML = sideBarSubtaskEl.innerText;
+
+            if(el && el.subtasks){
+                for (let key in el.subtasks){
+                    el.subtasks.forEach(subtask => {
+                        subtaskEl.innerText = key;
+                    });
+                }
+            } else {
+                subtaskEl.innerText = sideBarSubtaskEl.innerText;
+            }
+            
             subtasksUl.appendChild(subtaskEl);
             sideBarSubtaskEl.innerText = '';
+            updateLS();
         }
 
         // show the sidebar
@@ -225,25 +247,38 @@ function addTodo(el){
 }
 
 function updateLS() {
-    const todosEl   = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    const todosEl = document.querySelectorAll('.sb-todo');// all of the todos on the screen
     
     const todos = []; // create the array to push all of the todos into when I save to local storage
     
     todosEl.forEach(todo => {
-        const todoTexts = todo.querySelector('.input-text');// the todo input text
-        const todoDate  = todo.querySelector('.date-text'); // the todo date text
+        const todoTexts    = todo.querySelector('.sb-todo-title');// the todo input text
+        const todoDate     = todo.querySelector('.date-text2'); // the todo date text
+        const todoSubtasks = todo.querySelectorAll('.sub-task-item-li');
 
-        todos.push({
+        // get all the todod data here and have an empty array for the subtasks
+        allTodos = {
             text: todoTexts.innerText,
-            completed: todo.classList.contains('completed'),
-            duedate: todoDate.innerText
+            completed: todoTexts.classList.contains('completed'),
+            duedate: todoDate.innerText,
+            subtasks: []
+        }
+
+        // this is where all of the subtakss will be pushed to
+        allSubtasks = [];
+
+        // loop through each subtask and push each subtask to the allsubtasks array
+        todoSubtasks.forEach(subtask => {
+            allSubtasks.push({
+                subtask: subtask.innerText
+            })
         });
+        // add the array to the allTodos object
+        allTodos.subtasks.push(allSubtasks);
+
+        todos.push(allTodos);
     });
 
-    // OPTION 1 I could log the subtasks within the todo Item just like the date but make them invisible
-    // OPTION 2 Each todoItem could have an id of the date created and the subtasks could have the same attributes
-
-    
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
     toolbarButtons();

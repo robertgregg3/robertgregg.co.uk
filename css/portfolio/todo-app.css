@@ -303,6 +303,8 @@ input[type=date]::-webkit-calendar-picker-indicator {
     padding-left: 0.5rem;
 }
 
+/* to have the div show data text of "Add a subtask */
+
 [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text)
-}
+} 
