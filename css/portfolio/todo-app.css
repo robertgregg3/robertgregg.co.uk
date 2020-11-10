@@ -204,7 +204,12 @@ input[type="checkbox"]:before {
 
 .input-text {
     cursor: pointer;
-    padding: 1rem 1rem 1.3rem 0;
+    padding:0.9rem 1rem 1.15rem 0;
+}
+
+.input-text:focus{
+    outline: 0px;
+    outline-offset: none;
 }
 
 .close-todo {
@@ -281,3 +286,25 @@ input[type=date]::-webkit-calendar-picker-indicator {
     margin-left: 1rem;
     font-size: 1rem;
 }
+
+
+.sub-task-items {
+    padding: 0 1.7rem;
+    color: #333333;
+    font-size: 1.5rem;
+}
+
+.sub-task-item {
+    width: 100%;
+    margin-left: 1rem;
+    height: 60px;
+    font-size: 1rem;
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+}
+
+/* to have the div show data text of "Add a subtask */
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+} 

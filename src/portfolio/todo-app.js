@@ -6,6 +6,8 @@
 */
 
 // TODO: add a favorite star icon and add a view favorites button
+// TODO: refactor the keypress enter code
+// TODO: add hover styles to the sidebar
 
 const form                = document.getElementById('form');
 const input               = document.getElementById('item');
@@ -74,12 +76,17 @@ function addTodo(el){
         sidebarEl.classList.add('sb-todo', 'hidden');
         
         sidebarEl.innerHTML = `
-        <div class="sb-todo-item">
-        <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
-        </div>
-        <div class="sb-todo-item sb-todo-date">
-        <input type="date" class="date" name="date" /><span class="date-text2"></span>
-        </div>
+            <div class="sb-todo-item" draggable="false">
+                <h2 class="sb-todo-title" contenteditable="true" draggable="false">${sideBarText}</h2>
+            </div>
+            <div class="sb-todo-item sb-todo-date" draggable="false">
+                <input type="date" class="date" name="date" draggable="false" /><span class="date-text2" draggable="false"></span>
+            </div>
+            <div class="sb-todo-item sub-task-items" draggable="false">
+               <i class="fas fa-plus" draggable="false"></i><span class="sub-task-item" contenteditable="true" data-text="Add a subtask" draggable="false"></span>
+               </div>
+               <ul class="sub-tasks-items-ul" draggable="false">
+               <ul>
         `;
         
         todosContainer.appendChild(sidebarEl);
@@ -91,17 +98,20 @@ function addTodo(el){
         let months    = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         dateText2.innerText = 'Set a due date?';
+        dateText2.style.color = '#aaaaaa';
 
         if(el && el.duedate) {
             dateText.innerText  = el.duedate;
             dateText2.innerText = el.duedate;
+            dateText2.style.color = '#333333';
         }
         
         dueDate.addEventListener('change', () => {
             let inputDate = dueDate.value;
             let inputtedDate = new Date(inputDate);
-            dateText.innerText = 'Due Date: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
             dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText2.style.color = '#333333';
             updateLS();
         });
 
@@ -153,13 +163,72 @@ function addTodo(el){
               }
         });
 
+        const sideBarSubtaskEl = sidebarEl.querySelector('.sub-task-item')
+
+        sideBarSubtaskEl.addEventListener('keypress', (e) => {
+            if (e.code === 'Enter' || event.keyCode === 13) {
+                e.preventDefault();
+                sideBarSubtaskEl.setAttribute('contenteditable', 'false');
+                sideBarSubtaskEl.setAttribute('contenteditable', 'true');
+                addNewSubtask()
+                updateLS();
+              }
+        });
+
+        if(el && el.completed) {
+            sideBarTextEl.classList.add('completed');
+        }  
+
         todoItemCheckbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
-            sideBarTextEl.classList.add('completed');  
+            sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');  
+            updateLS();
             toolbarButtons();
             countTodos();
             updateLS();
         });
+
+        // function to add new Subtask
+        
+        if(el && el.subtasks){
+            for (let i = 1; i <= el.subtasks.length; i++) {
+                addNewSubtask();
+            }                
+        }
+
+        // if(el && el.subtasks){
+        //     el.subtasks.forEach(subtask => {
+        //         for (let key in el.subtasks){
+        //             subtaskEl.innerText = subtask[key];
+        //         }
+        //     });
+        // } else {
+        //     subtaskEl.innerText = sideBarSubtaskEl.innerText;
+        // }
+
+
+        
+        function addNewSubtask() {      
+            const subtasksUl = sidebarEl.querySelector('.sub-tasks-items-ul');
+            const subtaskEl  = document.createElement('li');
+            
+            subtaskEl.classList.add('sub-task-item-li');
+            subtaskEl.setAttribute('draggable', 'false');
+
+            if(el && el.subtasks){
+                for (let key in el.subtasks){
+                    el.subtasks.forEach(subtask => {
+                        subtaskEl.innerText = key;
+                    });
+                }
+            } else {
+                subtaskEl.innerText = sideBarSubtaskEl.innerText;
+            }
+            
+            subtasksUl.appendChild(subtaskEl);
+            sideBarSubtaskEl.innerText = '';
+            updateLS();
+        }
 
         // show the sidebar
         todoItem.addEventListener('click', () => {
@@ -178,21 +247,38 @@ function addTodo(el){
 }
 
 function updateLS() {
-    const todosEl   = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    const todosEl = document.querySelectorAll('.sb-todo');// all of the todos on the screen
     
     const todos = []; // create the array to push all of the todos into when I save to local storage
     
     todosEl.forEach(todo => {
-        const todoTexts = todo.querySelector('.input-text');// the todo input text
-        const todoDate  = todo.querySelector('.date-text'); // the todo date text
+        const todoTexts    = todo.querySelector('.sb-todo-title');// the todo input text
+        const todoDate     = todo.querySelector('.date-text2'); // the todo date text
+        const todoSubtasks = todo.querySelectorAll('.sub-task-item-li');
 
-        todos.push({
+        // get all the todod data here and have an empty array for the subtasks
+        allTodos = {
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
-            duedate: todoDate.innerText
+            duedate: todoDate.innerText,
+            subtasks: []
+        }
+
+        // this is where all of the subtakss will be pushed to
+        allSubtasks = [];
+
+        // loop through each subtask and push each subtask to the allsubtasks array
+        todoSubtasks.forEach(subtask => {
+            allSubtasks.push({
+                subtask: subtask.innerText
+            })
         });
+        // add the array to the allTodos object
+        allTodos.subtasks.push(allSubtasks);
+
+        todos.push(allTodos);
     });
-    
+
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
     toolbarButtons();
