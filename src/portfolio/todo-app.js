@@ -97,20 +97,20 @@ function addTodo(el){
         let dateText2 = sidebarEl.querySelector('.date-text2');
         let months    = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        dateText2.innerText = 'Set a due date?';
+        dateText2.innerText   = 'Set a due date?';
         dateText2.style.color = '#aaaaaa';
 
-        if(el && el.duedate) {
-            dateText.innerText  = el.duedate;
-            dateText2.innerText = el.duedate;
+        if(el && el.duedate !== dateText2.innerText) {
+            dateText.innerText    = el.duedate;
+            dateText2.innerText   = el.duedate;
             dateText2.style.color = '#333333';
         }
         
         dueDate.addEventListener('change', () => {
-            let inputDate = dueDate.value;
-            let inputtedDate = new Date(inputDate);
-            dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
-            dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            let inputDate         = dueDate.value;
+            let inputtedDate      = new Date(inputDate);
+            dateText.innerText    = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+            dateText2.innerText   = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
             dateText2.style.color = '#333333';
             updateLS();
         });
@@ -293,27 +293,6 @@ function updateLS() {
     toolbarButtons();
 }
 
-
-// function updateLS() {
-//     const todosEl   = document.querySelectorAll('.todo-item');// all of the todos on the screen
-    
-//     const todos = []; // create the array to push all of the todos into when I save to local storage
-    
-//     todosEl.forEach(todo => {
-//         const todoTexts = todo.querySelector('.input-text');// the todo input text
-//         const todoDate  = todo.querySelector('.date-text'); // the todo date text
-
-//         todos.push({
-//             text: todoTexts.innerText,
-//             completed: todo.classList.contains('completed'),
-//             duedate: todoDate.innerText
-//         });
-//     });
-
-//     localStorage.setItem('todos', JSON.stringify(todos));
-//     countTodos();
-//     toolbarButtons();
-// }
 
 function countTodos() {
     const totalTodos = document.querySelectorAll('.todo-item');// all of the todos on the screen
