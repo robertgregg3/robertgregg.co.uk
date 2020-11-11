@@ -179,6 +179,14 @@ function addTodo(el){
             sideBarTextEl.classList.add('completed');
         }  
 
+        // add sub-tasks to the sidebar
+        if(el && el.subtask1){
+            sideBarSubtaskEl.innerText = el.subtask1;
+            updateLS();
+        } else {
+            sideBarSubtaskEl.innerText = '';
+        }
+
         todoItemCheckbox.addEventListener('click', (e) => {
             e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
             sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');  
@@ -189,42 +197,13 @@ function addTodo(el){
         });
 
         // function to add new Subtask
-        
-        if(el && el.subtasks){
-            for (let i = 1; i <= el.subtasks.length; i++) {
-                addNewSubtask();
-            }                
-        }
-
-        // if(el && el.subtasks){
-        //     el.subtasks.forEach(subtask => {
-        //         for (let key in el.subtasks){
-        //             subtaskEl.innerText = subtask[key];
-        //         }
-        //     });
-        // } else {
-        //     subtaskEl.innerText = sideBarSubtaskEl.innerText;
-        // }
-
-
-        
-        function addNewSubtask() {      
+        function addNewSubtask() {
             const subtasksUl = sidebarEl.querySelector('.sub-tasks-items-ul');
             const subtaskEl  = document.createElement('li');
-            
+
             subtaskEl.classList.add('sub-task-item-li');
             subtaskEl.setAttribute('draggable', 'false');
-
-            if(el && el.subtasks){
-                for (let key in el.subtasks){
-                    el.subtasks.forEach(subtask => {
-                        subtaskEl.innerText = key;
-                    });
-                }
-            } else {
-                subtaskEl.innerText = sideBarSubtaskEl.innerText;
-            }
-            
+            subtaskEl.innerHTML = sideBarSubtaskEl.innerText;
             subtasksUl.appendChild(subtaskEl);
             sideBarSubtaskEl.innerText = '';
             updateLS();
@@ -235,7 +214,35 @@ function addTodo(el){
             hideSidebar();
             sidebarEl.classList[sidebarEl.classList.contains('hidden') ? 'remove' : 'add']('hidden');
             todosContainer.classList[sidebarEl.classList.contains('hidden') ? 'add' : 'remove']('grid-no-sidebar');        
-        });      
+        });   
+        
+        
+        // when you edit the todo the side bar text changes too
+
+        if(toDoInputText.textContent === sideBarTextEl.textContent){
+            const observer = new MutationObserver((mutationRecords) => {
+                sideBarTextEl.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+
+            observer.observe(toDoInputText, {
+                characterData: true,
+                subtree: true,
+            });
+        }
+
+        if(sideBarTextEl.textContent === toDoInputText.textContent){
+            const observer = new MutationObserver((mutationRecords) => {
+                toDoInputText.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+
+            observer.observe(sideBarTextEl, {
+                characterData: true,
+                subtree: true,
+            });
+        }
+  
 
         // run these functions
         countTodos();
@@ -273,16 +280,40 @@ function updateLS() {
                 subtask: subtask.innerText
             })
         });
-        // add the array to the allTodos object
+
+        // add the array to the allTodos
         allTodos.subtasks.push(allSubtasks);
 
         todos.push(allTodos);
+
     });
 
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
     toolbarButtons();
 }
+
+
+// function updateLS() {
+//     const todosEl   = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    
+//     const todos = []; // create the array to push all of the todos into when I save to local storage
+    
+//     todosEl.forEach(todo => {
+//         const todoTexts = todo.querySelector('.input-text');// the todo input text
+//         const todoDate  = todo.querySelector('.date-text'); // the todo date text
+
+//         todos.push({
+//             text: todoTexts.innerText,
+//             completed: todo.classList.contains('completed'),
+//             duedate: todoDate.innerText
+//         });
+//     });
+
+//     localStorage.setItem('todos', JSON.stringify(todos));
+//     countTodos();
+//     toolbarButtons();
+// }
 
 function countTodos() {
     const totalTodos = document.querySelectorAll('.todo-item');// all of the todos on the screen
@@ -413,41 +444,3 @@ function hideSidebar() {
         sidebar.classList.add('hidden');
    });
 }
-
-
-
-// when you edit the todo the side bar text changes too
-const toDoInputTexts        = document.querySelectorAll('.input-text');
-const sidebarTodoInputTexts = document.querySelectorAll('.sb-todo-title'); 
-
-toDoInputTexts.forEach(toDoInputText => {
-    sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
-        if(toDoInputText.textContent === sidebarTodoInputText.textContent){
-            const observer     = new MutationObserver((mutationRecords) => {
-                sidebarTodoInputText.textContent = mutationRecords[0].target.data
-                updateLS();
-            })
-
-            observer.observe(toDoInputText, {
-                characterData: true,
-                subtree: true,
-            });
-        }
-    });
-});
-
-sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
-    toDoInputTexts.forEach(toDoInputText => {
-        if(sidebarTodoInputText.textContent === toDoInputText.textContent){
-            const observer     = new MutationObserver((mutationRecords) => {
-                toDoInputText.textContent = mutationRecords[0].target.data
-                updateLS();
-            })
-
-            observer.observe(sidebarTodoInputText, {
-                characterData: true,
-                subtree: true,
-            });
-        }
-    });
-});
