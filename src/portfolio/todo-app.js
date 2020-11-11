@@ -1,13 +1,19 @@
-/*when form posts: 
+/*
+Tests: 
 
+1) completed both side bar and main el - same after LS
+2) drag and drop - same after LS
+3) content editable.  - same after LS
+
+
+when form posts: 
     1) add todo to the window. 
     2) Add to local storage 
-
 */
 
+
+
 // TODO: add a favorite star icon and add a view favorites button
-// TODO: refactor the keypress enter code
-// TODO: add hover styles to the sidebar
 
 const form                = document.getElementById('form');
 const input               = document.getElementById('item');
@@ -18,7 +24,8 @@ const countRemainingTodos = document.getElementById('count-remaining-todos');
 const countCompletedTodos = document.getElementById('count-completed-todos');
 const toolbar             = document.getElementById('toolbar');
 const todoSidebar         = document.getElementById('sb-todo');
-const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
+// const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
+const todosFromLS         = JSON.parse(localStorage.getItem('todosDrag'));
 
 // when there are no todos the toolbar is hidden
 toolbar.classList.add('hidden');
@@ -41,23 +48,19 @@ form.addEventListener('submit', (e) => {
 
 //  add the todo, and if a todo already exists then us the value from local storage as the input.value
 function addTodo(el){
-    toolbar.classList.remove('hidden'); // make the tool bar visible
+    toolbar.classList.remove('hidden');
 
-    let todoText = input.value; // assign the todo text to the variable todoText
+    let todoText = input.value; 
 
-    if(el){  // if there is a todo from LS then the variable todoText will now = el.text.
-        todoText = el.text; // the .text is from the object that comes from local Storage
+    if(el){  
+        todoText = el.text; 
     }
 
-    if(todoText) {  // if any kind of todoText exists either from LS or that has just been created...
-        const todoItem = document.createElement('li');  // create the todo element
+    if(todoText) {  
+        const todoItem = document.createElement('li');  
 
         todoItem.classList.add('todo-item', 'draggable'); 
         todoItem.setAttribute('draggable', 'true');
-        
-        if(el && el.completed) {  // if there is a todo from LS and it has the completed key value pair
-            todoItem.classList.add('completed');  // then add the completed class 
-        }
         
         // add the todo to the li
         todoItem.innerHTML = ` 
@@ -77,16 +80,16 @@ function addTodo(el){
         
         sidebarEl.innerHTML = `
             <div class="sb-todo-item" draggable="false">
-                <h2 class="sb-todo-title" contenteditable="true" draggable="false">${sideBarText}</h2>
+                    <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
             </div>
-            <div class="sb-todo-item sb-todo-date" draggable="false">
-                <input type="date" class="date" name="date" draggable="false" /><span class="date-text2" draggable="false"></span>
+            <div class="sb-todo-item sb-todo-date">
+                <input type="date" class="date" name="date" /><span class="date-text2"></span>
             </div>
-            <div class="sb-todo-item sub-task-items" draggable="false">
-               <i class="fas fa-plus" draggable="false"></i><span class="sub-task-item" contenteditable="true" data-text="Add a subtask" draggable="false"></span>
-               </div>
-               <ul class="sub-tasks-items-ul" draggable="false">
-               <ul>
+            <div class="sb-todo-item sub-task-items">
+                <i class="fas fa-plus"></i><span class="sub-task-item" contenteditable="true" data-text="Add a subtask"></span>
+            </div>
+            <ul class="sub-tasks-items-ul">
+            <ul>
         `;
         
         todosContainer.appendChild(sidebarEl);
@@ -114,12 +117,6 @@ function addTodo(el){
             dateText2.style.color = '#333333';
             updateLS();
         });
-
-        // make the checkbox checked when loaded from local storage
-        const todoItemCheckbox = todoItem.querySelector('input');
-        if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
-            todoItemCheckbox.checked = true;
-        }
 
         // make the X appear when you hover the li
         const closeTodo = todoItem.querySelector('.close-todo');
@@ -152,7 +149,7 @@ function addTodo(el){
         });
 
         // remove the new line when enter is pressed on the sidebar todo
-        const sideBarTextEl = sidebarEl.querySelector('.sb-todo-title')
+        const sideBarTextEl    = sidebarEl.querySelector('.sb-todo-title')
 
         sidebarEl.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || event.keyCode === 13) {
@@ -163,60 +160,33 @@ function addTodo(el){
               }
         });
 
-        const sideBarSubtaskEl = sidebarEl.querySelector('.sub-task-item')
-
-        sideBarSubtaskEl.addEventListener('keypress', (e) => {
-            if (e.code === 'Enter' || event.keyCode === 13) {
-                e.preventDefault();
-                sideBarSubtaskEl.setAttribute('contenteditable', 'false');
-                sideBarSubtaskEl.setAttribute('contenteditable', 'true');
-                addNewSubtask()
-                updateLS();
-              }
-        });
+        // from local storage if completed then check the box and add class
+        const todoInputText    = todoItem.querySelector('.input-text');
+        const todoItemCheckbox = todoItem.querySelector('input');
 
         if(el && el.completed) {
+            todoItemCheckbox.checked = true;
+            todoInputText.classList.add('completed');  // then add the completed class 
             sideBarTextEl.classList.add('completed');
-        }  
-
-        // add sub-tasks to the sidebar
-        if(el && el.subtask1){
-            sideBarSubtaskEl.innerText = el.subtask1;
             updateLS();
-        } else {
-            sideBarSubtaskEl.innerText = '';
         }
-
-        todoItemCheckbox.addEventListener('click', (e) => {
-            e.target.parentNode.classList[e.target.checked ? 'add' : 'remove']('completed');    
-            sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');  
+   
+        // When checkled/unchecked add/remove classes on main element and sidebar
+        todoItemCheckbox.addEventListener('click', () => {
+            todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+            sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');
             updateLS();
             toolbarButtons();
             countTodos();
-            updateLS();
         });
-
-        // function to add new Subtask
-        function addNewSubtask() {
-            const subtasksUl = sidebarEl.querySelector('.sub-tasks-items-ul');
-            const subtaskEl  = document.createElement('li');
-
-            subtaskEl.classList.add('sub-task-item-li');
-            subtaskEl.setAttribute('draggable', 'false');
-            subtaskEl.innerHTML = sideBarSubtaskEl.innerText;
-            subtasksUl.appendChild(subtaskEl);
-            sideBarSubtaskEl.innerText = '';
-            updateLS();
-        }
 
         // show the sidebar
         todoItem.addEventListener('click', () => {
             hideSidebar();
             sidebarEl.classList[sidebarEl.classList.contains('hidden') ? 'remove' : 'add']('hidden');
             todosContainer.classList[sidebarEl.classList.contains('hidden') ? 'add' : 'remove']('grid-no-sidebar');        
-        });   
-        
-        
+        });      
+
         // when you edit the todo the side bar text changes too
 
         if(toDoInputText.textContent === sideBarTextEl.textContent){
@@ -224,7 +194,6 @@ function addTodo(el){
                 sideBarTextEl.textContent = mutationRecords[0].target.data
                 updateLS();
             })
-
             observer.observe(toDoInputText, {
                 characterData: true,
                 subtree: true,
@@ -236,13 +205,11 @@ function addTodo(el){
                 toDoInputText.textContent = mutationRecords[0].target.data
                 updateLS();
             })
-
             observer.observe(sideBarTextEl, {
                 characterData: true,
                 subtree: true,
             });
         }
-  
 
         // run these functions
         countTodos();
@@ -253,45 +220,52 @@ function addTodo(el){
     }
 }
 
+
+
+
+
+
+
 function updateLS() {
-    const todosEl = document.querySelectorAll('.sb-todo');// all of the todos on the screen
+    const todosEl      = document.querySelectorAll('.sb-todo'); // all todos on the screen
+    const todosElsDrag = document.querySelectorAll('.todo-item');// store the gradded li's
     
     const todos = []; // create the array to push all of the todos into when I save to local storage
+    const todosDrag = [];
     
     todosEl.forEach(todo => {
-        const todoTexts    = todo.querySelector('.sb-todo-title');// the todo input text
-        const todoDate     = todo.querySelector('.date-text2'); // the todo date text
-        const todoSubtasks = todo.querySelectorAll('.sub-task-item-li');
-
-        // get all the todod data here and have an empty array for the subtasks
-        allTodos = {
+        const todoTexts = todo.querySelector('.sb-todo-title');// the todo input text
+        const todoDate  = todo.querySelector('.date-text2'); // the todo date text
+        
+        todos.push({
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
-            duedate: todoDate.innerText,
-            subtasks: []
-        }
-
-        // this is where all of the subtakss will be pushed to
-        allSubtasks = [];
-
-        // loop through each subtask and push each subtask to the allsubtasks array
-        todoSubtasks.forEach(subtask => {
-            allSubtasks.push({
-                subtask: subtask.innerText
-            })
-        });
-
-        // add the array to the allTodos
-        allTodos.subtasks.push(allSubtasks);
-
-        todos.push(allTodos);
-
+            duedate: todoDate.innerText
+        });        
     });
 
+    todosElsDrag.forEach(todoElDrag => {
+        const todoTextsDrag = todoElDrag.querySelector('.input-text');// the todo input text
+        const todoDateDrag  = todoElDrag.querySelector('.date-text'); // the todo date text
+
+        todosDrag.push({
+            text: todoTextsDrag.innerText,
+            completed: todoTextsDrag.classList.contains('completed'),
+            duedate: todoDateDrag.innerText
+        });
+    });
+    
     localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('todosDrag', JSON.stringify(todosDrag));
     countTodos();
     toolbarButtons();
 }
+
+
+
+
+
+
 
 
 function countTodos() {
@@ -316,7 +290,7 @@ function countTodos() {
 }
 
 function toolbarButtons(){
-    const totalTodos         = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    const totalTodos         = document.querySelectorAll('.todo-item');
     const showAllBtn         = document.querySelector('#show-all');
     const showRemainingBtn   = document.querySelector('#show-remaining');
     const showCompletedBtn   = document.querySelector('#show-completed');
@@ -410,12 +384,6 @@ function dragItems() {
 
 dragItems();
 
-// function todoSidebar() {
-//     const toDoInputTexts        = document.querySelectorAll('.input-text');
-//     const sidebarTodoInputTexts = document.querySelectorAll('.sb-todo-title'); 
-//     const allSideBars           = document.querySelectorAll('.');
-
-// }
 
 function hideSidebar() {
     const allSidebars = document.querySelectorAll('.sb-todo');
