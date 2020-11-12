@@ -1,8 +1,16 @@
-/*when form posts: 
+/*
+REFACTor: 
+    1) enter functions
 
+Tests: 
+    1) completed both side bar and main el - same after LS
+    2) drag and drop - same after LS
+    3) content editable.  - same after LS
+
+
+when form posts: 
     1) add todo to the window. 
     2) Add to local storage 
-
 */
 
 // TODO: add a favorite star icon and add a view favorites button
@@ -18,6 +26,7 @@ const countRemainingTodos = document.getElementById('count-remaining-todos');
 const countCompletedTodos = document.getElementById('count-completed-todos');
 const toolbar             = document.getElementById('toolbar');
 const todoSidebar         = document.getElementById('sb-todo');
+// const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
 const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
 
 // when there are no todos the toolbar is hidden
@@ -27,6 +36,7 @@ toolbar.classList.add('hidden');
 if(todosFromLS) {
     todosFromLS.forEach(el => {
         addTodo(el);
+        toolbarButtons();
     });
 } 
 
@@ -41,42 +51,47 @@ form.addEventListener('submit', (e) => {
 
 //  add the todo, and if a todo already exists then us the value from local storage as the input.value
 function addTodo(el){
-    toolbar.classList.remove('hidden'); // make the tool bar visible
-
-    let todoText = input.value; // assign the todo text to the variable todoText
-
-    if(el){  // if there is a todo from LS then the variable todoText will now = el.text.
-        todoText = el.text; // the .text is from the object that comes from local Storage
+    toolbar.classList.remove('hidden');
+    
+    let todoText = input.value; 
+    
+    if(el){  
+        todoText = el.text; 
     }
-
-    if(todoText) {  // if any kind of todoText exists either from LS or that has just been created...
-        const todoItem = document.createElement('li');  // create the todo element
-
+    
+    if(todoText) {  
+        // create the todo item with a li
+        const todoItem = document.createElement('li');  
+        
         todoItem.classList.add('todo-item', 'draggable'); 
         todoItem.setAttribute('draggable', 'true');
-        
-        if(el && el.completed) {  // if there is a todo from LS and it has the completed key value pair
-            todoItem.classList.add('completed');  // then add the completed class 
-        }
-        
-        // add the todo to the li
         todoItem.innerHTML = ` 
-            <input type="checkbox" class="spring"/><span class="input-text" contenteditable="true">${todoText}</span>
-                <i class="fas fa-times close-todo hidden"></i>
-            </li><span class="date-text"></span>
+            <input type="checkbox" class="spring"/>
+            <span class="input-text" contenteditable="true">${todoText}</span>
+            <i class="fas fa-times close-todo hidden"></i>
+            <span class="date-text"></span>
         `; 
         
         // append the li to the ul
         todosUl.appendChild(todoItem);
-
+        
         // create the sidebar element
         let sideBarText = todoText;
+        const sidebarEl = document.createElement('div');
         
-        const sidebarEl =  document.createElement('div');
         sidebarEl.classList.add('sb-todo', 'hidden');
-        
         sidebarEl.innerHTML = `
             <div class="sb-todo-item" draggable="false">
+                <h2 class="sb-todo-title" contenteditable="true">${sideBarText}</h2>
+            </div>
+            <div class="sb-todo-item sb-todo-date">
+                <input type="date" class="date" name="date" /><span class="date-text2">sET A DUE DATE?</span>
+            </div>
+            <div class="sb-todo-item sub-task-items">
+                <i class="fas fa-plus"></i><span class="sub-task-item" contenteditable="true" data-text="Add a subtask"></span>
+            </div>
+            <ul class="sub-tasks-items-ul">
+            <ul>
                 <h2 class="sb-todo-title" contenteditable="true" draggable="false">${sideBarText}</h2>
             </div>
             <div class="sb-todo-item sb-todo-date" draggable="false">
@@ -90,7 +105,7 @@ function addTodo(el){
         `;
         
         todosContainer.appendChild(sidebarEl);
-
+        
         // add a due date to sidebar and main todo
         let dueDate   = sidebarEl.querySelector('.sb-todo-item input');
         let dateText  = todoItem.querySelector('.date-text');
@@ -114,25 +129,12 @@ function addTodo(el){
             dateText2.style.color = '#333333';
             updateLS();
         });
-
-        // make the checkbox checked when loaded from local storage
-        const todoItemCheckbox = todoItem.querySelector('input');
-        if(el && el.completed && todoItemCheckbox.type === 'checkbox') {
-            todoItemCheckbox.checked = true;
-        }
-
-        // make the X appear when you hover the li
+        
+        // close button
         const closeTodo = todoItem.querySelector('.close-todo');
-        todoItem.addEventListener('mouseover', () => {
-            closeTodo.classList.remove('hidden');
-        });
+        todoItem.addEventListener('mouseover', () => {closeTodo.classList.remove('hidden');});
+        todoItem.addEventListener('mouseout',  () => {closeTodo.classList.add('hidden');});
 
-        // remove the X when you are not hovering the item
-        todoItem.addEventListener('mouseout', () => {
-            closeTodo.classList.add('hidden');
-        });
-
-        // delete the todo and remove from local storage
         closeTodo.addEventListener('click', () => {
             todoItem.remove();
             sidebarEl.remove();
@@ -163,6 +165,15 @@ function addTodo(el){
               }
         });
 
+
+        // completing/un-completing a todo
+        const todoInputText    = todoItem.querySelector('.input-text');
+        const todoItemCheckbox = todoItem.querySelector('input');
+
+        if(el && el.completed) {
+            todoItemCheckbox.checked = true;
+            todoInputText.classList.add('completed');  // then add the completed class 
+            sideBarTextEl.classList.add('completed');
         const sideBarSubtaskEl = sidebarEl.querySelector('.sub-task-item')
 
         sideBarSubtaskEl.addEventListener('keypress', (e) => {
@@ -186,8 +197,16 @@ function addTodo(el){
             toolbarButtons();
             countTodos();
             updateLS();
-        });
+        }
 
+        todoItemCheckbox.addEventListener('click', () => {
+            todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+            sideBarTextEl.classList[sideBarTextEl.classList.contains('completed') ? 'remove' : 'add']('completed');
+            updateLS();
+            countTodos();
+            toolbarButtons();
+        });
+   
         // function to add new Subtask
         
         if(el && el.subtasks){
@@ -237,16 +256,44 @@ function addTodo(el){
             todosContainer.classList[sidebarEl.classList.contains('hidden') ? 'add' : 'remove']('grid-no-sidebar');        
         });      
 
-        // run these functions
+        // when you edit the todo the side bar text changes too
+        if(toDoInputText.textContent === sideBarTextEl.textContent){
+            const observer = new MutationObserver((mutationRecords) => {
+                sideBarTextEl.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+            observer.observe(toDoInputText, {
+                characterData: true,
+                subtree: true,
+            });
+        }
+
+        if(sideBarTextEl.textContent === toDoInputText.textContent){
+            const observer = new MutationObserver((mutationRecords) => {
+                toDoInputText.textContent = mutationRecords[0].target.data
+                updateLS();
+            })
+            observer.observe(sideBarTextEl, {
+                characterData: true,
+                subtree: true,
+            });
+        }
+
         countTodos();
-        toolbarButtons();
         updateLS();
-        //  clear the input
         input.value ='';
     }
 }
 
+
 function updateLS() {
+    const todosEls = document.querySelectorAll('.todo-item');// store the gradded li's
+    
+    const todos = [];
+   
+    todosEls.forEach(todoEl => {
+        const todoTexts = todoEl.querySelector('.input-text');// the todo input text
+        const todoDate  = todoEl.querySelector('.date-text'); // the todo date text
     const todosEl = document.querySelectorAll('.sb-todo');// all of the todos on the screen
     
     const todos = []; // create the array to push all of the todos into when I save to local storage
@@ -281,16 +328,18 @@ function updateLS() {
 
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
-    toolbarButtons();
 }
 
+
 function countTodos() {
-    const totalTodos = document.querySelectorAll('.todo-item');// all of the todos on the screen
-    
+    const totalTodos     = document.querySelectorAll('.todo-item');
+    const toDoInputTexts = document.querySelectorAll('.input-text');
+   
     // calculation for remaining todos, then used for completed.
     let sum = totalTodos.length;
-    totalTodos.forEach(totalTodo => {
-        if(totalTodo.classList.contains('completed')){
+
+    toDoInputTexts.forEach(toDoInputText => {
+        if(toDoInputText.classList.contains('completed')){
             sum--;
         }
         return sum;
@@ -298,63 +347,55 @@ function countTodos() {
 
     countTotalTodos.innerHTML     = `All items: ${totalTodos.length} <br /><button id="show-all">Show</button>`;
     countRemainingTodos.innerHTML = `remaining: ${sum}<br /><button id="show-remaining">Show</button>`;
-    countCompletedTodos.innerHTML = `
-        completed: ${totalTodos.length - sum}<br />
+    countCompletedTodos.innerHTML = `completed: ${totalTodos.length - sum}<br />
         <button id="show-completed">Show</button>
         <button id="delete-completed">Delete</button>
     `;
 }
 
+
 function toolbarButtons(){
-    const totalTodos         = document.querySelectorAll('.todo-item');// all of the todos on the screen
+    const totalTodos         = document.querySelectorAll('.input-text');
     const showAllBtn         = document.querySelector('#show-all');
     const showRemainingBtn   = document.querySelector('#show-remaining');
     const showCompletedBtn   = document.querySelector('#show-completed');
     const deleteCompletedBtn = document.querySelector('#delete-completed');
-    const sidebarTodoTitles  = document.querySelectorAll('.sb-todo-title');
+    const allTodoSidebars    = document.querySelectorAll('.sb-todo');
 
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
-                totalTodo.classList.remove('hidden');
+            totalTodo.parentNode.classList.remove('hidden');
         });
     });
 
     showRemainingBtn.addEventListener('click', () => {
         totalTodos.forEach(remainingTodo => {
-            if(remainingTodo.classList.contains('completed')){
-                remainingTodo.classList.add('hidden');
-            }
-            if(!remainingTodo.classList.contains('completed')){
-                remainingTodo.classList.remove('hidden');
-            }
+            remainingTodo.parentNode.classList[remainingTodo.classList.contains('completed') ? 'add' : 'remove']('hidden');
         });
     });
 
     showCompletedBtn.addEventListener('click', () => {
         totalTodos.forEach(completedTodo => {
-            if(!completedTodo.classList.contains('completed')){
-                completedTodo.classList.add('hidden');
-            }
-            if(completedTodo.classList.contains('completed')){
-                completedTodo.classList.remove('hidden');
-            }
+            completedTodo.parentNode.classList[completedTodo.classList.contains('completed') ? 'remove' : 'add']('hidden');
         });
     });
 
     deleteCompletedBtn.addEventListener('click', () => {
         totalTodos.forEach(todoToDelete => {
             if(todoToDelete.classList.contains('completed')){
-                todoToDelete.remove();
-                // when the todo items are removed this code removes the completed class which appears
-                sidebarTodoTitles.forEach(sidebarTodoTitle => {
-                    sidebarTodoTitle.classList.remove('completed');
-                    updateLS()
-                });
-                updateLS();
+                todoToDelete.parentNode.remove();
             }
         });
+        allTodoSidebars.forEach(todoSidebar => {
+            const todoSidebarTitle = todoSidebar.querySelector('.sb-todo-title');
+            if(todoSidebarTitle.classList.contains('completed')){
+                todoSidebar.remove();
+            }
+        });
+        updateLS();
     });
 }
+
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
@@ -400,54 +441,10 @@ function dragItems() {
 
 dragItems();
 
-// function todoSidebar() {
-//     const toDoInputTexts        = document.querySelectorAll('.input-text');
-//     const sidebarTodoInputTexts = document.querySelectorAll('.sb-todo-title'); 
-//     const allSideBars           = document.querySelectorAll('.');
-
-// }
 
 function hideSidebar() {
     const allSidebars = document.querySelectorAll('.sb-todo');
     allSidebars.forEach(sidebar => {
         sidebar.classList.add('hidden');
    });
-}
-
-
-
-// when you edit the todo the side bar text changes too
-const toDoInputTexts        = document.querySelectorAll('.input-text');
-const sidebarTodoInputTexts = document.querySelectorAll('.sb-todo-title'); 
-
-toDoInputTexts.forEach(toDoInputText => {
-    sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
-        if(toDoInputText.textContent === sidebarTodoInputText.textContent){
-            const observer     = new MutationObserver((mutationRecords) => {
-                sidebarTodoInputText.textContent = mutationRecords[0].target.data
-                updateLS();
-            })
-
-            observer.observe(toDoInputText, {
-                characterData: true,
-                subtree: true,
-            });
-        }
-    });
-});
-
-sidebarTodoInputTexts.forEach(sidebarTodoInputText => {
-    toDoInputTexts.forEach(toDoInputText => {
-        if(sidebarTodoInputText.textContent === toDoInputText.textContent){
-            const observer     = new MutationObserver((mutationRecords) => {
-                toDoInputText.textContent = mutationRecords[0].target.data
-                updateLS();
-            })
-
-            observer.observe(sidebarTodoInputText, {
-                characterData: true,
-                subtree: true,
-            });
-        }
-    });
-});
+}    

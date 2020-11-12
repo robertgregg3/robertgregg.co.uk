@@ -308,3 +308,15 @@ input[type=date]::-webkit-calendar-picker-indicator {
 [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text)
 } 
+
+.sub-tasks-items-ul {
+    list-style: none;
+    padding: 1rem;
+    color: #333;
+    font-size: 1rem;
+}
+
+.sub-task-item-li {
+    padding: 1rem;
+    border-bottom: 1px solid #cccccc80;
+}
