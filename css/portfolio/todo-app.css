@@ -294,7 +294,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
     font-size: 1.5rem;
 }
 
-.sub-task-item {
+.sub-task-item-input {
     width: 100%;
     margin-left: 1rem;
     height: 60px;
@@ -311,12 +311,14 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .sub-tasks-items-ul {
     list-style: none;
-    padding: 1rem;
+    padding: 0;
     color: #333;
     font-size: 1rem;
+    margin: 0;
 }
 
 .sub-task-item-li {
     padding: 1rem;
     border-bottom: 1px solid #cccccc80;
+    background-color: #fff8f1;
 }
