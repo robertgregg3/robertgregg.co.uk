@@ -1,6 +1,9 @@
 /*
-REFACTor: 
-    1) enter functions
+Questions: 
+    1) How to implement subtasks
+    2) how to refactor the Enter function
+    3) What level am I from 1 to 10?
+    4) What should I be focusing on next?
 
 Tests: 
     1) completed both side bar and main el - same after LS
@@ -45,6 +48,7 @@ form.addEventListener('submit', (e) => {
     updateLS();
     countTodos();
     toolbarButtons();
+    dragItems();
 });
 
 //  add the todo, and if a todo already exists then us the value from local storage as the input.value
@@ -174,13 +178,39 @@ function addTodo(el){
         }
        
         function addSubtask() {
+            
             const subtaskLi = document.createElement('li');
-                
+            
             subtaskLi.classList.add('sub-task-item-li');
-            subtaskLi.innerText = subtaskInput.innerText;
+            subtaskLi.innerHTML= `
+            <input type="checkbox" class="spring" />${subtaskInput.innerText}
+            <i class="fas fa-times close-subtask hidden"></i>
+            `;
             
             subtaskInput.innerText = '';
+
             subtasksUl.appendChild(subtaskLi);
+            
+            const subtaskItems = subtasksUl.querySelectorAll('.sub-task-item-li');
+
+            if(subtaskItems){
+                // if there are subtasks hover the close icon and remove the item when pressed
+                subtaskItems.forEach(subtaskItem => {
+                    const closeSubtask = subtaskItem.querySelector('.close-subtask');
+                    subtaskItem.addEventListener('mouseover', () => {closeSubtask.classList.remove('hidden');});
+                    subtaskItem.addEventListener('mouseout',  () => {closeSubtask.classList.add('hidden');});
+                    
+                    closeSubtask.addEventListener('click', () => {
+                        subtaskItem.remove();
+                        updateLS();
+                    });                    
+                    const subtaskText     = subtaskItem.innerText;
+                    const subtaskCheckbox = subtaskItem.querySelector('input');
+                    subtaskCheckbox.addEventListener('click', () => {
+                        subtaskLi.classList.toggle('completed');
+                    });
+                });
+            }
             updateLS();
         }
 
