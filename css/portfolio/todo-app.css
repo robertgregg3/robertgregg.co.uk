@@ -25,7 +25,6 @@ body{
 #todo-col {
     width: 100%;
     max-width: 600px;
-    position: absolute;
     left: 2rem;
 }
 
@@ -39,6 +38,7 @@ body{
     transition: width 1000ms ease;
     position: absolute;
     right: 0;
+    display: none;
 }
 
 small {
@@ -150,11 +150,14 @@ h1{
     border-radius: 4px;
     box-shadow: 0 1px 2px rgb(0,0,0,0.4);
     margin-bottom: 0.4rem;
-    height: 60px;
     transition: all 200ms ease-in-out;
     position: relative;
     font-size: 1rem;
     cursor: move;
+}
+
+.todo-item-height {
+    height: 60px;
 }
 
 input[type="checkbox"] {
@@ -204,7 +207,10 @@ input[type="checkbox"]:before {
 
 .input-text {
     cursor: pointer;
-    padding:0.9rem 1rem 1.15rem 0;
+    padding: 0.9rem 1rem 1.15rem 0;
+    position: absolute;
+    width: 64%;
+    top: 0;
 }
 
 .input-text:focus{
@@ -212,12 +218,15 @@ input[type="checkbox"]:before {
     outline-offset: none;
 }
 
-.close-todo,
-.close-subtask {
+.close-todo {
     position: absolute;
-    right: 2rem;
-    top: 1.2rem;
+    right: -1rem;
+    top: 0;
     cursor: pointer;
+    background-color: #fff;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 50%;
+    box-shadow: 0px 0px 14px rgb(0, 0, 0, 0.5);
 }
 
 .hidden{
@@ -245,11 +254,12 @@ input[type="checkbox"]:before {
 
 /* ------ SIDE BAR ------ */
 
-.sb-todo-item {
+.extended-todo-item {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #cccccc80;
     padding: 1rem;
+    position: relative;
 }
 
 .grid-no-sidebar{
@@ -258,12 +268,12 @@ input[type="checkbox"]:before {
 }
 
 input[type="date"] {
-    padding: 0.5rem;
+    padding: 0.5rem 2.5rem 0.5rem 0rem;
     margin: 1rem 0;
     border: 1px solid #ff9900;
     border-radius: 4px;
     color: transparent;
-    width: 40px;
+    width: 44px;
     font-size: 1.5rem;
 }
 
@@ -272,7 +282,7 @@ input[type=date]::-webkit-inner-spin-button,
 input[type=date]::-webkit-calendar-picker-indicator {
     display: block;
     position: absolute;
-    left: 1.35rem;
+    left:0;
 }
 
 .date-text {
@@ -309,16 +319,47 @@ input[type=date]::-webkit-calendar-picker-indicator {
     content:attr(data-text)
 } 
 
-.sub-tasks-items-ul {
-    list-style: none;
+.todo-extend-div {
+    height: 0%;
+    transition: height 500ms ease-in-out;
+    opacity: 0;
+    border-top: 1px solid #33333330;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.height-100{
+    height: 100%;
+    transition: height 500ms ease-in-out;
+    opacity: 1;
+}
+
+.expand-todo {
+    position: absolute;
+    right: 1.3rem;
+    top: 1rem;
+    color: #e59f47;
+    padding: 0.3rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 500ms ease-in-out;
+}
+
+.expand-todo--rotate{
+    transform: rotate(180deg);
+    transition: transform 500ms ease-in-out;
+}
+
+.subtasks {
+    width: 100%;
+    grid-column: 1 / 3;
     padding: 0;
-    color: #333;
-    font-size: 1rem;
-    margin: 0;
+    list-style: none;
 }
 
 .sub-task-item-li {
-    padding: 1rem;
+    padding: 1rem 0 1rem 3.2rem;
     border-bottom: 1px solid #cccccc80;
     background-color: #fff8f1;
     position: relative;
