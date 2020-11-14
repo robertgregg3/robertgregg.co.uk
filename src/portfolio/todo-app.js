@@ -1,7 +1,11 @@
 /*
-Refactor:
+Todo:
     1) event listeners - consolodate
     2) ADD A "REMOVE COMPLETED BUTTON"
+    3) Drag not working on mobile
+    4) three dots options for todos and subtasks
+    5) close button permanently there on mobile
+    6) Sort Hidding clos ebutton issue
 
 Tests: 
     1) completed both side bar and main el - same after LS
@@ -37,7 +41,6 @@ if(todosFromLS) {
         toolbarButtons();
     });
 } 
-
 
 // when you add a todo, perform these actions
 form.addEventListener('submit', (e) => {
@@ -84,6 +87,18 @@ function addTodo(el){
         
         // append the li to the ul
         todosUl.appendChild(todoItem);
+
+         // remove the new line when enter is pressed on the main todo element
+         const toDoInputText = todoItem.querySelector('.input-text');
+
+         todosUl.addEventListener('keypress', (e) => {
+             if (e.code === 'Enter' || e.keyCode === 13) {
+                 e.preventDefault();
+                 toDoInputText.setAttribute('contenteditable', 'false');
+                 toDoInputText.setAttribute('contenteditable', 'true');
+                 updateLS();
+               }
+         });
                 
         // add a due date picker
         let dueDate   = todoItem.querySelector('.extended-todo-item input');
@@ -109,27 +124,15 @@ function addTodo(el){
             updateLS();
         });
 
-        // close button
-        const closeTodo = todoItem.querySelector('.close-todo');
-        todoItem.addEventListener('mouseover', () => {closeTodo.classList.remove('hidden');});
-        todoItem.addEventListener('mouseout',  () => {closeTodo.classList.add('hidden');});
+        // close todo button
+        const closeTodoBtn = todoItem.querySelector('.close-todo');
+        todoItem.addEventListener('mouseover', () => {closeTodoBtn.classList.remove('hidden');});
+        todoItem.addEventListener('mouseout',  () => {closeTodoBtn.classList.add('hidden');});
 
-        closeTodo.addEventListener('click', () => {
+        closeTodoBtn.addEventListener('click', () => {
             todoItem.remove();
             updateLS();
-        });
-
-        // remove the new line when enter is pressed on the main todo element
-        const toDoInputText = todoItem.querySelector('.input-text');
-
-        todosUl.addEventListener('keypress', (e) => {
-            if (e.code === 'Enter' || e.keyCode === 13) {
-                e.preventDefault();
-                toDoInputText.setAttribute('contenteditable', 'false');
-                toDoInputText.setAttribute('contenteditable', 'true');
-                updateLS();
-              }
-        });
+        });      
 
         // show the Extendable div
         const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
@@ -154,66 +157,58 @@ function addTodo(el){
             }
         }); 
 
+        const subtaskContainer = todoItem.querySelector('.subtasks')
+
         if(el && el.subTasks){
               el.subTasks.forEach(subtask=> {
-                
-                    const subtaskContainer = todoItem.querySelector('.subtasks')
-                    const subtaskEl        = document.createElement('li');
-                    
-                    subtaskEl.classList.add('sub-task-item-li');
-                    
-                    if(el && el.subTasks){
-                        subtaskEl.innerHTML = subtask;
-                    } else {
-                        subtaskEl.innerHTML = subtaskInput.innerText;
-                    }
-                    subtaskInput.innerText = '';
-        
-                    subtaskContainer.appendChild(subtaskEl);
-        
-                    updateLS();
+                addSubtask(subtask)
               });
             }
 
-        
-        function addSubtask(el){
-            const subtaskContainer = todoItem.querySelector('.subtasks')
-            const subtaskEl        = document.createElement('li');
+        function addSubtask(subtask){
+            const subtaskEl = document.createElement('li');
+            let subtaskText = subtaskInput.innerHTML;
+
+            if(el && el.subTasks){
+                subtaskText = subtask;
+            }
             
             subtaskEl.classList.add('sub-task-item-li');
             
-            subtaskEl.innerHTML = subtaskInput.innerText;
-            
+            subtaskEl.innerHTML = `
+                <input type="checkbox" />
+                <span class="subtask-text">${subtaskText}</span>
+            `;
+   
             subtaskInput.innerText = '';
 
             subtaskContainer.appendChild(subtaskEl);
-
+            updateSubtasks();
             updateLS();
-        }
-
-         // completing/un-completing a todo
+        }        
+        
+        // completing/un-completing a todo
         const todoInputText    = todoItem.querySelector('.input-text');
         const todoItemCheckbox = todoItem.querySelector('input');
-
+        
         if(el && el.completed) {
             todoItemCheckbox.checked = true;
             todoInputText.classList.add('completed');  // then add the completed class 
             updateLS();
         }
-
+        
         todoItemCheckbox.addEventListener('click', () => {
             todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
             updateLS();
             countTodos();
             toolbarButtons();
         });     
-
+        
         countTodos();
         updateLS();
         input.value ='';
     }
 }
-
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
@@ -236,7 +231,7 @@ function updateLS() {
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
-            subTasks: subTasks
+            subTasks: subTasks,
         });
      });
 
@@ -244,6 +239,22 @@ function updateLS() {
     countTodos();
 }
 
+function updateSubtasks(){
+    const totalSubtasks = document.querySelectorAll('.sub-task-item-li');
+
+    totalSubtasks.forEach(subtaskItem => {
+        const subtaskCheckbox  = subtaskItem.querySelector('input');
+        const subtaskInputText = subtaskItem.querySelector('.subtask-text');
+
+        subtaskCheckbox.addEventListener('click', () => {
+            subtaskInputText.classList[subtaskInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+            subtaskItem.remove();
+            updateLS();
+        });
+    });
+}
+
+updateSubtasks();
 
 function countTodos() {
     const totalTodos     = document.querySelectorAll('.todo-item');
