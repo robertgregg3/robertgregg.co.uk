@@ -71,7 +71,7 @@ function addTodo(el){
         todoItem.innerHTML = ` 
             <input type="checkbox" class="spring"/>
             <span class="input-text" contenteditable="true">${todoText}</span>
-            <i class="fas fa-times close-todo hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
+            <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
             <span class="date-text"></span>
             <div class="todo-extend-div">
                 <div class="extended-todo-item sub-task-items">
@@ -126,8 +126,8 @@ function addTodo(el){
 
         // close todo button
         const closeTodoBtn = todoItem.querySelector('.close-todo');
-        todoItem.addEventListener('mouseover', () => {closeTodoBtn.classList.remove('hidden');});
-        todoItem.addEventListener('mouseout',  () => {closeTodoBtn.classList.add('hidden');});
+        todoItem.addEventListener('mouseover', () => {closeTodoBtn.classList.remove('close-hidden');});
+        todoItem.addEventListener('mouseout',  () => {closeTodoBtn.classList.add('close-hidden');});
 
         closeTodoBtn.addEventListener('click', () => {
             todoItem.remove();

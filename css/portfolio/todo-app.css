@@ -146,7 +146,6 @@ h1{
 .todo-item {
     width: 100%;
     background-color: #f4f9f8;
-    padding: 1rem;
     border-radius: 4px;
     box-shadow: 0 1px 2px rgb(0,0,0,0.4);
     margin-bottom: 0.4rem;
@@ -161,7 +160,7 @@ h1{
 }
 
 input[type="checkbox"] {
-    margin-right: 1rem;
+   margin:  1.2rem 1rem 0 1rem;
 }
 
 input[type="checkbox"]:before {
@@ -240,6 +239,13 @@ input[type="checkbox"]:before {
     pointer-events: none;
     margin: 0;
     padding: 0;
+}
+
+.close-hidden{
+    transition: all 200ms ease-in-out;
+    font-size: 0rem;
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
 .completed {
@@ -362,7 +368,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 .sub-task-item-li {
-    padding: 1rem 0 1rem 0.7rem;
+    padding: 0rem 0 1rem 0.7rem;
     border-bottom: 1px solid #cccccc80;
     background-color: #fff8f1;
     position: relative;
