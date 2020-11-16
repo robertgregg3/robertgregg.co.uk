@@ -234,8 +234,7 @@ function addPortfolioCategory() {
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
-                let items = pfCategory.innerText.toLowerCase();
-                item.classList[!item.classList.contains(items) ? 'add' : 'remove']('hidden');
+                item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
             });   
         }
         
