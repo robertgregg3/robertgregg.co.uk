@@ -139,7 +139,7 @@ function addTodo(el){
         // add subtasks
         const subtaskInput = todoItem.querySelector('.sub-task-item-input');
         
-        let subtaskInputClicked = false;
+        let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
         subtaskInput.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || e.keyCode === 13) {
                 subtaskInputClicked = true;
@@ -164,10 +164,9 @@ function addTodo(el){
             const subtaskEl = document.createElement('li');
             let subtaskText = subtaskInput.innerText;
 
-            if(el && el.subTasks && !subtaskInputClicked){
+            if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
                 subtaskText = subtask;
             }
-            
             subtaskEl.classList.add('sub-task-item-li');
             
             subtaskEl.innerHTML = `
@@ -226,7 +225,7 @@ function updateLS() {
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
-            subTasks: subTasks,
+            subTasks: subTasks
         });
      });
 
@@ -272,14 +271,12 @@ function countTodos() {
     `;
 }
 
-
 function toolbarButtons(){
     const totalTodos         = document.querySelectorAll('.input-text');
     const showAllBtn         = document.querySelector('#show-all');
     const showRemainingBtn   = document.querySelector('#show-remaining');
     const showCompletedBtn   = document.querySelector('#show-completed');
     const deleteCompletedBtn = document.querySelector('#delete-completed');
-    const allTodoSidebars    = document.querySelectorAll('.sb-todo');
 
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
@@ -303,18 +300,18 @@ function toolbarButtons(){
         totalTodos.forEach(todoToDelete => {
             if(todoToDelete.classList.contains('completed')){
                 todoToDelete.parentNode.remove();
-            }
-        });
-        allTodoSidebars.forEach(todoSidebar => {
-            const todoSidebarTitle = todoSidebar.querySelector('.sb-todo-title');
-            if(todoSidebarTitle.classList.contains('completed')){
-                todoSidebar.remove();
+                const totalTodosAfterDeleted = document.querySelectorAll('.input-text'); // delete a todo, grab all remaining & remove hidden class
+                totalTodosAfterDeleted.forEach(todoAfterDeleted => {
+                    todoAfterDeleted.parentNode.classList.remove('hidden');
+                })
+                updateLS();
             }
         });
         updateLS();
     });
 }
 
+toolbarButtons();
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');

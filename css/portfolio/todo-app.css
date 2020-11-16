@@ -318,7 +318,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
     width: 100%;
     min-height: 60px;
     font-size: 1rem;
-    padding-top: 1rem;
+    padding: 1rem;
     word-break: break-word;
 }
 
