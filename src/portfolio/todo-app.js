@@ -204,6 +204,8 @@ function addTodo(el){
     }
 }
 
+
+
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
     
@@ -222,11 +224,11 @@ function updateLS() {
             subTasks = subTasksElements.map((el) => el.innerText);
         }
 
-        for (let i=0; i<subTasks.length; i++){
+        for (let i=1; i<=subTasks.length; i++){
             subTaskNumbers.push('subtask' + [i]);
         }
 
-        console.log(subTaskNumbers);
+        console.log(subTaskNumbers, subTasks);
         
         todos.push({
             text: todoTexts.innerText,
@@ -239,6 +241,8 @@ function updateLS() {
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
 }
+
+
 
 function updateSubtasks(){
     const totalSubtasks = document.querySelectorAll('.sub-task-item-li');
