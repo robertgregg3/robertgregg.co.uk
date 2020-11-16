@@ -276,21 +276,22 @@ input[type="checkbox"]:before {
 }
 
 input[type="date"] {
-    padding: 0.5rem 2.5rem 0.5rem 0rem;
-    margin: 1rem 0;
+    padding: 0.5rem;
     border: 1px solid #ff9900;
     border-radius: 4px;
-    color: transparent;
-    width: 44px;
-    font-size: 1.5rem;
+    font-family: inherit;
+    font-size: 0.7rem;
+    overflow: visible;
+    width: 100%;
+    max-width: 140px;
 }
 
 input[type=date]::-webkit-clear-button,
 input[type=date]::-webkit-inner-spin-button,
 input[type=date]::-webkit-calendar-picker-indicator {
-    display: block;
+    /* display: block;
     position: absolute;
-    left: -0.9rem;
+    left: -0.9rem; */
 }
 
 .date-text {
@@ -308,18 +309,16 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 .sub-task-items {
-    padding: 0 1.7rem;
+    padding: 0 1.3rem;
     color: #333333;
     font-size: 1.5rem;
 }
 
 .sub-task-item-input {
     width: 100%;
-    margin-left: 1rem;
     min-height: 60px;
     font-size: 1rem;
     padding-top: 1rem;
-    padding-left: 0.5rem;
     word-break: break-word;
 }
 
@@ -336,7 +335,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
     border-top: 1px solid #33333330;
     margin-top: 1.2rem;
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 70% 30%;
 }
 
 .height-100{

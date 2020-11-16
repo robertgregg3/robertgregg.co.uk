@@ -5,7 +5,7 @@ Todo:
     3) Drag not working on mobile
     4) three dots options for todos and subtasks
     5) close button permanently there on mobile
-    6) Sort Hidding clos ebutton issue
+    6) Sort issues with safari
 
 Tests: 
     1) completed both side bar and main el - same after LS
@@ -75,10 +75,10 @@ function addTodo(el){
             <span class="date-text"></span>
             <div class="todo-extend-div">
                 <div class="extended-todo-item sub-task-items">
-                    <i class="fas fa-plus"></i><span class="sub-task-item-input" contenteditable="true" data-text="Add a subtask"></span>
+                    <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
                 </div>
                 <div class="extended-todo-item sb-todo-date">
-                    <input type="date" class="date" name="date" /><span class="date-text2">Set a Due Date?</span>
+                    <input type="date" class="date" name="date" />
                 </div>
                 <ul class="subtasks">
                 </ul>
@@ -103,24 +103,16 @@ function addTodo(el){
         // add a due date picker
         let dueDate   = todoItem.querySelector('.extended-todo-item input');
         let dateText  = todoItem.querySelector('.date-text');
-        let dateText2 = todoItem.querySelector('.date-text2');
         let months    = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        dateText2.innerText = 'Set a due date?';
-        dateText2.style.color = '#aaaaaa';
 
         if(el && el.duedate) {
             dateText.innerText  = el.duedate;
-            dateText2.innerText = el.duedate;
-            dateText2.style.color = '#333333';
         }
         
         dueDate.addEventListener('change', () => {
             let inputDate = dueDate.value;
             let inputtedDate = new Date(inputDate);
             dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
-            dateText2.innerText = inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
-            dateText2.style.color = '#333333';
             updateLS();
         });
 
@@ -146,13 +138,16 @@ function addTodo(el){
 
         // add subtasks
         const subtaskInput = todoItem.querySelector('.sub-task-item-input');
-               
+        
+        let subtaskInputClicked = false;
         subtaskInput.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || e.keyCode === 13) {
+                subtaskInputClicked = true;
                 e.preventDefault();
                 subtaskInput.setAttribute('contenteditable', 'false');
                 subtaskInput.setAttribute('contenteditable', 'true');
-                addSubtask();
+                addSubtask(subtaskInputClicked);
+                subtaskInputClicked = false;
                 updateLS();
             }
         }); 
@@ -161,15 +156,15 @@ function addTodo(el){
 
         if(el && el.subTasks){
               el.subTasks.forEach(subtask=> {
-                addSubtask(subtask)
+                addSubtask(subtask);
               });
             }
 
         function addSubtask(subtask){
             const subtaskEl = document.createElement('li');
-            let subtaskText = subtaskInput.innerHTML;
+            let subtaskText = subtaskInput.innerText;
 
-            if(el && el.subTasks){
+            if(el && el.subTasks && !subtaskInputClicked){
                 subtaskText = subtask;
             }
             
