@@ -223,18 +223,16 @@ function updateLS() {
             const subTasksElements = [...subtaskEls];
             subTasks = subTasksElements.map((el) => el.innerText);
         }
-
-        for (let i=1; i<=subTasks.length; i++){
-            subTaskNumbers.push('subtask' + [i]);
-        }
-
-        console.log(subTaskNumbers, subTasks);
         
+        let subTasksAndNumbers = {};
+
+        subTaskNumbers.forEach((subTaskNumbers, i) => subTasksAndNumbers[subTaskNumbers] = subTasks[i]);
+  
         todos.push({
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
-            subTasks: subTasks
+            subTasksAndNumbers
         });
      });
 
