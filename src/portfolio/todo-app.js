@@ -215,11 +215,18 @@ function updateLS() {
         const subtaskEls       = todoEl.querySelectorAll('.sub-task-item-li'); 
         
         let subTasks = [];
+        let subTaskNumbers = [];
             
         if(subtaskEls) {
             const subTasksElements = [...subtaskEls];
             subTasks = subTasksElements.map((el) => el.innerText);
         }
+
+        for (let i=0; i<subTasks.length; i++){
+            subTaskNumbers.push('subtask' + [i]);
+        }
+
+        console.log(subTaskNumbers);
         
         todos.push({
             text: todoTexts.innerText,
@@ -311,8 +318,6 @@ function toolbarButtons(){
     });
 }
 
-toolbarButtons();
-
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
     const container  = document.getElementById('todos-ul');
@@ -356,6 +361,50 @@ function dragItems() {
 }
 
 dragItems();
+
+function dragItemsMobile() {
+    const draggables = document.querySelectorAll('.draggable');
+    const container  = document.getElementById('todos-ul');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('touchstart', () => {
+            draggable.classList.add('dragging');
+        });
+
+        draggable.addEventListener('touchend', () => {
+            draggable.classList.remove('dragging');
+        });
+    });
+
+    container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
+        const draggable = document.querySelector('.dragging');
+        if(afterElement == null ){
+            container.appendChild(draggable);
+            updateLS();
+        } else {
+            container.insertBefore(draggable, afterElement);
+            updateLS();
+        }
+    });
+
+    function placeElementWhereDragging(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+        
+        return draggableElements.reduce((nearest, child) => {
+            const box    = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > nearest.offset) {
+                return { offset: offset, element: child }
+            } else {
+                return nearest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+}
+
+dragItemsMobile();
 
 function hideSidebar() {
     const allSidebars = document.querySelectorAll('.sb-todo');
