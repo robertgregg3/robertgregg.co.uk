@@ -154,11 +154,11 @@ function addTodo(el){
 
         const subtaskContainer = todoItem.querySelector('.subtasks')
 
-        if(el && el.subTasks){
-              el.subTasks.forEach(subtask=> {
-                addSubtask(subtask);
-              });
-            }
+        // if(el && el.subTasks){
+        //       el.subTasks.forEach(subtask=> {
+        //         addSubtask(subtask);
+        //       });
+        //     }
 
         function addSubtask(subtask){
             const subtaskEl = document.createElement('li');
@@ -212,33 +212,58 @@ function updateLS() {
     const todos = [];
 
     todosEls.forEach(todoEl => {
-        const todoTexts        = todoEl.querySelector('.input-text');
-        const todoDate         = todoEl.querySelector('.date-text'); 
-        const subtaskEls       = todoEl.querySelectorAll('.sub-task-item-li'); 
+        const todoTexts  = todoEl.querySelector('.input-text');
+        const todoDate   = todoEl.querySelector('.date-text'); 
+        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
         
         let subTasks = [];
-        let subTaskNumbers = [];
-            
+        let subTaskNums = [];
+        let subTasksAndNumbers = [];
+
         if(subtaskEls) {
             const subTasksElements = [...subtaskEls];
             subTasks = subTasksElements.map((el) => el.innerText);
         }
         
-        let subTasksAndNumbers = {};
+        for (let i=1; i<=subTasks.length; i++){
+            subTaskNums.push('subtask'+[i]);
+        }
 
-        subTaskNumbers.forEach((subTaskNumbers, i) => subTasksAndNumbers[subTaskNumbers] = subTasks[i]);
-  
-        todos.push({
-            text: todoTexts.innerText,
-            completed: todoTexts.classList.contains('completed'),
-            duedate: todoDate.innerText,
-            subTasksAndNumbers
-        });
-     });
+        if(subtaskEls) {
+            subTasksAndNumbers = subTaskNums.reduce((o, k, i) => ({...o, [k]: subTasks[i]}), {})
 
+            todos.push({
+                text: todoTexts.innerText,
+                completed: todoTexts.classList.contains('completed'),
+                duedate: todoDate.innerText,
+                subTasks: subTasksAndNumbers
+            });
+        } else {
+            todos.push({
+                text: todoTexts.innerText,
+                completed: todoTexts.classList.contains('completed'),
+                duedate: todoDate.innerText
+            });
+        }
+    });
+    
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
 }
+
+
+
+// {
+//     text: todoTexts.innerText,
+//     completed: todoTexts.classList.contains('completed'),
+//     duedate: todoDate.innerText,
+//     subTasks: [
+//         { subtask1 : 'This is the subtask text', completed: true },
+//         { subtask2 : 'This is the subtask text', completed: true },
+//         { subtask3 : 'This is the subtask text', completed: true },
+//     ];
+
+// }
 
 
 
