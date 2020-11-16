@@ -79,8 +79,8 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'uiux',
-        skill7: 'wordpress',
-        skill8: 'websites',
+        skill5: 'wordpress',
+        skill6: 'websites',
         details: 'This website was created with a wordpress theme. Dealing with the client from beginning to completion',
         url: 'http://www.takt.co.uk'    
     },
@@ -234,6 +234,7 @@ function addPortfolioCategory() {
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
+                String(item);
                 item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
             });   
         }
