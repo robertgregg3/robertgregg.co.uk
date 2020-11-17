@@ -219,6 +219,47 @@ function addTodo(el){
     }
 }
 
+// today....... YOU NEED TO WORK OUT HOW TO GET 
+// THE SUBTASKS TO EACH BE IN THEIR OWN OBJECT
+
+//this...
+/*
+{
+    text: "Todo", 
+    completed: false, 
+    duedate: "",
+    subTasks: {
+        Subtask1: sub1 test"
+        Subtask2: sub2 text"
+    }
+}
+
+needs to become: 
+
+{
+    text: "Todo", 
+    completed: false, 
+    duedate: "",
+    subTasks1: {
+        text: sub1 test"
+        completed: true"
+    }
+    subTasks2: {
+        text: sub2 test"
+        completed: false"
+    }
+}
+
+I think it will be done in stages:
+
+1) get the subtask text and stor in an array []
+2) create the subtask indexes like I already did:[1,2,3,4 etc]
+
+Every subtask that is created needs to create a new object.
+That object gets pushed to the array. Just like the original one before subtasks.
+
+Good luck
+*/
 
 
 function updateLS() {
@@ -227,13 +268,13 @@ function updateLS() {
     const todos = [];
 
     todosEls.forEach(todoEl => {
-        const todoTexts  = todoEl.querySelector('.input-text');
-        const todoDate   = todoEl.querySelector('.date-text'); 
-        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
+        const todoTexts  = todoEl.querySelector('.input-text'); // store the input text as the todo
+        const todoDate   = todoEl.querySelector('.date-text');  // store the date
+        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li');  
         
-        let subTasks = [];
-        let subTaskNums = [];
-        let subTasksAndNumbers = [];
+        let subTasks = [];  // empty array containing all of the strings from the inputted subtasks
+        let subTaskNums = []; // an array to have the subtask1, subtask2 etc
+        let subTasksAndNumbers = []; // an empty array that ends up getting mapped to an object
 
         if(subtaskEls) {
             const subTasksElements = [...subtaskEls];
@@ -245,8 +286,10 @@ function updateLS() {
         }
 
         if(subtaskEls) {
-            subTasksAndNumbers = subTaskNums.reduce((o, k, i) => ({...o, [k]: subTasks[i]}), {})
-
+            for(let i=0; i<subtaskEls.length; i++){
+                subTasksAndNumbers = subTasks.map(subTask => ({subtask : subTask}));
+            }
+console.log(subTasksAndNumbers)
             todos.push({
                 text: todoTexts.innerText,
                 completed: todoTexts.classList.contains('completed'),
