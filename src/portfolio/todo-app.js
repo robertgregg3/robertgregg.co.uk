@@ -159,20 +159,6 @@ function addTodo(el){
            }
         };
 
-
-// {
-//     text: todoTexts.innerText,
-//     completed: todoTexts.classList.contains('completed'),
-//     duedate: todoDate.innerText,
-//     subTasks: [
-//         { subtask1 : 'This is the subtask text', completed: true },
-//         { subtask2 : 'This is the subtask text', completed: true },
-//         { subtask3 : 'This is the subtask text', completed: true },
-//     ];
-
-// }
-
-
         function addSubtask(key){
             const subtaskContainer = todoItem.querySelector('.subtasks')
 
@@ -192,6 +178,16 @@ function addTodo(el){
             subtaskInput.innerText = '';
 
             subtaskContainer.appendChild(subtaskEl);
+
+            // if(el && el.subTasks && !subtaskInputClicked){
+            //     const subtaskOutput       = subtaskEl.querySelector('.subtask-text');
+            //     const subtaskItemCheckbox = subtaskEl.querySelector('.input');
+            //     subtaskItemCheckbox.addEventListener('click', () => {
+            //         subtaskOutput.classList.add('completed');
+            //         subtaskItemCheckbox.checked;
+            //     });
+            // }
+
             updateSubtasks();
             updateLS();
         }        
@@ -219,48 +215,6 @@ function addTodo(el){
     }
 }
 
-// today....... YOU NEED TO WORK OUT HOW TO GET 
-// THE SUBTASKS TO EACH BE IN THEIR OWN OBJECT
-
-//this...
-/*
-{
-    text: "Todo", 
-    completed: false, 
-    duedate: "",
-    subTasks: {
-        Subtask1: sub1 test"
-        Subtask2: sub2 text"
-    }
-}
-
-needs to become: 
-
-{
-    text: "Todo", 
-    completed: false, 
-    duedate: "",
-    subTasks1: {
-        text: sub1 test"
-        completed: true"
-    }
-    subTasks2: {
-        text: sub2 test"
-        completed: false"
-    }
-}
-
-I think it will be done in stages:
-
-1) get the subtask text and stor in an array []
-2) create the subtask indexes like I already did:[1,2,3,4 etc]
-
-Every subtask that is created needs to create a new object.
-That object gets pushed to the array. Just like the original one before subtasks.
-
-Good luck
-*/
-
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
@@ -287,9 +241,10 @@ function updateLS() {
 
         if(subtaskEls) {
             subtaskEls.forEach(subtaskEl => {
+                const subtaskOutput = subtaskEl.querySelector('.subtask-text');
                 subTasksAndNumbers = subTasks.map(subTask => ({
                     subtask : subTask,
-                    subtaskCompleted: subtaskEl.classList.contains('completed')
+                    subtaskCompleted: subtaskOutput.classList.contains('completed')
                 }));
             });
 console.log(subTasksAndNumbers)
@@ -324,7 +279,6 @@ function updateSubtasks(){
 
         subtaskCheckbox.addEventListener('click', () => {
             subtaskInputText.classList[subtaskInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
-            subtaskItem.remove();
             updateLS();
         });
     });
