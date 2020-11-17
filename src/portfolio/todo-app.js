@@ -286,9 +286,12 @@ function updateLS() {
         }
 
         if(subtaskEls) {
-            for(let i=0; i<subtaskEls.length; i++){
-                subTasksAndNumbers = subTasks.map(subTask => ({subtask : subTask}));
-            }
+            subtaskEls.forEach(subtaskEl => {
+                subTasksAndNumbers = subTasks.map(subTask => ({
+                    subtask : subTask,
+                    subtaskCompleted: subtaskEl.classList.contains('completed')
+                }));
+            });
 console.log(subTasksAndNumbers)
             todos.push({
                 text: todoTexts.innerText,
