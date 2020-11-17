@@ -160,27 +160,41 @@ function addTodo(el){
         };
 
         function addSubtask(key){
-            const subtaskContainer = todoItem.querySelector('.subtasks')
-
+            const subtaskContainer = todoItem.querySelector('.subtasks');
+            
             const subtaskEl = document.createElement('li');
             let subtaskText = subtaskInput.innerText;
-
-            if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
-                subtaskText = el.subTasks[key];
+            
+            // if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
+            if(el && el.subTasks){ // the ! is for when the page loads and then you add a new subtask
+                el.subTasks.forEach(subT => {
+                      for (let i=0; i<subT.length; i++){
+                          subtaskText = subT[i].subtask;
+                      }
+                });
             }
             subtaskEl.classList.add('sub-task-item-li');
             
             subtaskEl.innerHTML = `
-                <input type="checkbox" />
-                <span class="subtask-text">${subtaskText}</span>
+            <input type="checkbox" />
+            <span class="subtask-text">${subtaskText}</span>
             `;
-   
+            
             subtaskInput.innerText = '';
+            
+            if(el && el.subTasks){
+                el.subTasks.forEach(subT => {
+                    const subtaskOutput = subtaskEl.querySelector('.subtask-text');
+                    if(subT.subtaskCompleted){
+                        subtaskOutput.classList.add('completed');
+                    }
+                });
+            }
 
             subtaskContainer.appendChild(subtaskEl);
 
             // if(el && el.subTasks && !subtaskInputClicked){
-            //     const subtaskOutput       = subtaskEl.querySelector('.subtask-text');
+            //    
             //     const subtaskItemCheckbox = subtaskEl.querySelector('.input');
             //     subtaskItemCheckbox.addEventListener('click', () => {
             //         subtaskOutput.classList.add('completed');
@@ -226,17 +240,18 @@ function updateLS() {
         const todoDate   = todoEl.querySelector('.date-text');  // store the date
         const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li');  
         
-        let subTasks = [];  // empty array containing all of the strings from the inputted subtasks
-        let subTaskNums = []; // an array to have the subtask1, subtask2 etc
-        let subTasksAndNumbers = []; // an empty array that ends up getting mapped to an object
+        let subTasks = [];  // empty array containing All of the strings from the inputted subtasks
+        let subTaskNums = []; // an array to have the subtask1, subtask2 etc for mapping later
+        let subTasksAndNumbers = []; // an empty array that ends up getting mapped to an object using the above
 
         if(subtaskEls) {
-            const subTasksElements = [...subtaskEls];
-            subTasks = subTasksElements.map((el) => el.innerText);
+            const subTasksElements = [...subtaskEls]; // turns the nodelist into an array with each element containing "li.sub-task-item-li"
+            subTasks = subTasksElements.map((el) => el.innerText); // convert the subTask array so that each element contains the innerText of the above
+            // the map method is more modern, less code than the for each loop. 
         }
         
         for (let i=1; i<=subTasks.length; i++){
-            subTaskNums.push('subtask'+[i]);
+            subTaskNums.push('subtask'+[i]);  // subTaskNums now contains the strings []
         }
 
         if(subtaskEls) {
@@ -247,7 +262,6 @@ function updateLS() {
                     subtaskCompleted: subtaskOutput.classList.contains('completed')
                 }));
             });
-console.log(subTasksAndNumbers)
             todos.push({
                 text: todoTexts.innerText,
                 completed: todoTexts.classList.contains('completed'),
