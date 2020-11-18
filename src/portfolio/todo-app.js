@@ -157,10 +157,10 @@ function addTodo(el){
         
         if(el && el.subTasks){
             el.subTasks.forEach(test => {
-                // console.log(test)
+                console.log(test)
             });
            }
-       
+        
 
 
         
@@ -180,6 +180,10 @@ function addTodo(el){
             
             if(el && el.subTasks && !subtaskInputClicked){
                 subtaskText = el.subTasks[i].subtask;
+                if(el.subTasks[i].subtaskCompleted){
+                    subtaskClass = 'completed';
+                    boxChecked = 'checked';
+                }
             }
               
             subtaskEl.classList.add('sub-task-item-li');
@@ -193,15 +197,6 @@ function addTodo(el){
             
             const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
             const subtaskCheckbox = subtaskEl.querySelector('input');
-
-            if(el && el.subTasks){
-                el.subTasks.forEach(test => {
-                    if(test.subtaskCompleted){
-                        subtaskCheckbox.checked;
-                        subtaskOutput.classList.add('completed');                    
-                    }
-                });
-            }
 
     
             subtaskCheckbox.addEventListener('click', () => {
@@ -236,8 +231,6 @@ function addTodo(el){
         input.value ='';
     }
 }
-
-
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
