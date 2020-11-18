@@ -162,34 +162,43 @@ function addTodo(el){
         function addSubtask(i){
             const subtaskContainer = todoItem.querySelector('.subtasks');
             
-            const subtaskEl = document.createElement('li');
-            let subtaskText = subtaskInput.innerText;
+            const subtaskEl  = document.createElement('li');
+            let subtaskText  = subtaskInput.innerText;
+            let subtaskClass = '';
+            let boxChecked   = '';
             
             if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
                 subtaskText = el.subTasks[i].subtask;
+            }
+            if(el && el.subTasks && !subtaskInputClicked){
+                el.subTasks.forEach(subT => { // subT is subtaskEl in the LocalStorage function
+                    if(subT.subtaskCompleted){
+                        subtaskClass = 'completed';
+                        boxChecked = 'checked';
+                    }
+                });
             }
               
             subtaskEl.classList.add('sub-task-item-li');
 
             subtaskEl.innerHTML = `
-            <input type="checkbox" />
-            <span class="subtask-text">${subtaskText}</span>
+            <input type="checkbox" ${boxChecked}/>
+            <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
             `;
             
             subtaskInput.innerText = '';
+            
+            const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
+            const subtaskCheckbox = subtaskEl.querySelector('input');
 
-            // if(el && el.subTasks && !subtaskInputClicked){
-            //     el.subTasks.forEach(subT => { // subT ois subtaskEl in the LocalStorage function
-            //         const subtaskOutput = subtaskEl.querySelector('.subtask-text');
-            //         if(subT.subtaskCompleted){
-            //             subtaskOutput.classList.add('completed');
-            //         }
-            //     });
-            // }
+    
+            subtaskCheckbox.addEventListener('click', () => {
+                subtaskOutput.classList[subtaskOutput.classList.contains('completed') ? 'remove' : 'add']('completed');
+                updateLS();
+            });
 
             subtaskContainer.appendChild(subtaskEl);
 
-            updateSubtasks();
             updateLS();
         }        
         
@@ -255,37 +264,13 @@ function updateLS() {
                 duedate: todoDate.innerText,
                 subTasks: subTasksAndNumbers
             });
-        } else {
-            todos.push({
-                text: todoTexts.innerText,
-                completed: todoTexts.classList.contains('completed'),
-                duedate: todoDate.innerText
-            });
-        }
+        } 
     });
     
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
 }
 
-
-
-
-function updateSubtasks(){
-    const totalSubtasks = document.querySelectorAll('.sub-task-item-li');
-
-    totalSubtasks.forEach(subtaskItem => {
-        const subtaskCheckbox  = subtaskItem.querySelector('input');
-        const subtaskInputText = subtaskItem.querySelector('.subtask-text');
-
-        subtaskCheckbox.addEventListener('click', () => {
-            subtaskInputText.classList[subtaskInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
-            updateLS();
-        });
-    });
-}
-
-updateSubtasks();
 
 function countTodos() {
     const totalTodos     = document.querySelectorAll('.todo-item');
