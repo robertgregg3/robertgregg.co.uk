@@ -153,6 +153,17 @@ function addTodo(el){
         }); 
 
 
+
+        
+        if(el && el.subTasks){
+            el.subTasks.forEach(test => {
+                // console.log(test)
+            });
+           }
+       
+
+
+        
         if(el && el.subTasks){
             for (let i=0; i<el.subTasks.length; i++){
                addSubtask(i);
@@ -167,16 +178,8 @@ function addTodo(el){
             let subtaskClass = '';
             let boxChecked   = '';
             
-            if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
-                subtaskText = el.subTasks[i].subtask;
-            }
             if(el && el.subTasks && !subtaskInputClicked){
-                el.subTasks.forEach(subT => { // subT is subtaskEl in the LocalStorage function
-                    if(subT.subtaskCompleted){
-                        subtaskClass = 'completed';
-                        boxChecked = 'checked';
-                    }
-                });
+                subtaskText = el.subTasks[i].subtask;
             }
               
             subtaskEl.classList.add('sub-task-item-li');
@@ -190,6 +193,15 @@ function addTodo(el){
             
             const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
             const subtaskCheckbox = subtaskEl.querySelector('input');
+
+            if(el && el.subTasks){
+                el.subTasks.forEach(test => {
+                    if(test.subtaskCompleted){
+                        subtaskCheckbox.checked;
+                        subtaskOutput.classList.add('completed');                    
+                    }
+                });
+            }
 
     
             subtaskCheckbox.addEventListener('click', () => {
@@ -226,6 +238,7 @@ function addTodo(el){
 }
 
 
+
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
     
@@ -236,35 +249,24 @@ function updateLS() {
         const todoDate   = todoEl.querySelector('.date-text');  // store the date
         const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li');  
         
-        let subTasks = [];  // empty array containing All of the strings from the inputted subtasks
-        let subTaskNums = []; // an array to have the subtask1, subtask2 etc for mapping later
-        let subTasksAndNumbers = []; // an empty array that ends up getting mapped to an object using the above
-
-        if(subtaskEls) {
-            const subTasksElements = [...subtaskEls]; // turns the nodelist into an array with each element containing "li.sub-task-item-li"
-            subTasks = subTasksElements.map((el) => el.innerText); // convert the subTask array so that each element contains the innerText of the above
-            // the map method is more modern, less code than the for each loop. 
-        }
+        let subTasksMap = []; // an empty array that ends up getting mapped to an object using the above
         
-        for (let i=1; i<=subTasks.length; i++){
-            subTaskNums.push('subtask'+[i]);  // subTaskNums now contains the strings []
-        }
-
         if(subtaskEls) {
             subtaskEls.forEach(subtaskEl => {
                 const subtaskOutput = subtaskEl.querySelector('.subtask-text');
-                subTasksAndNumbers = subTasks.map(subTask => ({
-                    subtask : subTask,
+
+                subTasksMap.push({
+                    subtask : subtaskOutput.innerText,
                     subtaskCompleted: subtaskOutput.classList.contains('completed')
-                }));
+                });
             });
-            todos.push({
-                text: todoTexts.innerText,
-                completed: todoTexts.classList.contains('completed'),
-                duedate: todoDate.innerText,
-                subTasks: subTasksAndNumbers
-            });
-        } 
+        }
+        todos.push({
+            text: todoTexts.innerText,
+            completed: todoTexts.classList.contains('completed'),
+            duedate: todoDate.innerText,
+            subTasks: subTasksMap
+        }); 
     });
     
     localStorage.setItem('todos', JSON.stringify(todos));
