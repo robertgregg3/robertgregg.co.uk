@@ -154,53 +154,40 @@ function addTodo(el){
 
 
         if(el && el.subTasks){
-           for (let key in el.subTasks){
-               addSubtask(key, el.subTasks[key]);
+            for (let i=0; i<el.subTasks.length; i++){
+               addSubtask(i);
            }
         };
 
-        function addSubtask(key){
+        function addSubtask(i){
             const subtaskContainer = todoItem.querySelector('.subtasks');
             
             const subtaskEl = document.createElement('li');
             let subtaskText = subtaskInput.innerText;
             
-            // if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
-            if(el && el.subTasks){ // the ! is for when the page loads and then you add a new subtask
-                el.subTasks.forEach(subT => {
-                      for (let i=0; i<subT.length; i++){
-                          subtaskText = subT[i].subtask;
-                      }
-                });
+            if(el && el.subTasks && !subtaskInputClicked){ // the ! is for when the page loads and then you add a new subtask
+                subtaskText = el.subTasks[i].subtask;
             }
+              
             subtaskEl.classList.add('sub-task-item-li');
-            
+
             subtaskEl.innerHTML = `
             <input type="checkbox" />
             <span class="subtask-text">${subtaskText}</span>
             `;
             
             subtaskInput.innerText = '';
-            
-            if(el && el.subTasks){
-                el.subTasks.forEach(subT => {
-                    const subtaskOutput = subtaskEl.querySelector('.subtask-text');
-                    if(subT.subtaskCompleted){
-                        subtaskOutput.classList.add('completed');
-                    }
-                });
-            }
-
-            subtaskContainer.appendChild(subtaskEl);
 
             // if(el && el.subTasks && !subtaskInputClicked){
-            //    
-            //     const subtaskItemCheckbox = subtaskEl.querySelector('.input');
-            //     subtaskItemCheckbox.addEventListener('click', () => {
-            //         subtaskOutput.classList.add('completed');
-            //         subtaskItemCheckbox.checked;
+            //     el.subTasks.forEach(subT => { // subT ois subtaskEl in the LocalStorage function
+            //         const subtaskOutput = subtaskEl.querySelector('.subtask-text');
+            //         if(subT.subtaskCompleted){
+            //             subtaskOutput.classList.add('completed');
+            //         }
             //     });
             // }
+
+            subtaskContainer.appendChild(subtaskEl);
 
             updateSubtasks();
             updateLS();
