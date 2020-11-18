@@ -386,3 +386,21 @@ input[type=date]::-webkit-calendar-picker-indicator {
     font-size: 1.4rem;
     color: #11111199;
 }
+/* 
+.subtask-btn {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    max-width: 50px;
+    top: 25%;
+    border-right: 1px solid #ccc;
+    height: 30px;
+}
+
+.edit {
+    margin-right: 2rem;
+}
+
+.favorite {
+    margin-right: -2.5rem;
+} */

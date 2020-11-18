@@ -6,6 +6,7 @@ Todo:
     4) three dots options for todos and subtasks
     5) close button permanently there on mobile
     6) Sort issues with safari
+    7) add a favorite star icon and add a view favorites button
 
 Tests: 
     1) completed both side bar and main el - same after LS
@@ -16,9 +17,7 @@ Tests:
 when form posts: 
     1) add todo to the window. 
     2) Add to local storage 
-*/
-
-// TODO: add a favorite star icon and add a view favorites button
+*/ 
 
 const form                = document.getElementById('form');
 const input               = document.getElementById('item');
@@ -151,37 +150,25 @@ function addTodo(el){
                 updateLS();
             }
         }); 
-
-
-
-        
-        if(el && el.subTasks){
-            el.subTasks.forEach(test => {
-                console.log(test)
-            });
-           }
-        
-
-
-        
+      
         if(el && el.subTasks){
             for (let i=0; i<el.subTasks.length; i++){
-               addSubtask(i);
+               addSubtask(i);  // passing i when we crerate a subtask 
            }
         };
 
-        function addSubtask(i){
+        function addSubtask(i){  // using i to create the subtasks from local storage
             const subtaskContainer = todoItem.querySelector('.subtasks');
             
             const subtaskEl  = document.createElement('li');
-            let subtaskText  = subtaskInput.innerText;
-            let subtaskClass = '';
-            let boxChecked   = '';
+            let subtaskText  = subtaskInput.innerText; // subtask inpout declared above where you enter the subtask text
+            let subtaskClass = ''; // empty if the subtask is just being created
+            let boxChecked   = ''; // empty if the subtask is just being created
             
-            if(el && el.subTasks && !subtaskInputClicked){
-                subtaskText = el.subTasks[i].subtask;
-                if(el.subTasks[i].subtaskCompleted){
-                    subtaskClass = 'completed';
+            if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
+                subtaskText = el.subTasks[i].subtask; // then the subtask text will be whichever subtask is being parsed using i
+                if(el.subTasks[i].subtaskCompleted){ // then if the subtask has a completed class (true)
+                    subtaskClass = 'completed'; // modify the variables declared above
                     boxChecked = 'checked';
                 }
             }
@@ -191,14 +178,21 @@ function addTodo(el){
             subtaskEl.innerHTML = `
             <input type="checkbox" ${boxChecked}/>
             <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
+          
             `;
+            
+              // <div class="subtask-btns">
+            //     <span class="subtask-btn edit">E</span>
+            //     <span class="subtask-btn delete">D</span>
+            //     <span class="subtask-btn favorite">F</span>
+            // </div>
             
             subtaskInput.innerText = '';
             
             const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
             const subtaskCheckbox = subtaskEl.querySelector('input');
 
-    
+            // toggle the check box and classes
             subtaskCheckbox.addEventListener('click', () => {
                 subtaskOutput.classList[subtaskOutput.classList.contains('completed') ? 'remove' : 'add']('completed');
                 updateLS();
@@ -240,25 +234,25 @@ function updateLS() {
     todosEls.forEach(todoEl => {
         const todoTexts  = todoEl.querySelector('.input-text'); // store the input text as the todo
         const todoDate   = todoEl.querySelector('.date-text');  // store the date
-        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li');  
+        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); // grab all of the subtask items
         
-        let subTasksMap = []; // an empty array that ends up getting mapped to an object using the above
+        let subtasks = []; // an empty array that will eventually contain objects of teh subtask / completed status
         
-        if(subtaskEls) {
-            subtaskEls.forEach(subtaskEl => {
-                const subtaskOutput = subtaskEl.querySelector('.subtask-text');
+        if(subtaskEls) { // if there are subtasks
+            subtaskEls.forEach(subtaskEl => {  // for each subtask
+                const subtaskOutput = subtaskEl.querySelector('.subtask-text'); // assign the element that contains the subtask text
 
-                subTasksMap.push({
+                subtasks.push({  // add each subtask + the completed status to the subtasks array above. 
                     subtask : subtaskOutput.innerText,
                     subtaskCompleted: subtaskOutput.classList.contains('completed')
                 });
             });
-        }
+        }  // what is pushed whether there are subtasks or not. If no subtasks then subtasks will just be an empty array
         todos.push({
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
-            subTasks: subTasksMap
+            subTasks: subtasks
         }); 
     });
     
