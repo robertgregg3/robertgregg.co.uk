@@ -135,7 +135,7 @@ function addTodo(el){
             expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
         });
 
-        // add subtasks
+        // add subtasks Input
         const subtaskInput = todoItem.querySelector('.sub-task-item-input');
         
         let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
@@ -145,7 +145,7 @@ function addTodo(el){
                 e.preventDefault();
                 subtaskInput.setAttribute('contenteditable', 'false');
                 subtaskInput.setAttribute('contenteditable', 'true');
-                addSubtask(subtaskInputClicked);
+                createSubtask(subtaskInputClicked);
                 subtaskInputClicked = false;
                 updateLS();
             }
@@ -153,23 +153,27 @@ function addTodo(el){
       
         if(el && el.subTasks){
             for (let i=0; i<el.subTasks.length; i++){
-               addSubtask(i);  // passing i when we crerate a subtask 
+               createSubtask(i);  
            }
         };
 
-        function addSubtask(i){  // using i to create the subtasks from local storage
+        function createSubtask(i){  
             const subtaskContainer = todoItem.querySelector('.subtasks');
             
             const subtaskEl  = document.createElement('li');
-            let subtaskText  = subtaskInput.innerText; // subtask inpout declared above where you enter the subtask text
-            let subtaskClass = ''; // empty if the subtask is just being created
-            let boxChecked   = ''; // empty if the subtask is just being created
+            let subtaskText  = subtaskInput.innerText; 
+            let subtaskClass = ''; 
+            let boxChecked   = ''; 
+            let favorited    = '';
             
             if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
-                subtaskText = el.subTasks[i].subtask; // then the subtask text will be whichever subtask is being parsed using i
-                if(el.subTasks[i].subtaskCompleted){ // then if the subtask has a completed class (true)
-                    subtaskClass = 'completed'; // modify the variables declared above
+                subtaskText = el.subTasks[i].subtask; 
+                if(el.subTasks[i].subtaskCompleted){ 
+                    subtaskClass = 'completed'; 
                     boxChecked = 'checked';
+                }
+                if(el.subTasks[i].subtaskFavorited){
+                    favorited = 'favorited';
                 }
             }
               
@@ -178,19 +182,24 @@ function addTodo(el){
             subtaskEl.innerHTML = `
             <input type="checkbox" ${boxChecked}/>
             <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
-          
+            <div class="subtask-btns">
+                <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
+                <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
+                <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
+                <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
+            </div>          
             `;
-            
-              // <div class="subtask-btns">
-            //     <span class="subtask-btn edit">E</span>
-            //     <span class="subtask-btn delete">D</span>
-            //     <span class="subtask-btn favorite">F</span>
-            // </div>
-            
+                
             subtaskInput.innerText = '';
             
-            const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
-            const subtaskCheckbox = subtaskEl.querySelector('input');
+            const subtaskOutput      = subtaskEl.querySelector('.subtask-text');
+            const subtaskCheckbox    = subtaskEl.querySelector('input');
+            const subtaskBtns        = subtaskEl.querySelector('.subtask-btns')
+            const subtaskEditBtn     = subtaskBtns.querySelector('.edit');
+            const subtaskDeleteBtn   = subtaskBtns.querySelector('.delete');
+            const subtaskFavoriteBtn = subtaskBtns.querySelector('.favorite');
+            const subtaskSaveBtn     = subtaskBtns.querySelector('.save');
+
 
             // toggle the check box and classes
             subtaskCheckbox.addEventListener('click', () => {
@@ -198,10 +207,54 @@ function addTodo(el){
                 updateLS();
             });
 
+            // subtask buttons
+           
+            subtaskEditBtn.addEventListener('click', () => {
+                subtaskOutput.setAttribute('contenteditable', 'true');
+                subtaskOutput.classList.add('editable');
+                subtaskSaveBtn.classList.remove('hidden');
+                subtaskEditBtn.classList.add('hidden');
+                subtaskDeleteBtn.style.marginLeft = '1.05rem';
+            });
+            subtaskDeleteBtn.addEventListener('click', () => {
+                subtaskEl.remove();
+                updateLS();
+            });         
+
+             // editing the subtasks
+             subtaskOutput.addEventListener('keypress', (e) => {
+                if (e.code === 'Enter' || e.keyCode === 13) {
+                    e.preventDefault();
+                    subtaskOutput.setAttribute('contenteditable', 'false');
+                    subtaskOutput.classList.remove('editable');
+                    subtaskSaveBtn.classList.add('hidden');
+                    subtaskEditBtn.classList.remove('hidden');
+                    subtaskDeleteBtn.style.marginLeft = '0rem';
+                    updateLS();
+                }
+            }); 
+
+            // saving the subtask (with button rather than pressing enter - above)
+            subtaskSaveBtn.addEventListener('click', () => {
+                subtaskOutput.setAttribute('contenteditable', 'false');
+                subtaskOutput.classList.remove('editable');
+                subtaskSaveBtn.classList.add('hidden');
+                subtaskEditBtn.classList.remove('hidden');
+                subtaskDeleteBtn.style.marginLeft = '0rem';
+                updateLS();
+            }); 
+
+            subtaskFavoriteBtn.addEventListener('click', () => {
+                subtaskFavoriteBtn.classList[subtaskFavoriteBtn.classList.contains('favorited') ? 'remove' : 'add']('favorited');
+                updateLS();
+            })
+
             subtaskContainer.appendChild(subtaskEl);
 
             updateLS();
-        }        
+        }
+        
+       
         
         // completing/un-completing a todo
         const todoInputText    = todoItem.querySelector('.input-text');
@@ -232,19 +285,21 @@ function updateLS() {
     const todos = [];
 
     todosEls.forEach(todoEl => {
-        const todoTexts  = todoEl.querySelector('.input-text'); // store the input text as the todo
-        const todoDate   = todoEl.querySelector('.date-text');  // store the date
-        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); // grab all of the subtask items
+        const todoTexts  = todoEl.querySelector('.input-text'); 
+        const todoDate   = todoEl.querySelector('.date-text');  
+        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
         
-        let subtasks = []; // an empty array that will eventually contain objects of teh subtask / completed status
+        let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         
-        if(subtaskEls) { // if there are subtasks
-            subtaskEls.forEach(subtaskEl => {  // for each subtask
-                const subtaskOutput = subtaskEl.querySelector('.subtask-text'); // assign the element that contains the subtask text
+        if(subtaskEls) { 
+            subtaskEls.forEach(subtaskEl => { 
+                const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
+                const subtaskFavorite = subtaskEl.querySelector('.favorite'); 
 
-                subtasks.push({  // add each subtask + the completed status to the subtasks array above. 
+                subtasks.push({   
                     subtask : subtaskOutput.innerText,
-                    subtaskCompleted: subtaskOutput.classList.contains('completed')
+                    subtaskCompleted: subtaskOutput.classList.contains('completed'),
+                    subtaskFavorited: subtaskFavorite.classList.contains('favorited')
                 });
             });
         }  // what is pushed whether there are subtasks or not. If no subtasks then subtasks will just be an empty array
