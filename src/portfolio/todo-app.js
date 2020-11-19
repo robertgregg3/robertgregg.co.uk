@@ -179,6 +179,7 @@ function addTodo(el){
             <input type="checkbox" ${boxChecked}/>
             <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
             <div class="subtask-btns">
+                <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
                 <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
                 <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
                 <span class="subtask-btn favorite"><i class="fas fa-star"></i></span>
@@ -193,6 +194,7 @@ function addTodo(el){
             const subtaskEditBtn     = subtaskBtns.querySelector('.edit');
             const subtaskDeleteBtn   = subtaskBtns.querySelector('.delete');
             const subtaskFavoriteBtn = subtaskBtns.querySelector('.favorite');
+            const subtaskSaveBtn     = subtaskBtns.querySelector('.save');
 
 
             // toggle the check box and classes
@@ -203,24 +205,51 @@ function addTodo(el){
 
             // subtask buttons
            
-                subtaskEditBtn.addEventListener('click', () => {
-                    alert('Edit')
-                });
-                subtaskDeleteBtn.addEventListener('click', () => {
-                    subtaskEl.remove();
-                    updateLS();
-                });
-                subtaskFavoriteBtn.addEventListener('click', () => {
-                    alert('Favorite')
-                });
+            subtaskEditBtn.addEventListener('click', () => {
+                subtaskOutput.setAttribute('contenteditable', 'true');
+                subtaskOutput.classList.add('editable');
+                subtaskSaveBtn.classList.remove('hidden');
+                subtaskEditBtn.classList.add('hidden');
+                subtaskDeleteBtn.style.marginLeft = '1.05rem';
+            });
+            subtaskDeleteBtn.addEventListener('click', () => {
+                subtaskEl.remove();
+                updateLS();
+            });         
 
-         
-            
+             // editing the subtasks
+             subtaskOutput.addEventListener('keypress', (e) => {
+                if (e.code === 'Enter' || e.keyCode === 13) {
+                    e.preventDefault();
+                    subtaskOutput.setAttribute('contenteditable', 'false');
+                    subtaskOutput.classList.remove('editable');
+                    subtaskSaveBtn.classList.add('hidden');
+                    subtaskEditBtn.classList.remove('hidden');
+                    subtaskDeleteBtn.style.marginLeft = '0rem';
+                    updateLS();
+                }
+            }); 
+
+            // saving the subtask (with button rather than pressing enter - above)
+            subtaskSaveBtn.addEventListener('click', () => {
+                subtaskOutput.setAttribute('contenteditable', 'false');
+                subtaskOutput.classList.remove('editable');
+                subtaskSaveBtn.classList.add('hidden');
+                subtaskEditBtn.classList.remove('hidden');
+                subtaskDeleteBtn.style.marginLeft = '0rem';
+                updateLS();
+            }); 
+
+            subtaskFavoriteBtn.addEventListener('click', () => {
+                subtaskFavoriteBtn.classList[subtaskFavoriteBtn.classList.contains('favorited') ? 'remove' : 'add']('favorited');
+            })
 
             subtaskContainer.appendChild(subtaskEl);
 
             updateLS();
-        }        
+        }
+        
+       
         
         // completing/un-completing a todo
         const todoInputText    = todoItem.querySelector('.input-text');

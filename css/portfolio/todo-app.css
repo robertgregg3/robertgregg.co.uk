@@ -378,20 +378,23 @@ input[type=date]::-webkit-calendar-picker-indicator {
     border-radius: 0 0 4px 4px;
 }
 
-.close-subtask {
-    cursor: pointer;
+.subtask-text {
+    width: 45%;
     position: absolute;
-    right: 1.5rem;
-    top: 1rem;
-    font-size: 1.4rem;
-    color: #11111199;
+    height: 56px;
+    display: flex;
+    left: 4rem;
+    top: 0;
+    align-items: center;
+    padding-left: 0.2rem;
 }
+
 .subtask-btns {
     position: absolute;
     right: 1rem;
     top: 0;
     width: 100%;
-    max-width: 80px;
+    max-width: 95px;
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -399,4 +402,16 @@ input[type=date]::-webkit-calendar-picker-indicator {
     align-items: center;
     color: #33333390;
     cursor: pointer;
+}
+
+.editable {
+    background-color: #fdebcb;
+}
+
+.save {
+    position: absolute;
+}
+
+.favorited {
+    color: #efc871;
 }
