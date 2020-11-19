@@ -135,7 +135,7 @@ function addTodo(el){
             expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
         });
 
-        // add subtasks
+        // add subtasks Input
         const subtaskInput = todoItem.querySelector('.sub-task-item-input');
         
         let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
@@ -145,7 +145,7 @@ function addTodo(el){
                 e.preventDefault();
                 subtaskInput.setAttribute('contenteditable', 'false');
                 subtaskInput.setAttribute('contenteditable', 'true');
-                addSubtask(subtaskInputClicked);
+                createSubtask(subtaskInputClicked);
                 subtaskInputClicked = false;
                 updateLS();
             }
@@ -153,22 +153,22 @@ function addTodo(el){
       
         if(el && el.subTasks){
             for (let i=0; i<el.subTasks.length; i++){
-               addSubtask(i);  // passing i when we crerate a subtask 
+               createSubtask(i);  
            }
         };
 
-        function addSubtask(i){  // using i to create the subtasks from local storage
+        function createSubtask(i){  
             const subtaskContainer = todoItem.querySelector('.subtasks');
             
             const subtaskEl  = document.createElement('li');
-            let subtaskText  = subtaskInput.innerText; // subtask inpout declared above where you enter the subtask text
-            let subtaskClass = ''; // empty if the subtask is just being created
-            let boxChecked   = ''; // empty if the subtask is just being created
+            let subtaskText  = subtaskInput.innerText; 
+            let subtaskClass = ''; 
+            let boxChecked   = ''; 
             
             if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
-                subtaskText = el.subTasks[i].subtask; // then the subtask text will be whichever subtask is being parsed using i
-                if(el.subTasks[i].subtaskCompleted){ // then if the subtask has a completed class (true)
-                    subtaskClass = 'completed'; // modify the variables declared above
+                subtaskText = el.subTasks[i].subtask; 
+                if(el.subTasks[i].subtaskCompleted){ 
+                    subtaskClass = 'completed'; 
                     boxChecked = 'checked';
                 }
             }
@@ -178,25 +178,44 @@ function addTodo(el){
             subtaskEl.innerHTML = `
             <input type="checkbox" ${boxChecked}/>
             <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
-          
+            <div class="subtask-btns">
+                <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
+                <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
+                <span class="subtask-btn favorite"><i class="fas fa-star"></i></span>
+            </div>          
             `;
-            
-              // <div class="subtask-btns">
-            //     <span class="subtask-btn edit">E</span>
-            //     <span class="subtask-btn delete">D</span>
-            //     <span class="subtask-btn favorite">F</span>
-            // </div>
-            
+                
             subtaskInput.innerText = '';
             
-            const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
-            const subtaskCheckbox = subtaskEl.querySelector('input');
+            const subtaskOutput      = subtaskEl.querySelector('.subtask-text');
+            const subtaskCheckbox    = subtaskEl.querySelector('input');
+            const subtaskBtns        = subtaskEl.querySelector('.subtask-btns')
+            const subtaskEditBtn     = subtaskBtns.querySelector('.edit');
+            const subtaskDeleteBtn   = subtaskBtns.querySelector('.delete');
+            const subtaskFavoriteBtn = subtaskBtns.querySelector('.favorite');
+
 
             // toggle the check box and classes
             subtaskCheckbox.addEventListener('click', () => {
                 subtaskOutput.classList[subtaskOutput.classList.contains('completed') ? 'remove' : 'add']('completed');
                 updateLS();
             });
+
+            // subtask buttons
+           
+                subtaskEditBtn.addEventListener('click', () => {
+                    alert('Edit')
+                });
+                subtaskDeleteBtn.addEventListener('click', () => {
+                    subtaskEl.remove();
+                    updateLS();
+                });
+                subtaskFavoriteBtn.addEventListener('click', () => {
+                    alert('Favorite')
+                });
+
+         
+            
 
             subtaskContainer.appendChild(subtaskEl);
 
