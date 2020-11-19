@@ -286,14 +286,6 @@ input[type="date"] {
     max-width: 140px;
 }
 
-input[type=date]::-webkit-clear-button,
-input[type=date]::-webkit-inner-spin-button,
-input[type=date]::-webkit-calendar-picker-indicator {
-    /* display: block;
-    position: absolute;
-    left: -0.9rem; */
-}
-
 .date-text {
     position: absolute;
     right: 3rem;
@@ -308,6 +300,11 @@ input[type=date]::-webkit-calendar-picker-indicator {
     font-size: 1rem;
 }
 
+.sb-todo-date {
+    justify-self: flex-end;
+    margin-right: 0.9rem;
+}
+
 .sub-task-items {
     padding: 0 1.3rem;
     color: #333333;
@@ -320,6 +317,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
     font-size: 1rem;
     padding: 1rem;
     word-break: break-word;
+    cursor: text;
 }
 
 /* to have the div show data text of "Add a subtask */
@@ -379,7 +377,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 .subtask-text {
-    width: 45%;
+    width: 71.5%;
     position: absolute;
     height: 56px;
     display: flex;
@@ -415,4 +413,28 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .favorited {
     color: #efc871;
+}
+
+#undo-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+
+#undo {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    border-radius: 4px 4px 0 0;
+    border: 0;
+    background-color: #b77b00;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#undo:focus{
+    outline-offset: 0px;
+    outline: none;
 }

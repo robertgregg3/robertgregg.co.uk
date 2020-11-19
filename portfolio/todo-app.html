@@ -12,29 +12,32 @@
     <title>Todo App</title>
 </head>
 <body>
-    <div id="todos-container" class="grid-no-sidebar">
-      <div id="todo-col">
-        <div id="toolbar">
-          <div id="count-total-todos" class="toolbar-item"></div>
-          <div id="count-remaining-todos" class="toolbar-item"></div>
-          <div id="count-completed-todos" class="toolbar-item"></div>
-        </div>
-        <div class="todo">
-            <form id="form" name="todo-form">
-              <input 
-                id="item" 
-                type="text" 
-                placeholder="New Todo"
-                autocomplete="off"
-                maxlength="50"
-                >
-            </form>
-        </div>
-        <ul class="todos-ul" id="todos-ul">
-        </ul>
+  <div id="undo-btn-container">
+      <button id="undo"><i class="fas fa-undo"></i>Undo deleted Item</button>
+  </div>
+  <div id="todos-container" class="grid-no-sidebar">
+    <div id="todo-col">
+      <div id="toolbar">
+        <div id="count-total-todos" class="toolbar-item"></div>
+        <div id="count-remaining-todos" class="toolbar-item"></div>
+        <div id="count-completed-todos" class="toolbar-item"></div>
       </div>
+      <div class="todo">
+          <form id="form" name="todo-form">
+            <input 
+              id="item" 
+              type="text" 
+              placeholder="New Todo"
+              autocomplete="off"
+              maxlength="50"
+              >
+          </form>
+      </div>
+      <ul class="todos-ul" id="todos-ul">
+      </ul>
     </div>
-    <script src="../src/utils.js"></script>
-    <script src="../src/portfolio/todo-app.js"></script>
+  </div>
+  <script src="../src/utils.js"></script>
+  <script src="../src/portfolio/todo-app.js"></script>
 </body>
 </html>
