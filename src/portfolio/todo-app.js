@@ -164,12 +164,16 @@ function addTodo(el){
             let subtaskText  = subtaskInput.innerText; 
             let subtaskClass = ''; 
             let boxChecked   = ''; 
+            let favorited    = '';
             
             if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
                 subtaskText = el.subTasks[i].subtask; 
                 if(el.subTasks[i].subtaskCompleted){ 
                     subtaskClass = 'completed'; 
                     boxChecked = 'checked';
+                }
+                if(el.subTasks[i].subtaskFavorited){
+                    favorited = 'favorited';
                 }
             }
               
@@ -182,7 +186,7 @@ function addTodo(el){
                 <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
                 <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
                 <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
-                <span class="subtask-btn favorite"><i class="fas fa-star"></i></span>
+                <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
             </div>          
             `;
                 
@@ -242,6 +246,7 @@ function addTodo(el){
 
             subtaskFavoriteBtn.addEventListener('click', () => {
                 subtaskFavoriteBtn.classList[subtaskFavoriteBtn.classList.contains('favorited') ? 'remove' : 'add']('favorited');
+                updateLS();
             })
 
             subtaskContainer.appendChild(subtaskEl);
@@ -280,19 +285,21 @@ function updateLS() {
     const todos = [];
 
     todosEls.forEach(todoEl => {
-        const todoTexts  = todoEl.querySelector('.input-text'); // store the input text as the todo
-        const todoDate   = todoEl.querySelector('.date-text');  // store the date
-        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); // grab all of the subtask items
+        const todoTexts  = todoEl.querySelector('.input-text'); 
+        const todoDate   = todoEl.querySelector('.date-text');  
+        const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
         
-        let subtasks = []; // an empty array that will eventually contain objects of teh subtask / completed status
+        let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         
-        if(subtaskEls) { // if there are subtasks
-            subtaskEls.forEach(subtaskEl => {  // for each subtask
-                const subtaskOutput = subtaskEl.querySelector('.subtask-text'); // assign the element that contains the subtask text
+        if(subtaskEls) { 
+            subtaskEls.forEach(subtaskEl => { 
+                const subtaskOutput   = subtaskEl.querySelector('.subtask-text');
+                const subtaskFavorite = subtaskEl.querySelector('.favorite'); 
 
-                subtasks.push({  // add each subtask + the completed status to the subtasks array above. 
+                subtasks.push({   
                     subtask : subtaskOutput.innerText,
-                    subtaskCompleted: subtaskOutput.classList.contains('completed')
+                    subtaskCompleted: subtaskOutput.classList.contains('completed'),
+                    subtaskFavorited: subtaskFavorite.classList.contains('favorited')
                 });
             });
         }  // what is pushed whether there are subtasks or not. If no subtasks then subtasks will just be an empty array

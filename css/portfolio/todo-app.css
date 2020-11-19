@@ -394,7 +394,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
     right: 1rem;
     top: 0;
     width: 100%;
-    max-width: 95px;
+    max-width: 70px;
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -406,6 +406,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .editable {
     background-color: #fdebcb;
+    cursor: text;
 }
 
 .save {
