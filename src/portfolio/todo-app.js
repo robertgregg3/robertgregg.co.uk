@@ -1,22 +1,10 @@
-/*
-Todo:
+/* //Todo:
     1) event listeners - consolodate
     2) ADD A "REMOVE COMPLETED BUTTON"
     3) Drag not working on mobile
-    4) three dots options for todos and subtasks
-    5) close button permanently there on mobile
+    5) remove date
     6) Sort issues with safari
-    7) add a favorite star icon and add a view favorites button
-
-Tests: 
-    1) completed both side bar and main el - same after LS
-    2) drag and drop - same after LS
-    3) content editable.  - same after LS
-
-
-when form posts: 
-    1) add todo to the window. 
-    2) Add to local storage 
+    7) add a note section
 */ 
 
 const form                = document.getElementById('form');
@@ -27,13 +15,11 @@ const countTotalTodos     = document.getElementById('count-total-todos');
 const countRemainingTodos = document.getElementById('count-remaining-todos');
 const countCompletedTodos = document.getElementById('count-completed-todos');
 const toolbar             = document.getElementById('toolbar');
-// const todosFromLS         = JSON.parse(localStorage.getItem('todos'));
+const undoLastActionBtn   = document.getElementById('undo');
 let todosFromLS         = JSON.parse(localStorage.getItem('todos'));
 
-// when there are no todos the toolbar is hidden
 toolbar.classList.add('hidden');
 
-// if there are todos in LS then add todos and the text input is el.
 if(todosFromLS) {
     todosFromLS.forEach(el => {
         addTodo(el);
@@ -41,17 +27,16 @@ if(todosFromLS) {
     });
 } 
 
-// when you add a todo, perform these actions
 form.addEventListener('submit', (e) => {
     e.preventDefault(); 
     addTodo();
+    undoLastAction();
     updateLS();
     countTodos();
     toolbarButtons();
     dragItems();
 });
 
-//  add the todo, and if a todo already exists then us the value from local storage as the input.value
 function addTodo(el){
     toolbar.classList.remove('hidden');
     
@@ -77,7 +62,7 @@ function addTodo(el){
                     <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
                 </div>
                 <div class="extended-todo-item sb-todo-date">
-                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)" />
+                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
                 </div>
                 <ul class="subtasks">
                 </ul>
@@ -122,6 +107,7 @@ function addTodo(el){
 
         closeTodoBtn.addEventListener('click', () => {
             todoItem.remove();
+            undoLastAction();
             updateLS();
         });      
 
@@ -218,6 +204,7 @@ function addTodo(el){
             });
             subtaskDeleteBtn.addEventListener('click', () => {
                 subtaskEl.remove();
+                undoLastAction();
                 updateLS();
             });         
 
@@ -252,9 +239,7 @@ function addTodo(el){
             subtaskContainer.appendChild(subtaskEl);
 
             updateLS();
-        }
-        
-       
+        }    
         
         // completing/un-completing a todo
         const todoInputText    = todoItem.querySelector('.input-text');
@@ -279,10 +264,38 @@ function addTodo(el){
     }
 }
 
+
+
+/*
+UNDO LAST ACTION - reverts back to the last local storage position
+
+Tests: when you delet a todo, delete a subtask, reorder basically anything that updates local storage then button should move it back. 
+
+when I save to lkocal storage, how can I get a copy ofthe old items?
+How can one variable be one step behind teh other?
+perhaps logic for when the button is pressed. Such as when local storage is updated, first domnlaod from LS and save as a variable. 
+
+*/
+function undoLastAction() {
+    let todosFromLSPreviousVersion = [...todosFromLS];
+
+    undoLastActionBtn.addEventListener('click', () => {
+        if(todosFromLS){
+            let todos = [...todosFromLSPreviousVersion];
+            localStorage.setItem('todos', JSON.stringify(todos));
+            location.reload();
+            countTodos();
+        }
+    });
+}
+
+undoLastAction();
+
+
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
     
-    const todos = [];
+    let todos = [];
 
     todosEls.forEach(todoEl => {
         const todoTexts  = todoEl.querySelector('.input-text'); 
@@ -310,11 +323,10 @@ function updateLS() {
             subTasks: subtasks
         }); 
     });
-    
+        
     localStorage.setItem('todos', JSON.stringify(todos));
     countTodos();
 }
-
 
 function countTodos() {
     const totalTodos     = document.querySelectorAll('.todo-item');
@@ -366,6 +378,7 @@ function toolbarButtons(){
         totalTodos.forEach(todoToDelete => {
             if(todoToDelete.classList.contains('completed')){
                 todoToDelete.parentNode.remove();
+                undoLastAction();
                 const totalTodosAfterDeleted = document.querySelectorAll('.input-text'); // delete a todo, grab all remaining & remove hidden class
                 totalTodosAfterDeleted.forEach(todoAfterDeleted => {
                     todoAfterDeleted.parentNode.classList.remove('hidden');
@@ -464,10 +477,3 @@ function dragItemsMobile() {
 }
 
 dragItemsMobile();
-
-function hideSidebar() {
-    const allSidebars = document.querySelectorAll('.sb-todo');
-    allSidebars.forEach(sidebar => {
-        sidebar.classList.add('hidden');
-   });
-}    
