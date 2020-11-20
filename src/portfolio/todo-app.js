@@ -3,6 +3,16 @@
     2) Sort issues with safari
 */ 
 
+/*
+    Sidebar:
+
+    1) Upload image
+    2) Write your name
+    3) Add todo list
+    4) Select icon for the todo list
+    5) Reorder the projects
+*/
+
 const form                 = document.getElementById('form');
 const input                = document.getElementById('item');
 const todosContainer       = document.getElementById('todos-container');
@@ -246,12 +256,14 @@ function addTodo(el){
         // completing/un-completing a todo        
         if(el && el.completed) {
             todoItemCheckbox.checked = true;
-            todoInputText.classList.add('completed');  // then add the completed class 
+            todoInputText.classList.add('completed');  
+            todoItem.classList.add('hidden');
             updateLS();
         }
         
         todoItemCheckbox.addEventListener('click', () => {
             todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+            todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
             updateLS();
             countTodos();
             toolbarButtons();
