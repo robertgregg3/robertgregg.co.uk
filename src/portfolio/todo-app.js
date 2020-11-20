@@ -2,7 +2,6 @@
     1) event listeners - consolodate
     3) Drag not working on mobile
     6) Sort issues with safari
-    7) add a note section
 */ 
 
 const form                 = document.getElementById('form');

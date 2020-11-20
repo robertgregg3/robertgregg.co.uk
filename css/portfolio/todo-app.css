@@ -426,11 +426,13 @@ input[type="date"] {
 .todo-note {
     width: 100%;
     grid-column: 1/3;
+    height: 100%;
+    max-height: 2000px;
+    position: relative;
 }
 
 textarea {
     width: 100%;
-    height: 150px;
     padding: 1rem;
     font-size: 1rem;
     font-family: inherit;
@@ -445,9 +447,10 @@ textarea:focus{
 
 .note-saved {
     width: 100%;
-    height: 200px;
+    height: auto;
     padding: 1rem;
     opacity: 1;
+    max-height: 2000px;
 }
 
 .note-hidden{
