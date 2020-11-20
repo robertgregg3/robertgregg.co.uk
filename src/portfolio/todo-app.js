@@ -1,7 +1,6 @@
 /* //Todo:
-    1) event listeners - consolodate
-    3) Drag not working on mobile
-    6) Sort issues with safari
+    1) Drag not working on mobile
+    2) Sort issues with safari
 */ 
 
 const form                 = document.getElementById('form');
@@ -37,9 +36,8 @@ function addTodo(el){
     
     let todoText = input.value; 
     
-    if(el){  
+    if(el) 
         todoText = el.text; 
-    }
     
     if(todoText) {  
         // create the todo item with a li
@@ -63,7 +61,6 @@ function addTodo(el){
                 </ul>
                 <div class="todo-note">
                     <textarea placeholder="Add a Note"></textarea>
-                    <div class="note-saved note-hidden"><div>
                 </div>
             </div>
         `; 
@@ -72,20 +69,19 @@ function addTodo(el){
         todosUl.appendChild(todoItem);
 
          // remove the new line when enter is pressed on the main todo element
-         const toDoInputText     = todoItem.querySelector('.input-text');
-         const closeTodoBtn      = todoItem.querySelector('.close-todo');
-         const subtaskContainer  = todoItem.querySelector('.subtasks');
-         let removeDate          = todoItem.querySelector('.remove-date');
-         let dueDate             = todoItem.querySelector('.extended-todo-item input');
-         let dateText            = todoItem.querySelector('.date-text');
-         let months              = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-         const subtaskInput      = todoItem.querySelector('.sub-task-item-input');
-         const todoExtendingDiv  = todoItem.querySelector('.todo-extend-div');     
-         const expandTodoBtn     = todoItem.querySelector('.expand-todo');
-         const todoInputText     = todoItem.querySelector('.input-text');
-         const todoItemCheckbox  = todoItem.querySelector('input');
-         const todoNote          = todoItem.querySelector('textarea');
-         const todoNoteSaved     = todoItem.querySelector('.note-saved');
+         const toDoInputText    = todoItem.querySelector('.input-text');
+         const closeTodoBtn     = todoItem.querySelector('.close-todo');
+         const subtaskContainer = todoItem.querySelector('.subtasks');
+         const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
+         const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
+         const expandTodoBtn    = todoItem.querySelector('.expand-todo');
+         const todoInputText    = todoItem.querySelector('.input-text');
+         const todoItemCheckbox = todoItem.querySelector('input');
+         const todoNote         = todoItem.querySelector('textarea');
+         let removeDate         = todoItem.querySelector('.remove-date');
+         let dueDate            = todoItem.querySelector('.extended-todo-item input');
+         let dateText           = todoItem.querySelector('.date-text');
+         let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
          todosUl.addEventListener('keypress', (e) => {
@@ -136,9 +132,10 @@ function addTodo(el){
 
         // add subtasks Input        
         let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
+
         subtaskInput.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || e.keyCode === 13) {
-                        subtaskInputClicked = true;
+                subtaskInputClicked = true;
                 e.preventDefault();
                 subtaskInput.setAttribute('contenteditable', 'false');
                 subtaskInput.setAttribute('contenteditable', 'true');
@@ -210,7 +207,7 @@ function addTodo(el){
                 subtaskDeleteBtn.style.marginLeft = '1.05rem';
             });
             subtaskDeleteBtn.addEventListener('click', () => {
-                        subtaskEl.remove();
+                subtaskEl.remove();
                 updateLS();
             });         
 
@@ -218,7 +215,7 @@ function addTodo(el){
              subtaskOutput.addEventListener('keypress', (e) => {
                 if (e.code === 'Enter' || e.keyCode === 13) {
                     e.preventDefault();
-                                subtaskOutput.setAttribute('contenteditable', 'false');
+                    subtaskOutput.setAttribute('contenteditable', 'false');
                     subtaskOutput.classList.remove('editable');
                     subtaskSaveBtn.classList.add('hidden');
                     subtaskEditBtn.classList.remove('hidden');
@@ -229,7 +226,7 @@ function addTodo(el){
 
             // saving the subtask (with button rather than pressing enter - above)
             subtaskSaveBtn.addEventListener('click', () => {
-                        subtaskOutput.setAttribute('contenteditable', 'false');
+                subtaskOutput.setAttribute('contenteditable', 'false');
                 subtaskOutput.classList.remove('editable');
                 subtaskSaveBtn.classList.add('hidden');
                 subtaskEditBtn.classList.remove('hidden');
@@ -260,27 +257,9 @@ function addTodo(el){
             toolbarButtons();
         });   
         
-        // text area note
-        todoNote.addEventListener('keypress', (e) => {
-            if(e.code === 'Enter' || e.keyCode === 13){
-                e.preventDefault();
-                todoNoteSaved.innerText = todoNote.value;
-                todoNoteSaved.classList.remove('note-hidden');
-                todoNote.classList.add('note-hidden')
-            }
-        });   
-
-        todoNoteSaved.addEventListener('click', () => {
-            todoNoteSaved.classList.add('note-hidden');
-            todoNote.classList.remove('note-hidden');
-        });
-        
-        if(el && el.todoNote){
-            todoNoteSaved.innerText = el.todoNote;
+        // text area note   
+        if(el && el.todoNote)
             todoNote.value = el.todoNote;
-            todoNoteSaved.classList.remove('note-hidden');
-            todoNote.classList.add('note-hidden');
-        }
         
         countTodos();
         updateLS();
@@ -297,7 +276,7 @@ function updateLS() {
         const todoTexts  = todoEl.querySelector('.input-text'); 
         const todoDate   = todoEl.querySelector('.date-text');  
         const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
-        const todoNote   = todoEl.querySelector('.todo-note');
+        const todoNote   = todoEl.querySelector('textarea');
         
         let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         
@@ -318,7 +297,7 @@ function updateLS() {
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
             subTasks: subtasks,
-            todoNote: todoNote.innerText
+            todoNote: todoNote.value
         }); 
     });
         
@@ -379,7 +358,7 @@ function toolbarButtons(){
                 const totalTodosAfterDeleted = document.querySelectorAll('.input-text'); // delete a todo, grab all remaining & remove hidden class
                 totalTodosAfterDeleted.forEach(todoAfterDeleted => {
                     todoAfterDeleted.parentNode.classList.remove('hidden');
-                })
+                });
                 updateLS();
             }
         });

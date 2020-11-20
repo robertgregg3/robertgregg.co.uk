@@ -320,6 +320,11 @@ input[type="date"] {
     cursor: text;
 }
 
+.sub-task-item-input:focus{
+    outline-offset: 0px;
+    outline: none;
+}
+
 /* to have the div show data text of "Add a subtask */
 
 [contentEditable=true]:empty:not(:focus):before{
@@ -443,21 +448,4 @@ textarea {
 textarea:focus{
     outline: none;
     outline-offset: 0px;
-}
-
-.note-saved {
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-    opacity: 1;
-    max-height: 2000px;
-}
-
-.note-hidden{
-    height: 0px;
-    transition: all 500ms ease-in-out;
-    opacity: 0;
-    pointer-events: none;
-    margin: 0;
-    padding: 0;
 }
