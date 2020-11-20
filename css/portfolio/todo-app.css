@@ -333,7 +333,7 @@ input[type="date"] {
     border-top: 1px solid #33333330;
     margin-top: 1.2rem;
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 75% 25%;
 }
 
 .height-100{
@@ -415,26 +415,46 @@ input[type="date"] {
     color: #efc871;
 }
 
-#undo-btn-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.remove-date {
     position: absolute;
-    bottom: 0;
-}
-
-#undo {
-    padding: 1rem 1.5rem;
-    font-size: 0.9rem;
-    font-family: inherit;
-    border-radius: 4px 4px 0 0;
-    border: 0;
-    background-color: #b77b00;
-    color: #ffffff;
+    right: 10.5rem;
+    top: 1.27rem;
+    opacity: 0.5;
     cursor: pointer;
 }
 
-#undo:focus{
-    outline-offset: 0px;
+.todo-note {
+    width: 100%;
+    grid-column: 1/3;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: none;
+    resize: vertical;
+}
+
+textarea:focus{
     outline: none;
+    outline-offset: 0px;
+}
+
+.note-saved {
+    width: 100%;
+    height: 200px;
+    padding: 1rem;
+    opacity: 1;
+}
+
+.note-hidden{
+    height: 0px;
+    transition: all 500ms ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
 }
