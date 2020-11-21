@@ -380,10 +380,15 @@ function toolbarButtons(){
     const showRemainingBtn   = document.querySelector('#show-remaining');
     const showCompletedBtn   = document.querySelector('#show-completed');
     const deleteCompletedBtn = document.querySelector('#delete-completed');
+    const todoItemCategories = document.querySelectorAll('.todo-list-category-li');
+
 
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
+        });
+        todoItemCategories.forEach(todoItemCategory => {
+            todoItemCategory.classList.remove('selected');
         });
     });
 
@@ -396,6 +401,7 @@ function toolbarButtons(){
     showCompletedBtn.addEventListener('click', () => {
         totalTodos.forEach(completedTodo => {
             completedTodo.parentNode.classList[completedTodo.classList.contains('completed') ? 'remove' : 'add']('hidden');
+
         });
     });
 
