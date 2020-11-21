@@ -12,7 +12,22 @@
     <title>Todo App</title>
 </head>
 <body>
-  <div id="todos-container" class="grid-no-sidebar">
+  <div id="todos-container">
+    <div id="todo-categories-container">
+      <div id="todo-profile">
+        <!-- <i class="fas fa-user"></i> -->
+        <img src="../images/rob.jpg" class="todo-profile__img" />
+        <div class="todo-profile__email" contenteditable="true">hi@robertgregg.co.uk</div>
+      </div>
+      <div id="todo-categories">
+        <ul id="todo-list-categories-ul">
+          <li class="todo-list-category-li main-list"><i class="fas fa-list-alt icon"></i>Main List</li>
+          <li class="todo-list-category-li list-2"><i class="fas fa-list-alt icon"></i>List 2</li>
+          <li class="todo-list-category-li shopping selected"><i class="fas fa-list-alt icon"></i>Shopping</li>
+        </ul>
+        <button id="new-todo-list-btn"><i class="fas fa-plus"></i></button>
+      </div>
+    </div>
     <div id="todo-col">
       <div id="toolbar">
         <div id="count-total-todos" class="toolbar-item"></div>
