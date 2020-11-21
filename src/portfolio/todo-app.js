@@ -13,15 +13,43 @@
     5) Reorder the projects
 */
 
-const form                 = document.getElementById('form');
-const input                = document.getElementById('item');
-const todosContainer       = document.getElementById('todos-container');
-const todosUl              = document.getElementById('todos-ul');
-const countTotalTodos      = document.getElementById('count-total-todos');
-const countRemainingTodos  = document.getElementById('count-remaining-todos');
-const countCompletedTodos  = document.getElementById('count-completed-todos');
-const toolbar              = document.getElementById('toolbar');
-let todosFromLS            = JSON.parse(localStorage.getItem('todos'));
+const form                  = document.getElementById('form');
+const input                 = document.getElementById('item');
+const todosContainer        = document.getElementById('todos-container');
+const todosUl               = document.getElementById('todos-ul');
+const countTotalTodos       = document.getElementById('count-total-todos');
+const countRemainingTodos   = document.getElementById('count-remaining-todos');
+const countCompletedTodos   = document.getElementById('count-completed-todos');
+const toolbar               = document.getElementById('toolbar');
+const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
+const todoCategories        = document.querySelectorAll('.todo-list-category-li');
+let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
+let todoCategoryName        = '';
+
+todoCategoryContainer.addEventListener('click', addSelectedClassToCategory, false);
+
+function addSelectedClassToCategory(e) {
+    todoCategories.forEach(todoCategory => {todoCategory.classList.remove('selected')});
+    clickedItem = e.target;
+    clickedItem.classList.add('selected');
+
+    // get the category name, remove spaces, join with hyphen, make lowercase    
+    todoCategoryName = clickedItem.innerText
+        .split(' ')
+        .join('-')
+        .toLowerCase();
+
+    const allTodoItems = document.querySelectorAll('.todo-item');
+
+    allTodoItems.forEach(todoItem => {
+        todoItem.classList.remove('hidden');
+        if(!todoItem.classList.contains(todoCategoryName)) {
+            todoItem.classList.add('hidden');
+        }
+    });
+}
+
+
 
 toolbar.classList.add('hidden');
 
@@ -41,6 +69,13 @@ form.addEventListener('submit', (e) => {
     dragItems();
 });
 
+// when you create a todo, use the name of the List item that is selected. 
+// then when you click on another list, make all other list items hidden. 
+// press plus button > popup > whatever name you type becomes the list name and the class name 
+// content editable:
+    // on the categories, if contenteditable = true, grab all of the visible list items and change the class name to teh new value
+    // change the category name
+
 function addTodo(el){
     toolbar.classList.remove('hidden');
     
@@ -54,6 +89,7 @@ function addTodo(el){
         const todoItem = document.createElement('li');  
         
         todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
+        todoItem.className += ' ' + todoCategoryName;
         todoItem.setAttribute('draggable', 'true');
         todoItem.innerHTML = ` 
             <input type="checkbox" class="spring"/>
