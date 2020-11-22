@@ -53,7 +53,7 @@ body{
 .todo-profile__email {
     word-break: break-word;
     width: 100%;
-    padding: 0 0 0 1rem;
+    margin-left: 1rem;
 }
 
 #todo-categories {

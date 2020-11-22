@@ -1,7 +1,8 @@
 /* //Todo:
     1) Drag not working on mobile
     2) Sort issues with safari
-    3) show all button  needs to remove all selected classes first
+    3) refactor Enter press or set attributyes code
+
 */ 
 
 /*
@@ -24,9 +25,19 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
+const profileEmail          = document.getElementById('todo-profile__email');
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = '';
+
+profileEmail.addEventListener('keypress', (e) => {
+    if (e.code === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        profileEmail.setAttribute('contenteditable', 'false');
+        profileEmail.setAttribute('contenteditable', 'true');
+        updateLS();
+      }
+});
 
 todoCategories.forEach(todoCategory => {
     todoCategory.classList.remove('selected');
@@ -115,29 +126,29 @@ function addTodo(el){
         // append the li to the ul
         todosUl.appendChild(todoItem);
 
-         // remove the new line when enter is pressed on the main todo element
-         const toDoInputText    = todoItem.querySelector('.input-text');
-         const closeTodoBtn     = todoItem.querySelector('.close-todo');
-         const subtaskContainer = todoItem.querySelector('.subtasks');
-         const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
-         const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
-         const expandTodoBtn    = todoItem.querySelector('.expand-todo');
-         const todoInputText    = todoItem.querySelector('.input-text');
-         const todoItemCheckbox = todoItem.querySelector('input');
-         const todoNote         = todoItem.querySelector('textarea');
-         let removeDate         = todoItem.querySelector('.remove-date');
-         let dueDate            = todoItem.querySelector('.extended-todo-item input');
-         let dateText           = todoItem.querySelector('.date-text');
-         let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            // remove the new line when enter is pressed on the main todo element
+            const toDoInputText    = todoItem.querySelector('.input-text');
+            const closeTodoBtn     = todoItem.querySelector('.close-todo');
+            const subtaskContainer = todoItem.querySelector('.subtasks');
+            const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
+            const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
+            const expandTodoBtn    = todoItem.querySelector('.expand-todo');
+            const todoInputText    = todoItem.querySelector('.input-text');
+            const todoItemCheckbox = todoItem.querySelector('input');
+            const todoNote         = todoItem.querySelector('textarea');
+            let removeDate         = todoItem.querySelector('.remove-date');
+            let dueDate            = todoItem.querySelector('.extended-todo-item input');
+            let dateText           = todoItem.querySelector('.date-text');
+            let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-         todosUl.addEventListener('keypress', (e) => {
-             if (e.code === 'Enter' || e.keyCode === 13) {
-                 e.preventDefault();
-                 toDoInputText.setAttribute('contenteditable', 'false');
-                 toDoInputText.setAttribute('contenteditable', 'true');
-                 updateLS();
-               }
-         });
+            todosUl.addEventListener('keypress', (e) => {
+                if (e.code === 'Enter' || e.keyCode === 13) {
+                    e.preventDefault();
+                    toDoInputText.setAttribute('contenteditable', 'false');
+                    toDoInputText.setAttribute('contenteditable', 'true');
+                    updateLS();
+                }
+        });
                 
         // add a due date picker
         if(el && el.duedate) {
