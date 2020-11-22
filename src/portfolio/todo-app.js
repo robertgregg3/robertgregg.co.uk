@@ -23,15 +23,27 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
+let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = '';
 
+console.log(todoCategoryFromLS);
+
+todoCategories.forEach(todoCategory => {
+    todoCategory.classList.remove('selected');
+    if(todoCategory.innerText === todoCategoryFromLS){
+        todoCategory.classList.add('selected');
+    }
+});
+
+// add selected category and show category todos
 todoCategoryContainer.addEventListener('click', addSelectedClassToCategory, false);
 
 function addSelectedClassToCategory(e) {
     todoCategories.forEach(todoCategory => {todoCategory.classList.remove('selected')});
     clickedItem = e.target;
     clickedItem.classList.add('selected');
+    updateLS();
 
     // get the category name, remove spaces, join with hyphen, make lowercase    
     todoCategoryName = clickedItem.innerText
@@ -48,8 +60,6 @@ function addSelectedClassToCategory(e) {
         }
     });
 }
-
-
 
 toolbar.classList.add('hidden');
 
@@ -68,13 +78,6 @@ form.addEventListener('submit', (e) => {
     toolbarButtons();
     dragItems();
 });
-
-// when you create a todo, use the name of the List item that is selected. 
-// then when you click on another list, make all other list items hidden. 
-// press plus button > popup > whatever name you type becomes the list name and the class name 
-// content editable:
-    // on the categories, if contenteditable = true, grab all of the visible list items and change the class name to teh new value
-    // change the category name
 
 function addTodo(el){
     toolbar.classList.remove('hidden');
@@ -128,7 +131,6 @@ function addTodo(el){
          let dueDate            = todoItem.querySelector('.extended-todo-item input');
          let dateText           = todoItem.querySelector('.date-text');
          let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 
          todosUl.addEventListener('keypress', (e) => {
              if (e.code === 'Enter' || e.keyCode === 13) {
@@ -217,14 +219,14 @@ function addTodo(el){
               
             subtaskEl.classList.add('sub-task-item-li');
             subtaskEl.innerHTML = `
-            <input type="checkbox" ${boxChecked}/>
-            <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
-            <div class="subtask-btns">
-                <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
-                <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
-                <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
-                <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
-            </div>          
+                <input type="checkbox" ${boxChecked}/>
+                <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
+                <div class="subtask-btns">
+                    <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
+                    <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
+                    <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
+                    <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
+                </div>          
             `;
                 
             subtaskInput.innerText = '';
@@ -347,6 +349,13 @@ function updateLS() {
             subTasks: subtasks,
             todoNote: todoNote.value
         }); 
+    });
+
+    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+    allTodoCategories.forEach(todoCategory => {
+        if(todoCategory.classList.contains('selected'))
+            localStorage.setItem('todoCategory', todoCategory.innerText);
+            console.log(todoCategory)
     });
         
     localStorage.setItem('todos', JSON.stringify(todos));    
