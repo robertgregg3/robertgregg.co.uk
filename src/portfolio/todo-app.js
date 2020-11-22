@@ -1,6 +1,7 @@
 /* //Todo:
     1) Drag not working on mobile
     2) Sort issues with safari
+    3) show all button  needs to remove all selected classes first
 */ 
 
 /*
@@ -27,13 +28,8 @@ let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = '';
 
-console.log(todoCategoryFromLS);
-
 todoCategories.forEach(todoCategory => {
     todoCategory.classList.remove('selected');
-    if(todoCategory.innerText === todoCategoryFromLS){
-        todoCategory.classList.add('selected');
-    }
 });
 
 // add selected category and show category todos
@@ -81,11 +77,13 @@ form.addEventListener('submit', (e) => {
 
 function addTodo(el){
     toolbar.classList.remove('hidden');
-    
+   
     let todoText = input.value; 
     
-    if(el) 
+    if(el) {
         todoText = el.text; 
+        todoCategoryName = el.todoCategory;
+    }
     
     if(todoText) {  
         // create the todo item with a li
@@ -327,6 +325,21 @@ function updateLS() {
         const todoDate   = todoEl.querySelector('.date-text');  
         const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
         const todoNote   = todoEl.querySelector('textarea');
+        const categories = document.querySelectorAll('.todo-list-category-li');
+
+        let categoryName = '';
+
+        categories.forEach(category => {
+            if(todoEl.classList.contains(category.innerText
+                .split(' ')
+                .join('-')
+                .toLowerCase()))
+                    categoryName = category.innerText
+                        .split(' ')
+                        .join('-')
+                        .toLowerCase();
+                        return categoryName;
+                    });
         
         let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         
@@ -343,6 +356,7 @@ function updateLS() {
             });
         }  // what is pushed whether there are subtasks or not. If no subtasks then subtasks will just be an empty array
         todos.push({
+            todoCategory: categoryName,
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
@@ -351,11 +365,11 @@ function updateLS() {
         }); 
     });
 
+    // add the category selected to LS
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
     allTodoCategories.forEach(todoCategory => {
         if(todoCategory.classList.contains('selected'))
             localStorage.setItem('todoCategory', todoCategory.innerText);
-            console.log(todoCategory)
     });
         
     localStorage.setItem('todos', JSON.stringify(todos));    
