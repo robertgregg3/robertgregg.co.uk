@@ -50,9 +50,9 @@ function addSelectedClassToCategory(e) {
     const allTodoItems = document.querySelectorAll('.todo-item');
 
     allTodoItems.forEach(todoItem => {
-        todoItem.classList.remove('hidden');
+        todoItem.classList.remove('hidden2');
         if(!todoItem.classList.contains(todoCategoryName)) {
-            todoItem.classList.add('hidden');
+            todoItem.classList.add('hidden2');
         }
     });
 }
@@ -404,14 +404,17 @@ function toolbarButtons(){
     const showCompletedBtn   = document.querySelector('#show-completed');
     const deleteCompletedBtn = document.querySelector('#delete-completed');
     const todoItemCategories = document.querySelectorAll('.todo-list-category-li');
-
-
+    const totalTodoItems     = document.querySelectorAll('.todo-item');
+    
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
         });
         todoItemCategories.forEach(todoItemCategory => {
             todoItemCategory.classList.remove('selected');
+        });
+        totalTodoItems.forEach(item =>{
+            item.classList.remove('hidden2');
         });
     });
 

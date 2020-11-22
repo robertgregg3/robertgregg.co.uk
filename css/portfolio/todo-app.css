@@ -335,6 +335,17 @@ input[type="checkbox"]:before {
     padding: 0;
 }
 
+.hidden2{
+    height: 0px;
+    transition: all 500ms ease-in-out;
+    font-size: 0rem;
+    width: 0px !important;
+    opacity: 0 !important;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
 .close-hidden{
     transition: all 200ms ease-in-out;
     font-size: 0rem;
