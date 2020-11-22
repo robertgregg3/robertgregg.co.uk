@@ -53,7 +53,7 @@ body{
 .todo-profile__email {
     word-break: break-word;
     width: 100%;
-    padding: 0 0 0 1rem;
+    margin-left: 1rem;
 }
 
 #todo-categories {
@@ -68,6 +68,7 @@ body{
     padding: 1rem 0;
     font-size: 1rem;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .todo-list-category-li {
@@ -78,6 +79,7 @@ body{
     color: #333;
     cursor: pointer;
     transition: all 300ms ease-in-out;
+    pointer-events: all;
 }
 
 .todo-list-category-li i.icon {
@@ -90,6 +92,10 @@ body{
     transform: scale(1.1);
     padding-left: 1.9rem;
     transition: all 300ms ease-in-out;
+}
+
+.selected .icon {
+    color: #e1a041 !important;
 }
 
 #new-todo-list-btn {
@@ -319,6 +325,17 @@ input[type="checkbox"]:before {
 }
 
 .hidden{
+    height: 0px;
+    transition: all 500ms ease-in-out;
+    font-size: 0rem;
+    width: 0px !important;
+    opacity: 0 !important;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
+.hidden2{
     height: 0px;
     transition: all 500ms ease-in-out;
     font-size: 0rem;

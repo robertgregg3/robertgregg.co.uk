@@ -1,6 +1,8 @@
 /* //Todo:
     1) Drag not working on mobile
     2) Sort issues with safari
+    3) refactor Enter press or set attributyes code
+
 */ 
 
 /*
@@ -23,15 +25,32 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
+const profileEmail          = document.getElementById('todo-profile__email');
+let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = '';
 
+profileEmail.addEventListener('keypress', (e) => {
+    if (e.code === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        profileEmail.setAttribute('contenteditable', 'false');
+        profileEmail.setAttribute('contenteditable', 'true');
+        updateLS();
+      }
+});
+
+todoCategories.forEach(todoCategory => {
+    todoCategory.classList.remove('selected');
+});
+
+// add selected category and show category todos
 todoCategoryContainer.addEventListener('click', addSelectedClassToCategory, false);
 
 function addSelectedClassToCategory(e) {
     todoCategories.forEach(todoCategory => {todoCategory.classList.remove('selected')});
     clickedItem = e.target;
     clickedItem.classList.add('selected');
+    updateLS();
 
     // get the category name, remove spaces, join with hyphen, make lowercase    
     todoCategoryName = clickedItem.innerText
@@ -42,14 +61,12 @@ function addSelectedClassToCategory(e) {
     const allTodoItems = document.querySelectorAll('.todo-item');
 
     allTodoItems.forEach(todoItem => {
-        todoItem.classList.remove('hidden');
+        todoItem.classList.remove('hidden2');
         if(!todoItem.classList.contains(todoCategoryName)) {
-            todoItem.classList.add('hidden');
+            todoItem.classList.add('hidden2');
         }
     });
 }
-
-
 
 toolbar.classList.add('hidden');
 
@@ -69,20 +86,15 @@ form.addEventListener('submit', (e) => {
     dragItems();
 });
 
-// when you create a todo, use the name of the List item that is selected. 
-// then when you click on another list, make all other list items hidden. 
-// press plus button > popup > whatever name you type becomes the list name and the class name 
-// content editable:
-    // on the categories, if contenteditable = true, grab all of the visible list items and change the class name to teh new value
-    // change the category name
-
 function addTodo(el){
     toolbar.classList.remove('hidden');
-    
+   
     let todoText = input.value; 
     
-    if(el) 
+    if(el) {
         todoText = el.text; 
+        todoCategoryName = el.todoCategory;
+    }
     
     if(todoText) {  
         // create the todo item with a li
@@ -114,30 +126,29 @@ function addTodo(el){
         // append the li to the ul
         todosUl.appendChild(todoItem);
 
-         // remove the new line when enter is pressed on the main todo element
-         const toDoInputText    = todoItem.querySelector('.input-text');
-         const closeTodoBtn     = todoItem.querySelector('.close-todo');
-         const subtaskContainer = todoItem.querySelector('.subtasks');
-         const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
-         const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
-         const expandTodoBtn    = todoItem.querySelector('.expand-todo');
-         const todoInputText    = todoItem.querySelector('.input-text');
-         const todoItemCheckbox = todoItem.querySelector('input');
-         const todoNote         = todoItem.querySelector('textarea');
-         let removeDate         = todoItem.querySelector('.remove-date');
-         let dueDate            = todoItem.querySelector('.extended-todo-item input');
-         let dateText           = todoItem.querySelector('.date-text');
-         let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            // remove the new line when enter is pressed on the main todo element
+            const toDoInputText    = todoItem.querySelector('.input-text');
+            const closeTodoBtn     = todoItem.querySelector('.close-todo');
+            const subtaskContainer = todoItem.querySelector('.subtasks');
+            const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
+            const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
+            const expandTodoBtn    = todoItem.querySelector('.expand-todo');
+            const todoInputText    = todoItem.querySelector('.input-text');
+            const todoItemCheckbox = todoItem.querySelector('input');
+            const todoNote         = todoItem.querySelector('textarea');
+            let removeDate         = todoItem.querySelector('.remove-date');
+            let dueDate            = todoItem.querySelector('.extended-todo-item input');
+            let dateText           = todoItem.querySelector('.date-text');
+            let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-
-         todosUl.addEventListener('keypress', (e) => {
-             if (e.code === 'Enter' || e.keyCode === 13) {
-                 e.preventDefault();
-                 toDoInputText.setAttribute('contenteditable', 'false');
-                 toDoInputText.setAttribute('contenteditable', 'true');
-                 updateLS();
-               }
-         });
+            todosUl.addEventListener('keypress', (e) => {
+                if (e.code === 'Enter' || e.keyCode === 13) {
+                    e.preventDefault();
+                    toDoInputText.setAttribute('contenteditable', 'false');
+                    toDoInputText.setAttribute('contenteditable', 'true');
+                    updateLS();
+                }
+        });
                 
         // add a due date picker
         if(el && el.duedate) {
@@ -217,14 +228,14 @@ function addTodo(el){
               
             subtaskEl.classList.add('sub-task-item-li');
             subtaskEl.innerHTML = `
-            <input type="checkbox" ${boxChecked}/>
-            <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
-            <div class="subtask-btns">
-                <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
-                <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
-                <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
-                <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
-            </div>          
+                <input type="checkbox" ${boxChecked}/>
+                <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
+                <div class="subtask-btns">
+                    <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
+                    <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
+                    <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
+                    <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
+                </div>          
             `;
                 
             subtaskInput.innerText = '';
@@ -325,6 +336,21 @@ function updateLS() {
         const todoDate   = todoEl.querySelector('.date-text');  
         const subtaskEls = todoEl.querySelectorAll('.sub-task-item-li'); 
         const todoNote   = todoEl.querySelector('textarea');
+        const categories = document.querySelectorAll('.todo-list-category-li');
+
+        let categoryName = '';
+
+        categories.forEach(category => {
+            if(todoEl.classList.contains(category.innerText
+                .split(' ')
+                .join('-')
+                .toLowerCase()))
+                    categoryName = category.innerText
+                        .split(' ')
+                        .join('-')
+                        .toLowerCase();
+                        return categoryName;
+                    });
         
         let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         
@@ -341,12 +367,20 @@ function updateLS() {
             });
         }  // what is pushed whether there are subtasks or not. If no subtasks then subtasks will just be an empty array
         todos.push({
+            todoCategory: categoryName,
             text: todoTexts.innerText,
             completed: todoTexts.classList.contains('completed'),
             duedate: todoDate.innerText,
             subTasks: subtasks,
             todoNote: todoNote.value
         }); 
+    });
+
+    // add the category selected to LS
+    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+    allTodoCategories.forEach(todoCategory => {
+        if(todoCategory.classList.contains('selected'))
+            localStorage.setItem('todoCategory', todoCategory.innerText);
     });
         
     localStorage.setItem('todos', JSON.stringify(todos));    
@@ -381,14 +415,17 @@ function toolbarButtons(){
     const showCompletedBtn   = document.querySelector('#show-completed');
     const deleteCompletedBtn = document.querySelector('#delete-completed');
     const todoItemCategories = document.querySelectorAll('.todo-list-category-li');
-
-
+    const totalTodoItems     = document.querySelectorAll('.todo-item');
+    
     showAllBtn.addEventListener('click', () => {
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
         });
         todoItemCategories.forEach(todoItemCategory => {
             todoItemCategory.classList.remove('selected');
+        });
+        totalTodoItems.forEach(item =>{
+            item.classList.remove('hidden2');
         });
     });
 
