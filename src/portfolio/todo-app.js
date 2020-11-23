@@ -69,11 +69,12 @@ createListPopupBtn.addEventListener('click', () => {
 });
 
 function createList(todoCategoryName) {
-    const allCategories        = document.querySelectorAll('.todo-list-category-li');
-
+    // remove all of the selected classes first
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
     allCategories.forEach(todoCat => {
         todoCat.classList.remove('selected');
     });
+
     const createListEl = document.createElement('li');
 
     createListEl.classList.add('todo-list-category-li', 'selected');
@@ -92,32 +93,32 @@ function createList(todoCategoryName) {
 
 
 
-todoCategories.forEach(todoCategory => {
-    todoCategory.addEventListener('click', (e) => {
-        const todoCategories = document.querySelectorAll('.todo-list-category-li');
-        todoCategories.forEach(cat => {
-            cat.classList.remove('selected');
-        });
+// todoCategories.forEach(todoCategory => {
+//     todoCategory.addEventListener('click', (e) => {
+//         const todoCategories = document.querySelectorAll('.todo-list-category-li');
+//         todoCategories.forEach(cat => {
+//             cat.classList.remove('selected');
+//         });
 
        
-        let clickedItem = e.target;
-        clickedItem.classList.add('selected');
+//         let clickedItem = e.target;
+//         clickedItem.classList.add('selected');
         
-        todoCategoryName = clickedItem.innerText
-        .split(' ')
-        .join('-')
-        .toLowerCase();
+//         todoCategoryName = clickedItem.innerText
+//         .split(' ')
+//         .join('-')
+//         .toLowerCase();
     
-        const allTodoItems = document.querySelectorAll('.todo-item');
+//         const allTodoItems = document.querySelectorAll('.todo-item');
     
-        allTodoItems.forEach(todoItem => {
-            todoItem.classList.remove('hidden2');
-            if(!todoItem.classList.contains(todoCategoryName)) 
-            todoItem.classList.add('hidden2');
-        });
-        updateLS();
-    });
-});
+//         allTodoItems.forEach(todoItem => {
+//             todoItem.classList.remove('hidden2');
+//             if(!todoItem.classList.contains(todoCategoryName)) 
+//             todoItem.classList.add('hidden2');
+//         });
+//         updateLS();
+//     });
+// });
 
 
 
