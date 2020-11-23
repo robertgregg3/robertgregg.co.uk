@@ -69,6 +69,11 @@ createListPopupBtn.addEventListener('click', () => {
 });
 
 function createList(todoCategoryName) {
+    const allCategories        = document.querySelectorAll('.todo-list-category-li');
+
+    allCategories.forEach(todoCat => {
+        todoCat.classList.remove('selected');
+    });
     const createListEl = document.createElement('li');
 
     createListEl.classList.add('todo-list-category-li', 'selected');
