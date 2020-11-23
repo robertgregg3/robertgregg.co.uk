@@ -50,7 +50,7 @@ body{
     object-position: top;
 }
 
-.todo-profile__email {
+#todo-profile__email {
     word-break: break-word;
     width: 100%;
     margin-left: 1rem;
@@ -432,7 +432,8 @@ input[type="date"] {
 /* to have the div show data text of "Add a subtask */
 
 [contentEditable=true]:empty:not(:focus):before{
-    content:attr(data-text)
+    content:attr(data-text);
+    color: #33333380;
 } 
 
 .todo-extend-div {
