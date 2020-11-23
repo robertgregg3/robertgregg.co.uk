@@ -73,7 +73,7 @@ createListPopupBtn.addEventListener('click', () => {
 function createList(todoCategoryName) {
     const createListEl = document.createElement('li');
 
-    createListEl.classList.add('todo-list-category-li', 'selected');
+    createListEl.classList.add('todo-list-category-li');
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i>${todoCategoryName}
@@ -82,10 +82,10 @@ function createList(todoCategoryName) {
     todoCategoryContainer.appendChild(createListEl);
 
     categoryName = todoCategoryName.split(' ').join('-').toLowerCase();
-    console.log(categoryName)
 
     createListEl.addEventListener('click', () => {
         filterTodos();
+        listCategroySelect()
     }); 
 }
 
@@ -101,6 +101,17 @@ function filterTodos(){
                 if(!oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
                     oneTodo.classList.add('hidden');
             });
+        });
+    });
+}
+
+function listCategroySelect() {
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+
+    allCategories.forEach(cat => {
+        cat.classList.remove('selected');
+        cat.addEventListener('click', (e) => {
+            e.target.classList.add('selected');
         });
     });
 }
