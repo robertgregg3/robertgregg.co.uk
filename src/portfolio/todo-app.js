@@ -2,6 +2,7 @@
     1) Drag not working on mobile
     2) Sort issues with safari
     3) refactor Enter press or set attributyes code
+    4) create list button appears when the text is there
 
 */ 
 
@@ -22,15 +23,27 @@ const todosUl               = document.getElementById('todos-ul');
 const countTotalTodos       = document.getElementById('count-total-todos');
 const countRemainingTodos   = document.getElementById('count-remaining-todos');
 const countCompletedTodos   = document.getElementById('count-completed-todos');
+
 const toolbar               = document.getElementById('toolbar');
+const profileEmail          = document.getElementById('todo-profile__email');
+
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
-const profileEmail          = document.getElementById('todo-profile__email');
+
+const createListBtn         = document.getElementById('create-list-btn');
+const createListPopup       = document.getElementById('create-list-popup');
+const closeCreateListBtn    = createListPopup.querySelector('.close-create-list');
+const createListInput       = createListPopup.querySelector('input');
+const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
+
 let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
+
 let todoCategoryName        = '';
 
+
+//profile section
 profileEmail.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
@@ -40,48 +53,76 @@ profileEmail.addEventListener('keypress', (e) => {
       }
 });
 
-if(profileEmail){
+if(profileEmail)
     profileEmail.innerText = profileEmailFromLS;
-}
 
-todoCategories.forEach(todoCategory => {
-    todoCategory.classList.remove('selected');
+// show/hide the create list box
+createListBtn.addEventListener('click',      () => {createListPopup.classList.remove('create-list--hidden');});
+closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
+
+// create a new list button press
+createListPopupBtn.addEventListener('click', () => {
+    todoCategoryName = createListInput.value;
+    createList(todoCategoryName);
+    createListPopup.classList.add('create-list--hidden');
+    updateLS();
 });
 
-// add selected category and show category todos
-todoCategoryContainer.addEventListener('click', addSelectedClassToCategory, false);
 
-function addSelectedClassToCategory(e) {
-    todoCategories.forEach(todoCategory => {todoCategory.classList.remove('selected')});
-    clickedItem = e.target;
-    clickedItem.classList.add('selected');
-    updateLS();
 
-    // get the category name, remove spaces, join with hyphen, make lowercase    
-    todoCategoryName = clickedItem.innerText
-        .split(' ')
-        .join('-')
-        .toLowerCase();
+function createList(todoCategoryName) {
+    const createListEl = document.createElement('li');
 
-    const allTodoItems = document.querySelectorAll('.todo-item');
+    createListEl.classList.add('todo-list-category-li');
+    createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
+    createListEl.innerHTML = `
+        <i class="fas fa-list-alt icon"></i>${todoCategoryName}
+    `;
 
-    allTodoItems.forEach(todoItem => {
-        todoItem.classList.remove('hidden2');
-        if(!todoItem.classList.contains(todoCategoryName)) {
-            todoItem.classList.add('hidden2');
-        }
+    todoCategoryContainer.appendChild(createListEl);
+
+    categoryName = todoCategoryName.split(' ').join('-').toLowerCase();
+
+    createListEl.addEventListener('click', () => {
+        filterTodos();
+        listCategroySelect()
+    }); 
+}
+
+function filterTodos(){
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+    const allTodos      = document.querySelectorAll('.todo-item');
+
+    allCategories.forEach(cat => {
+        cat.addEventListener('click', () => {
+            allTodos.forEach(oneTodo => {
+                if(oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
+                    oneTodo.classList.remove('hidden');
+                if(!oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
+                    oneTodo.classList.add('hidden');
+            });
+        });
     });
 }
 
+function listCategroySelect() {
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+
+    allCategories.forEach(cat => {
+        cat.classList.remove('selected');
+        cat.addEventListener('click', (e) => {
+            e.target.classList.add('selected');
+        });
+    });
+}
+
+
+
+
+// hide the toolbar on page load
 toolbar.classList.add('hidden');
 
-if(todosFromLS) {
-    todosFromLS.forEach(el => {
-        addTodo(el);
-        toolbarButtons();
-    });
-} 
-
+// add the todo form
 form.addEventListener('submit', (e) => {
     e.preventDefault(); 
     addTodo();
@@ -90,6 +131,14 @@ form.addEventListener('submit', (e) => {
     toolbarButtons();
     dragItems();
 });
+
+// create todos from localStorage
+if(todosFromLS) {
+    todosFromLS.forEach(el => {
+        addTodo(el);
+        toolbarButtons();
+    });
+} 
 
 function addTodo(el){
     toolbar.classList.remove('hidden');
@@ -102,11 +151,10 @@ function addTodo(el){
     }
     
     if(todoText) {  
-        // create the todo item with a li
         const todoItem = document.createElement('li');  
         
         todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
-        todoItem.className += ' ' + todoCategoryName;
+        todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
         todoItem.setAttribute('draggable', 'true');
         todoItem.innerHTML = ` 
             <input type="checkbox" class="spring"/>
@@ -346,16 +394,10 @@ function updateLS() {
         let categoryName = '';
 
         categories.forEach(category => {
-            if(todoEl.classList.contains(category.innerText
-                .split(' ')
-                .join('-')
-                .toLowerCase()))
-                    categoryName = category.innerText
-                        .split(' ')
-                        .join('-')
-                        .toLowerCase();
-                        return categoryName;
-                    });
+            if(todoEl.classList.contains(category.innerText.split(' ').join('-').toLowerCase()))
+                categoryName = category.innerText.split(' ').join('-').toLowerCase();
+                return categoryName;
+            });
         
         let subtasks = []; // an empty array that will eventually contain objects of the subtask / completed status
         

@@ -21,11 +21,8 @@
       </div>
       <div id="todo-categories">
         <ul id="todo-list-categories-ul">
-          <li class="todo-list-category-li main-list"><i class="fas fa-list-alt icon"></i>Main List</li>
-          <li class="todo-list-category-li list-2"><i class="fas fa-list-alt icon"></i>List 2</li>
-          <li class="todo-list-category-li shopping selected"><i class="fas fa-list-alt icon"></i>Shopping</li>
         </ul>
-        <button id="new-todo-list-btn"><i class="fas fa-plus"></i></button>
+        <button id="create-list-btn"><i class="fas fa-plus"></i></button>
       </div>
     </div>
     <div id="todo-col">
@@ -48,6 +45,15 @@
       <ul class="todos-ul" id="todos-ul">
       </ul>
     </div>
+  </div>
+  <div id="create-list-popup" class="create-list--hidden">
+    <i class="fas fa-times close-create-list"></i>
+    <input 
+      type="text" 
+      id="create-list__input"
+      placeholder="List name"
+      />
+    <button id="create-list__button">Create List</button>
   </div>
   <script src="../src/utils.js"></script>
   <script src="../src/portfolio/todo-app.js"></script>
