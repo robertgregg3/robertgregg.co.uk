@@ -26,6 +26,7 @@ const toolbar               = document.getElementById('toolbar');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
 const profileEmail          = document.getElementById('todo-profile__email');
+let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = '';
@@ -38,6 +39,10 @@ profileEmail.addEventListener('keypress', (e) => {
         updateLS();
       }
 });
+
+if(profileEmail){
+    profileEmail.innerText = profileEmailFromLS;
+}
 
 todoCategories.forEach(todoCategory => {
     todoCategory.classList.remove('selected');
@@ -376,6 +381,9 @@ function updateLS() {
         }); 
     });
 
+    // add profile email to local storage
+    localStorage.setItem('email', profileEmail.innerText);
+
     // add the category selected to LS
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
     allTodoCategories.forEach(todoCategory => {
@@ -383,6 +391,7 @@ function updateLS() {
             localStorage.setItem('todoCategory', todoCategory.innerText);
     });
         
+    // add todos to local storage
     localStorage.setItem('todos', JSON.stringify(todos));    
     countTodos();
 }
