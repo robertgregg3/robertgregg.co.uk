@@ -37,11 +37,19 @@ const createListInput       = createListPopup.querySelector('input');
 const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
 
 let profileEmailFromLS      = localStorage.getItem('email');
+let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 
 let todoCategoryName        = '';
 
+// add created categories to the sidebar
+if(todoCategoriesFromLS){
+    todoCategoriesFromLS.forEach(todoCat => {
+        todoCategoryName = todoCat.todoCategory;
+        createList(todoCategoryName);
+    });
+}
 
 //profile section
 profileEmail.addEventListener('keypress', (e) => {
@@ -57,6 +65,9 @@ if(profileEmail)
     profileEmail.innerText = profileEmailFromLS;
 
 // show/hide the create list box
+if(!todosFromLS)
+    createListPopup.classList.remove('create-list--hidden')
+
 createListBtn.addEventListener('click',      () => {createListPopup.classList.remove('create-list--hidden');});
 closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
 
@@ -71,9 +82,15 @@ createListPopupBtn.addEventListener('click', () => {
 
 
 function createList(todoCategoryName) {
+    
+    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+
+    allTodoCategories.forEach(cat => {
+        cat.classList.remove('selected');
+    });
     const createListEl = document.createElement('li');
 
-    createListEl.classList.add('todo-list-category-li');
+    createListEl.classList.add('todo-list-category-li', 'selected');
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i>${todoCategoryName}
@@ -83,31 +100,32 @@ function createList(todoCategoryName) {
 
     categoryName = todoCategoryName.split(' ').join('-').toLowerCase();
 
+    filterTodos();
+    filterTodosWhenClciked(createListEl);
     createListEl.addEventListener('click', () => {
-        filterTodos();
-        listCategroySelect()
-    }); 
-}
-
-function filterTodos(){
-    const allCategories = document.querySelectorAll('.todo-list-category-li');
-    const allTodos      = document.querySelectorAll('.todo-item');
-
-    allCategories.forEach(cat => {
-        cat.addEventListener('click', () => {
-            allTodos.forEach(oneTodo => {
-                if(oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
-                    oneTodo.classList.remove('hidden');
-                if(!oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
-                    oneTodo.classList.add('hidden');
-            });
-        });
+        listCategorySelect();
     });
+
+    updateLS();
 }
 
-function listCategroySelect() {
-    const allCategories = document.querySelectorAll('.todo-list-category-li');
+// filter todos when a category is added
+function filterTodos(){
+    const allTodos = document.querySelectorAll('.todo-item');
+   
+    allTodos.forEach(oneTodo => {
+        if(oneTodo.classList.contains(todoCategoryName.split(' ').join('-').toLowerCase()))
+            oneTodo.classList.remove('hidden');
+        if(!oneTodo.classList.contains(todoCategoryName.split(' ').join('-').toLowerCase()))
+            oneTodo.classList.add('hidden');
+    });
 
+}
+
+// add selected class to category
+function listCategorySelect() {
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+    
     allCategories.forEach(cat => {
         cat.classList.remove('selected');
         cat.addEventListener('click', (e) => {
@@ -116,9 +134,24 @@ function listCategroySelect() {
     });
 }
 
-
-
-
+function filterTodosWhenClciked(){
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+    const allTodos      = document.querySelectorAll('.todo-item');
+    
+    allCategories.forEach(cat => {
+        cat.addEventListener('click', (e) => {
+            
+            clickedItemEl = e.target.innerText.split(' ').join('-').toLowerCase();
+            console.log(clickedItemEl);
+            
+            allTodos.forEach(oneTodo => {
+                oneTodo.classList[oneTodo.classList.contains(clickedItemEl) ? 'remove' :  'add']('hidden');
+                // if(clickedItemEl)
+            });
+        });
+    });
+}
+    
 // hide the toolbar on page load
 toolbar.classList.add('hidden');
 
@@ -142,6 +175,7 @@ if(todosFromLS) {
 
 function addTodo(el){
     toolbar.classList.remove('hidden');
+    input.style.marginTop = '0';
    
     let todoText = input.value; 
     
@@ -427,11 +461,22 @@ function updateLS() {
     localStorage.setItem('email', profileEmail.innerText);
 
     // add the category selected to LS
+    let todoCategories      = [];
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+
     allTodoCategories.forEach(todoCategory => {
+
+        todoCategories.push({
+            todoCategory: todoCategory.innerText,
+            selected: todoCategory.classList.contains('selected')
+        });
+
         if(todoCategory.classList.contains('selected'))
             localStorage.setItem('todoCategory', todoCategory.innerText);
     });
+
+    // add all created todo List categories
+    localStorage.setItem('todoCategories', JSON.stringify(todoCategories));
         
     // add todos to local storage
     localStorage.setItem('todos', JSON.stringify(todos));    
