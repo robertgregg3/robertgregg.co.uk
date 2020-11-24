@@ -16,6 +16,23 @@
     5) Reorder the projects
 */
 
+/* Test 1
+1) list gets crerated with correct class
+2) todo item gets created with correct class
+3) when two or more lists are created, by clicking on the category you can see the list and correct todos
+4) Refresh has the same effect
+
+Test 2
+1) Create 2 lists with no todos. Correct classes applied
+2) Then create the todos as above. 
+
+ISSUES:
+    when more than one list is created, the app applies the LAST created classname
+
+Test 3
+1) 
+*/
+
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
@@ -37,11 +54,20 @@ const createListInput       = createListPopup.querySelector('input');
 const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
 
 let profileEmailFromLS      = localStorage.getItem('email');
+let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 
 let todoCategoryName        = '';
 
+// add created categories to the sidebar
+if(todoCategoriesFromLS){
+    todoCategoriesFromLS.forEach(todoCat => {
+        todoCategoryName = todoCat.todoCategory;
+        createList(todoCategoryName);
+        todoCategoryName = '';
+    });
+}
 
 //profile section
 profileEmail.addEventListener('keypress', (e) => {
@@ -56,11 +82,15 @@ profileEmail.addEventListener('keypress', (e) => {
 if(profileEmail)
     profileEmail.innerText = profileEmailFromLS;
 
-// show/hide the create list box
+// show the create list box if there is nothing in Local storage
+if(!todosFromLS)
+    createListPopup.classList.remove('create-list--hidden')
+
+// show/hide create list box    
 createListBtn.addEventListener('click',      () => {createListPopup.classList.remove('create-list--hidden');});
 closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
 
-// create a new list button press
+// create a new list button click or pressing enter 
 createListPopupBtn.addEventListener('click', () => {
     todoCategoryName = createListInput.value;
     createList(todoCategoryName);
@@ -68,12 +98,25 @@ createListPopupBtn.addEventListener('click', () => {
     updateLS();
 });
 
+createListInput.addEventListener('keypress', (e) => {
+    if (e.code === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        todoCategoryName = createListInput.value;
+        createList(todoCategoryName);
+        createListPopup.classList.add('create-list--hidden');
+        updateLS();
+    }
+}); 
+
 
 
 function createList(todoCategoryName) {
+    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+    allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
+
     const createListEl = document.createElement('li');
 
-    createListEl.classList.add('todo-list-category-li');
+    createListEl.classList.add('todo-list-category-li', 'selected');
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i>${todoCategoryName}
@@ -83,54 +126,88 @@ function createList(todoCategoryName) {
 
     categoryName = todoCategoryName.split(' ').join('-').toLowerCase();
 
+    filterTodos();
+    filterTodosWhenClciked(createListEl);
     createListEl.addEventListener('click', () => {
-        filterTodos();
-        listCategroySelect()
-    }); 
+        listCategorySelect(todoCategoryName);
+    });
+
+    updateLS();
+    todoCategoryName = '';
 }
 
+// filter todos when a category is added
 function filterTodos(){
+    const allTodos = document.querySelectorAll('.todo-item');
+   
+    allTodos.forEach(oneTodo => {
+        if(oneTodo.classList.contains(todoCategoryName.split(' ').join('-').toLowerCase()))
+            oneTodo.classList.remove('hidden');
+        if(!oneTodo.classList.contains(todoCategoryName.split(' ').join('-').toLowerCase()))
+            oneTodo.classList.add('hidden');
+    });
+
+}
+
+// add selected class to category
+function listCategorySelect() {
+    const allCategories = document.querySelectorAll('.todo-list-category-li');
+    
+    allCategories.forEach(cat => {
+        todoCategoryName = cat.innerText;
+        cat.classList.remove('selected');
+        cat.addEventListener('click', (e) => {
+            e.target.classList.add('selected');
+        });
+    });
+
+    return todoCategoryName;
+}
+
+function filterTodosWhenClciked(){
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     const allTodos      = document.querySelectorAll('.todo-item');
-
+    
     allCategories.forEach(cat => {
-        cat.addEventListener('click', () => {
+        cat.addEventListener('click', (e) => {
+            
+            clickedItemEl = e.target.innerText.split(' ').join('-').toLowerCase();
+            
             allTodos.forEach(oneTodo => {
-                if(oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
+                if(oneTodo.classList.contains(clickedItemEl))
                     oneTodo.classList.remove('hidden');
-                if(!oneTodo.classList.contains(cat.innerText.split(' ').join('-').toLowerCase()))
+                if(!oneTodo.classList.contains(clickedItemEl))
                     oneTodo.classList.add('hidden');
             });
         });
     });
 }
 
-function listCategroySelect() {
-    const allCategories = document.querySelectorAll('.todo-list-category-li');
-
-    allCategories.forEach(cat => {
-        cat.classList.remove('selected');
-        cat.addEventListener('click', (e) => {
-            e.target.classList.add('selected');
-        });
-    });
-}
+filterTodosWhenClciked();
 
 
-
-
+    
 // hide the toolbar on page load
 toolbar.classList.add('hidden');
 
 // add the todo form
 form.addEventListener('submit', (e) => {
     e.preventDefault(); 
+    findSelectedCategory();
     addTodo();
     updateLS();
     countTodos();
     toolbarButtons();
     dragItems();
 });
+
+function findSelectedCategory() {
+    todoCategories.forEach(cat => {
+        if(cat.classList.contains('selected'))
+        return todoCategoryName = cat.innerText;
+    });
+}
+
 
 // create todos from localStorage
 if(todosFromLS) {
@@ -142,6 +219,7 @@ if(todosFromLS) {
 
 function addTodo(el){
     toolbar.classList.remove('hidden');
+    input.style.marginTop = '0';
    
     let todoText = input.value; 
     
@@ -373,6 +451,7 @@ function addTodo(el){
         if(el && el.todoNote)
             todoNote.value = el.todoNote;
         
+        filterTodosWhenClciked()
         countTodos();
         updateLS();
         input.value ='';
@@ -427,11 +506,22 @@ function updateLS() {
     localStorage.setItem('email', profileEmail.innerText);
 
     // add the category selected to LS
+    let todoCategories      = [];
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+
     allTodoCategories.forEach(todoCategory => {
+
+        todoCategories.push({
+            todoCategory: todoCategory.innerText,
+            selected: todoCategory.classList.contains('selected')
+        });
+
         if(todoCategory.classList.contains('selected'))
             localStorage.setItem('todoCategory', todoCategory.innerText);
     });
+
+    // add all created todo List categories
+    localStorage.setItem('todoCategories', JSON.stringify(todoCategories));
         
     // add todos to local storage
     localStorage.setItem('todos', JSON.stringify(todos));    
