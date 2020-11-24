@@ -49,6 +49,7 @@ if(todoCategoriesFromLS){
         todoCategoryName = todoCat.todoCategory;
         createList(todoCategoryName);
     });
+    todoCategoryName = '';
 }
 
 //profile section
