@@ -235,231 +235,231 @@ function addTodo(el){
     if(todoText) {  
         const todoItem = document.createElement('li');  
         
-        todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
-        todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        todoItem.setAttribute('draggable', 'true');
-        todoItem.innerHTML = ` 
-            <input type="checkbox" class="spring"/>
-            <span class="input-text" contenteditable="true">${todoText}</span>
-            <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
-            <i class="fas fa-times remove-date close-hidden"></i><span class="date-text"></span>
-            <div class="todo-extend-div">
-                <div class="extended-todo-item sub-task-items">
-                    <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
-                </div>
-                <div class="extended-todo-item sb-todo-date">
-                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
-                </div>
-                <ul class="subtasks">
-                </ul>
-                <div class="todo-note">
-                    <textarea placeholder="Add a Note"></textarea>
-                </div>
+    todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
+    todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
+    todoItem.setAttribute('draggable', 'true');
+    todoItem.innerHTML = ` 
+        <input type="checkbox" class="spring"/>
+        <span class="input-text" contenteditable="true">${todoText}</span>
+        <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
+        <i class="fas fa-times remove-date close-hidden"></i><span class="date-text"></span>
+        <div class="todo-extend-div">
+            <div class="extended-todo-item sub-task-items">
+                <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
             </div>
-        `; 
-        
-        // append the li to the ul
-        todosUl.appendChild(todoItem);
+            <div class="extended-todo-item sb-todo-date">
+                <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
+            </div>
+            <ul class="subtasks">
+            </ul>
+            <div class="todo-note">
+                <textarea placeholder="Add a Note"></textarea>
+            </div>
+        </div>
+    `; 
+    
+    // append the li to the ul
+    todosUl.appendChild(todoItem);
 
-            // remove the new line when enter is pressed on the main todo element
-            const toDoInputText    = todoItem.querySelector('.input-text');
-            const closeTodoBtn     = todoItem.querySelector('.close-todo');
-            const subtaskContainer = todoItem.querySelector('.subtasks');
-            const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
-            const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
-            const expandTodoBtn    = todoItem.querySelector('.expand-todo');
-            const todoInputText    = todoItem.querySelector('.input-text');
-            const todoItemCheckbox = todoItem.querySelector('input');
-            const todoNote         = todoItem.querySelector('textarea');
-            let removeDate         = todoItem.querySelector('.remove-date');
-            let dueDate            = todoItem.querySelector('.extended-todo-item input');
-            let dateText           = todoItem.querySelector('.date-text');
-            let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    // remove the new line when enter is pressed on the main todo element
+    const toDoInputText    = todoItem.querySelector('.input-text');
+    const closeTodoBtn     = todoItem.querySelector('.close-todo');
+    const subtaskContainer = todoItem.querySelector('.subtasks');
+    const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
+    const todoExtendingDiv = todoItem.querySelector('.todo-extend-div');     
+    const expandTodoBtn    = todoItem.querySelector('.expand-todo');
+    const todoInputText    = todoItem.querySelector('.input-text');
+    const todoItemCheckbox = todoItem.querySelector('input');
+    const todoNote         = todoItem.querySelector('textarea');
+    let removeDate         = todoItem.querySelector('.remove-date');
+    let dueDate            = todoItem.querySelector('.extended-todo-item input');
+    let dateText           = todoItem.querySelector('.date-text');
+    let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            todosUl.addEventListener('keypress', (e) => {
-                if (e.code === 'Enter' || e.keyCode === 13) {
-                    e.preventDefault();
-                    toDoInputText.setAttribute('contenteditable', 'false');
-                    toDoInputText.setAttribute('contenteditable', 'true');
-                    updateLS();
-                }
-        });
-                
-        // add a due date picker
-        if(el && el.duedate) {
-            dateText.innerText = el.duedate;
-            removeDate.classList.remove('close-hidden');
+    todosUl.addEventListener('keypress', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            toDoInputText.setAttribute('contenteditable', 'false');
+            toDoInputText.setAttribute('contenteditable', 'true');
+            updateLS();
         }
+    });
+            
+    // add a due date picker
+    if(el && el.duedate) {
+        dateText.innerText = el.duedate;
+        removeDate.classList.remove('close-hidden');
+    }
+    
+    dueDate.addEventListener('change', () => {
+        let inputDate = dueDate.value;
+        let inputtedDate = new Date(inputDate);
+        dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+        updateLS();
+        removeDate.classList.remove('close-hidden');
+    });
+
+    removeDate.addEventListener('click', () => {
+        dateText.innerText = '';
+        removeDate.classList.add('close-hidden');
+        dueDate.value = '';
+        updateLS();
+    });
+
+    // close todo button
+    todoItem.addEventListener('mouseover', () => {closeTodoBtn.classList.remove('close-hidden');});
+    todoItem.addEventListener('mouseout',  () => {closeTodoBtn.classList.add('close-hidden');});
+
+    closeTodoBtn.addEventListener('click', () => {
+        todoItem.remove();
+        updateLS();
+    });      
+
+    // show the Extendable div
+    expandTodoBtn.addEventListener('click', () => {
+        todoItem.classList[todoItem.classList.contains('todo-item-height') ? 'remove' : 'add']('todo-item-height');
+        todoExtendingDiv.classList[todoExtendingDiv.classList.contains('height-100') ? 'remove' : 'add']('height-100');
+        expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
+    });
+
+    // add subtasks Input        
+    let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
+
+    subtaskInput.addEventListener('keypress', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            subtaskInputClicked = true;
+            e.preventDefault();
+            subtaskInput.setAttribute('contenteditable', 'false');
+            subtaskInput.setAttribute('contenteditable', 'true');
+            createSubtask(subtaskInputClicked);
+            subtaskInputClicked = false;
+            updateLS();
+        }
+    }); 
+    
+    if(el && el.subTasks){
+        for (let i=0; i<el.subTasks.length; i++){
+            createSubtask(i);  
+        }
+    };
+    
+    function createSubtask(i){      
+        const subtaskEl  = document.createElement('li');
+        let subtaskText  = subtaskInput.innerText; 
+        let subtaskClass = ''; 
+        let boxChecked   = ''; 
+        let favorited    = '';
         
-        dueDate.addEventListener('change', () => {
-            let inputDate = dueDate.value;
-            let inputtedDate = new Date(inputDate);
-            dateText.innerText = 'Due: ' + inputtedDate.getDate() + '-' + months[inputtedDate.getMonth()] + '-' + inputtedDate.getFullYear();
+        if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
+            subtaskText = el.subTasks[i].subtask; 
+            if(el.subTasks[i].subtaskCompleted){ 
+                subtaskClass = 'completed'; 
+                boxChecked = 'checked';
+            }
+            if(el.subTasks[i].subtaskFavorited){
+                favorited = 'favorited';
+            }
+        }
+            
+        subtaskEl.classList.add('sub-task-item-li');
+        subtaskEl.innerHTML = `
+            <input type="checkbox" ${boxChecked}/>
+            <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
+            <div class="subtask-btns">
+                <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
+                <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
+                <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
+                <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
+            </div>          
+        `;
+            
+        subtaskInput.innerText = '';
+        
+        const subtaskOutput      = subtaskEl.querySelector('.subtask-text');
+        const subtaskCheckbox    = subtaskEl.querySelector('input');
+        const subtaskBtns        = subtaskEl.querySelector('.subtask-btns')
+        const subtaskEditBtn     = subtaskBtns.querySelector('.edit');
+        const subtaskDeleteBtn   = subtaskBtns.querySelector('.delete');
+        const subtaskFavoriteBtn = subtaskBtns.querySelector('.favorite');
+        const subtaskSaveBtn     = subtaskBtns.querySelector('.save');
+
+
+        // toggle the check box and classes
+        subtaskCheckbox.addEventListener('click', () => {
+            subtaskOutput.classList[subtaskOutput.classList.contains('completed') ? 'remove' : 'add']('completed');
             updateLS();
-            removeDate.classList.remove('close-hidden');
         });
 
-        removeDate.addEventListener('click', () => {
-            dateText.innerText = '';
-            removeDate.classList.add('close-hidden');
-            dueDate.value = '';
-            updateLS();
+        // subtask buttons
+        subtaskEditBtn.addEventListener('click', () => {
+            subtaskOutput.setAttribute('contenteditable', 'true');
+            subtaskOutput.classList.add('editable');
+            subtaskSaveBtn.classList.remove('hidden');
+            subtaskEditBtn.classList.add('hidden');
+            subtaskDeleteBtn.style.marginLeft = '1.05rem';
         });
-
-        // close todo button
-        todoItem.addEventListener('mouseover', () => {closeTodoBtn.classList.remove('close-hidden');});
-        todoItem.addEventListener('mouseout',  () => {closeTodoBtn.classList.add('close-hidden');});
-
-        closeTodoBtn.addEventListener('click', () => {
-            todoItem.remove();
+        subtaskDeleteBtn.addEventListener('click', () => {
+            subtaskEl.remove();
             updateLS();
-        });      
+        });         
 
-        // show the Extendable div
-        expandTodoBtn.addEventListener('click', () => {
-            todoItem.classList[todoItem.classList.contains('todo-item-height') ? 'remove' : 'add']('todo-item-height');
-            todoExtendingDiv.classList[todoExtendingDiv.classList.contains('height-100') ? 'remove' : 'add']('height-100');
-            expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
-        });
-
-        // add subtasks Input        
-        let subtaskInputClicked = false; // variable used to enable the subtasks after a page reloads
-
-        subtaskInput.addEventListener('keypress', (e) => {
+            // editing the subtasks
+            subtaskOutput.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || e.keyCode === 13) {
-                subtaskInputClicked = true;
                 e.preventDefault();
-                subtaskInput.setAttribute('contenteditable', 'false');
-                subtaskInput.setAttribute('contenteditable', 'true');
-                createSubtask(subtaskInputClicked);
-                subtaskInputClicked = false;
-                updateLS();
-            }
-        }); 
-        
-        if(el && el.subTasks){
-            for (let i=0; i<el.subTasks.length; i++){
-                createSubtask(i);  
-            }
-        };
-        
-        function createSubtask(i){      
-            const subtaskEl  = document.createElement('li');
-            let subtaskText  = subtaskInput.innerText; 
-            let subtaskClass = ''; 
-            let boxChecked   = ''; 
-            let favorited    = '';
-            
-            if(el && el.subTasks && !subtaskInputClicked){ // if there is a todo, and subtasks, and the enter button was NOT pressed 
-                subtaskText = el.subTasks[i].subtask; 
-                if(el.subTasks[i].subtaskCompleted){ 
-                    subtaskClass = 'completed'; 
-                    boxChecked = 'checked';
-                }
-                if(el.subTasks[i].subtaskFavorited){
-                    favorited = 'favorited';
-                }
-            }
-                
-            subtaskEl.classList.add('sub-task-item-li');
-            subtaskEl.innerHTML = `
-                <input type="checkbox" ${boxChecked}/>
-                <span class="subtask-text ${subtaskClass}">${subtaskText}</span>
-                <div class="subtask-btns">
-                    <span class="subtask-btn save hidden"><i class="fas fa-save"></i></span>
-                    <span class="subtask-btn edit"><i class="fas fa-edit"></i></span>
-                    <span class="subtask-btn delete"><i class="fas fa-trash-alt"></i></span>
-                    <span class="subtask-btn favorite ${favorited}"><i class="fas fa-star"></i></span>
-                </div>          
-            `;
-                
-            subtaskInput.innerText = '';
-            
-            const subtaskOutput      = subtaskEl.querySelector('.subtask-text');
-            const subtaskCheckbox    = subtaskEl.querySelector('input');
-            const subtaskBtns        = subtaskEl.querySelector('.subtask-btns')
-            const subtaskEditBtn     = subtaskBtns.querySelector('.edit');
-            const subtaskDeleteBtn   = subtaskBtns.querySelector('.delete');
-            const subtaskFavoriteBtn = subtaskBtns.querySelector('.favorite');
-            const subtaskSaveBtn     = subtaskBtns.querySelector('.save');
-
-
-            // toggle the check box and classes
-            subtaskCheckbox.addEventListener('click', () => {
-                subtaskOutput.classList[subtaskOutput.classList.contains('completed') ? 'remove' : 'add']('completed');
-                updateLS();
-            });
-
-            // subtask buttons
-            subtaskEditBtn.addEventListener('click', () => {
-                subtaskOutput.setAttribute('contenteditable', 'true');
-                subtaskOutput.classList.add('editable');
-                subtaskSaveBtn.classList.remove('hidden');
-                subtaskEditBtn.classList.add('hidden');
-                subtaskDeleteBtn.style.marginLeft = '1.05rem';
-            });
-            subtaskDeleteBtn.addEventListener('click', () => {
-                subtaskEl.remove();
-                updateLS();
-            });         
-
-                // editing the subtasks
-                subtaskOutput.addEventListener('keypress', (e) => {
-                if (e.code === 'Enter' || e.keyCode === 13) {
-                    e.preventDefault();
-                    subtaskOutput.setAttribute('contenteditable', 'false');
-                    subtaskOutput.classList.remove('editable');
-                    subtaskSaveBtn.classList.add('hidden');
-                    subtaskEditBtn.classList.remove('hidden');
-                    subtaskDeleteBtn.style.marginLeft = '0rem';
-                    updateLS();
-                }
-            }); 
-
-            // saving the subtask (with button rather than pressing enter - above)
-            subtaskSaveBtn.addEventListener('click', () => {
                 subtaskOutput.setAttribute('contenteditable', 'false');
                 subtaskOutput.classList.remove('editable');
                 subtaskSaveBtn.classList.add('hidden');
                 subtaskEditBtn.classList.remove('hidden');
                 subtaskDeleteBtn.style.marginLeft = '0rem';
                 updateLS();
-            }); 
+            }
+        }); 
 
-            subtaskFavoriteBtn.addEventListener('click', () => {
-                subtaskFavoriteBtn.classList[subtaskFavoriteBtn.classList.contains('favorited') ? 'remove' : 'add']('favorited');
-                updateLS();
-            });
+        // saving the subtask (with button rather than pressing enter - above)
+        subtaskSaveBtn.addEventListener('click', () => {
+            subtaskOutput.setAttribute('contenteditable', 'false');
+            subtaskOutput.classList.remove('editable');
+            subtaskSaveBtn.classList.add('hidden');
+            subtaskEditBtn.classList.remove('hidden');
+            subtaskDeleteBtn.style.marginLeft = '0rem';
+            updateLS();
+        }); 
 
-            subtaskContainer.appendChild(subtaskEl);
+        subtaskFavoriteBtn.addEventListener('click', () => {
+            subtaskFavoriteBtn.classList[subtaskFavoriteBtn.classList.contains('favorited') ? 'remove' : 'add']('favorited');
             updateLS();
-        }    
-        
-        // completing/un-completing a todo        
-        if(el && el.completed) {
-            todoItemCheckbox.checked = true;
-            todoInputText.classList.add('completed');  
-            todoItem.classList.add('hidden');
-            updateLS();
-        }
-        
-        todoItemCheckbox.addEventListener('click', () => {
-            todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
-            todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-            updateLS();
-            countTodos();
-            toolbarButtons();
-        });   
-        
-        // text area note   
-        if(el && el.todoNote)
-            todoNote.value = el.todoNote;
-        
-        filterTodosWhenClicked()
-        countTodos();
+        });
+
+        subtaskContainer.appendChild(subtaskEl);
         updateLS();
-        input.value ='';
+    }    
+    
+    // completing/un-completing a todo        
+    if(el && el.completed) {
+        todoItemCheckbox.checked = true;
+        todoInputText.classList.add('completed');  
+        todoItem.classList.add('hidden');
+        updateLS();
     }
+    
+    todoItemCheckbox.addEventListener('click', () => {
+        todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+        todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+        updateLS();
+        countTodos();
+        toolbarButtons();
+    });   
+    
+    // text area note   
+    if(el && el.todoNote)
+        todoNote.value = el.todoNote;
+    
+    filterTodosWhenClicked()
+    countTodos();
+    updateLS();
+    input.value ='';
+}
 }
 
 
@@ -564,6 +564,7 @@ function toolbarButtons(){
     const totalTodoItems     = document.querySelectorAll('.todo-item');
     
     showAllBtn.addEventListener('click', () => {
+        console.log('hello again')
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
         });
