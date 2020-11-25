@@ -121,7 +121,11 @@ function createList(todoCategoryName) {
 
     const createListEl = document.createElement('li');
 
-    createListEl.classList.add('todo-list-category-li', 'selected');
+    if(todosFromLS) {
+        createListEl.classList.add('todo-list-category-li');
+    } else {
+        createListEl.classList.add('todo-list-category-li', 'selected');
+    }
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i>${todoCategoryName}
