@@ -564,7 +564,6 @@ function toolbarButtons(){
     const totalTodoItems     = document.querySelectorAll('.todo-item');
     
     showAllBtn.addEventListener('click', () => {
-        console.log('hello again')
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
         });
@@ -603,8 +602,6 @@ function toolbarButtons(){
         updateLS();
     });
 }
-
-toolbarButtons();
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
