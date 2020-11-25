@@ -234,8 +234,14 @@ function addPortfolioCategory() {
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
-                String(item);
-                item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
+                if(!item.classList.contains(pfCategory.innerText.toLowerCase())) {
+                    item.classList.add('hidden');
+                }
+                if(item.classList.contains(pfCategory.innerText.toLowerCase())) {
+                    item.classList.remove('hidden');
+                }
+            
+                // item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
             });   
         }
         

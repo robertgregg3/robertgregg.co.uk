@@ -157,18 +157,21 @@ function filterTodos(){
     });
 
 }
+const allCategories = document.querySelectorAll('.todo-list-category-li');
+    
+allCategories.forEach(cat => {
+    cat.addEventListener('click', (e) => {
+        todoCategoryName = cat.innerText;
+        e.target.classList.add('selected');
+        updateLS();
+    });
+});
 
 // add selected class to category
 function listCategorySelect() {
     const allCategories = document.querySelectorAll('.todo-list-category-li');
-    
     allCategories.forEach(cat => {
-        cat.classList.remove('selected');
-        cat.addEventListener('click', (e) => {
-            todoCategoryName = cat.innerText;
-            e.target.classList.add('selected');
-            updateLS();
-        });
+        cat.classList.remove('selected');     
     });
 }
 
@@ -551,6 +554,11 @@ function countTodos() {
     `;
 }
 
+const showAllBtn         = document.querySelector('#show-all');
+showAllBtn.addEventListener('click', () => {
+   console.log('hello')
+});
+
 function toolbarButtons(){
     const totalTodos         = document.querySelectorAll('.input-text');
     const showAllBtn         = document.querySelector('#show-all');
@@ -561,6 +569,7 @@ function toolbarButtons(){
     const totalTodoItems     = document.querySelectorAll('.todo-item');
     
     showAllBtn.addEventListener('click', () => {
+        console.log('hello again')
         totalTodos.forEach(totalTodo => {
             totalTodo.parentNode.classList.remove('hidden');
         });
@@ -599,6 +608,8 @@ function toolbarButtons(){
         updateLS();
     });
 }
+
+toolbarButtons();
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
