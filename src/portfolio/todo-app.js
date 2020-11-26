@@ -151,6 +151,9 @@ function createList(todoCategoryName) {
         e.target.classList.add('selected');
         todoCategoryName = e.target.innerText.split(' ').join('-').toLowerCase();
     });
+
+    if(!createListEl.classList.contains('selected'))
+        createListEl.classList.add('selected')
     
     updateLS();
 }
@@ -219,7 +222,6 @@ toolbar.classList.add('hidden');
 // add the todo form
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    findSelectedCategory();
     addTodo();
     updateLS();
     countTodos();
