@@ -92,7 +92,7 @@ body{
 
 .category-btns {
     position: absolute;
-    right: 1.5rem;
+    right: 1rem;
     top: 0;
     color: #8c9bad;
     list-style: none;
@@ -469,10 +469,20 @@ input[type="checkbox"]:before {
     box-shadow: 0px 0px 14px rgb(0, 0, 0, 0.5);
 }
 
-.hidden, 
-.cat-hidden{
+.hidden{
     height: 0px;
     transition: all 500ms ease-in-out;
+    font-size: 0rem;
+    width: 0px !important;
+    opacity: 0 !important;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cat-hidden{
+    height: 0px;
+    transition: opacity 500ms ease-in-out;
     font-size: 0rem;
     width: 0px !important;
     opacity: 0 !important;

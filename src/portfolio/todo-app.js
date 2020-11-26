@@ -7,22 +7,13 @@
 
 /* Sidebar:
     1) Upload image
-    2) Write your name
-    3) Add todo list
+    // 2) Write your name
+    // 3) Add todo list
     4) Select icon for the todo list
     5) Reorder the projects
-    6) bug if list bames are the same
-*/
-
-/* Test 1
-    1) list gets crerated with correct class
-    2) todo item gets created with correct class
-    3) when two or more lists are created, by clicking on the category you can see the list and correct todos
-    4) Refresh has the same effect
-
-Test 2
-    1) Create 2 lists with no todos. Correct classes applied
-    2) Then create the todos as above. 
+    6) bug if list names are the same
+    7) when in edit mode you can't edit another
+    8) If no category seledcted then cant make a note
 */
 
 const form                  = document.getElementById('form');
@@ -134,6 +125,7 @@ function createList(todoCategoryName) {
         categoryText.classList.remove('category-edit-mode');
         saveCategoryBtn.classList.add('cat-hidden');
         editCategoryBtn.classList.remove('cat-hidden');
+        saveNewListName();
     });
 
     editCategoryBtn.addEventListener('click', () => {
@@ -141,6 +133,7 @@ function createList(todoCategoryName) {
         categoryText.classList.add('category-edit-mode');
         saveCategoryBtn.classList.remove('cat-hidden');
         editCategoryBtn.classList.add('cat-hidden');
+        editListGetClassToRemove();
     });
 
     deleteCategoryBtn.addEventListener('click', (e) => {
@@ -185,6 +178,38 @@ function createList(todoCategoryName) {
     
     updateLS();
 }
+
+function editListGetClassToRemove() {
+    // let classToRemove = selectedCategory;
+
+    // const allTodos = document.querySelectorAll('.todo-item');
+
+    // allTodos.forEach(todo => {
+    //     if(todo.classList.contains(classToRemove))
+    //     todo.classList.remove(classToRemove);   
+    // });
+}
+
+function saveNewListName() {
+    // let classToAdd = selectedCategory;
+
+    // const allTodos = document.querySelectorAll('.todo-item');
+    
+    // allTodos.forEach(todo => {
+    //     todo.classList.remove(classToRemove);   
+    //     if(todo.classList.contains('list-modifying')){
+    //         todo.classList.remove('list-modifying');   
+    //         todo.classList.add(classToAdd);
+    //         todo.classList.add('list-modified');   
+    //     }
+    // });
+}
+
+// work out what the selected class is
+// I want to select all of the todos withouty the class 'hidden'.
+// Remove the selected classes class from the todos
+// when I press ENTER or save, I want to select all of those todos and add the class from the new input
+// needs to be in 2 stages I think because the compiler needs to know what class to remove (step 1) and then what class to add (step 2)
 
 function findSelectedCategory(){
     todoCategories.forEach(oneCat => {
@@ -282,19 +307,17 @@ function addTodo(el){
         todoText = el.text; 
         todoCategoryName = el.todoCategory;    
     }
-
     
     if(todoText) {  
         const todoItem = document.createElement('li');  
         
         todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
 
-        if(el)
+        if(el) {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-
-        if(selectedCategory === '') {
+        } else if (selectedCategory === '') {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if(selectedCategory !== '') {
+        } else if (selectedCategory !== '') {
             todoItem.className += ' ' + selectedCategory;
         }
 
