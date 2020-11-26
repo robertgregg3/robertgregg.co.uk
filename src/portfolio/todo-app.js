@@ -124,6 +124,9 @@ createListInput.addEventListener('keypress', (e) => {
 
 // create category on the dom
 function createList(todoCategoryName) {
+    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+    allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
+
     const createListEl = document.createElement('li');
 
     if(todosFromLS) {
@@ -162,7 +165,7 @@ function createList(todoCategoryName) {
 
     findSelectedCategory();
     filterTodos();
-    filterTodosWhenClicked();
+    filterTodosWhenClicked(createListEl);
 
     createListEl.addEventListener('click', (e) => {
         listCategorySelect();
