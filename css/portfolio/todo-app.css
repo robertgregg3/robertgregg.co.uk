@@ -92,9 +92,20 @@ body{
 
 .category-btns {
     position: absolute;
-    right: 2rem;
-    top: 25%;
+    right: 1rem;
+    top: 0;
     color: #8c9bad;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 55px;
+}
+
+.category-btn {
+    right: 3rem;
+    position: relative;
+    padding-left: 0.6rem;
 }
 
 .delete-list-popup {
