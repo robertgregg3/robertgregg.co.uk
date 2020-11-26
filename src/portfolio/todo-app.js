@@ -42,6 +42,7 @@ let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
+let catId                   =  1;
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
@@ -96,6 +97,7 @@ function createList(todoCategoryName) {
     allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
 
     const createListEl = document.createElement('li');
+    createListEl.id = catId;
 
     if(todosFromLS) {
         createListEl.classList.add('todo-list-category-li');
@@ -114,6 +116,8 @@ function createList(todoCategoryName) {
     `;
 
     todoCategoryContainer.appendChild(createListEl);
+
+    catId++;
     
     const categoryText      = createListEl.querySelector('.category-text');
     const saveCategoryBtn   = createListEl.querySelector('.cat-save');
@@ -125,15 +129,15 @@ function createList(todoCategoryName) {
         categoryText.classList.remove('category-edit-mode');
         saveCategoryBtn.classList.add('cat-hidden');
         editCategoryBtn.classList.remove('cat-hidden');
-        saveNewListName();
+        saveNewListName(selectedCategory);
     });
-
+    
     editCategoryBtn.addEventListener('click', () => {
         categoryText.setAttribute('contenteditable', 'true');
         categoryText.classList.add('category-edit-mode');
         saveCategoryBtn.classList.remove('cat-hidden');
         editCategoryBtn.classList.add('cat-hidden');
-        editListGetClassToRemove();
+        editListGetClassToRemove(selectedCategory);
     });
 
     deleteCategoryBtn.addEventListener('click', (e) => {
@@ -179,30 +183,25 @@ function createList(todoCategoryName) {
     updateLS();
 }
 
-function editListGetClassToRemove() {
-    // let classToRemove = selectedCategory;
+function editListGetClassToRemove(selectedCategory) {
+    const allTodos = document.querySelectorAll('.todo-item');
 
-    // const allTodos = document.querySelectorAll('.todo-item');
-
-    // allTodos.forEach(todo => {
-    //     if(todo.classList.contains(classToRemove))
-    //     todo.classList.remove(classToRemove);   
-    // });
+    allTodos.forEach(todo => {
+        if(todo.classList.contains(selectedCategory))
+            todo.classList.remove(selectedCategory);
+            todo.classList.add('list-modifying');   
+    });
 }
 
-function saveNewListName() {
-    // let classToAdd = selectedCategory;
-
-    // const allTodos = document.querySelectorAll('.todo-item');
+function saveNewListName(selectedCategory) {
+    const allTodos = document.querySelectorAll('.todo-item');
     
-    // allTodos.forEach(todo => {
-    //     todo.classList.remove(classToRemove);   
-    //     if(todo.classList.contains('list-modifying')){
-    //         todo.classList.remove('list-modifying');   
-    //         todo.classList.add(classToAdd);
-    //         todo.classList.add('list-modified');   
-    //     }
-    // });
+    allTodos.forEach(todo => {
+        if(todo.classList.contains('list-modifying')){
+            todo.classList.remove('list-modifying');   
+            todo.classList.add(selectedCategory);
+        }
+    });
 }
 
 // work out what the selected class is
