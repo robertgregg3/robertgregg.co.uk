@@ -125,7 +125,10 @@ function createList(todoCategoryName) {
     todoCategoryContainer.appendChild(createListEl);
     
     const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
-    deleteCategoryBtn.addEventListener('click', () => {showDeleteCategoryPopup();});
+    deleteCategoryBtn.addEventListener('click', (e) => {
+        showDeleteCategoryPopup();
+        console.log(e.currentTarget)
+    });
 
     function showDeleteCategoryPopup(){
         const deleteCategoryPopup = document.createElement('div');
@@ -137,7 +140,6 @@ function createList(todoCategoryName) {
         document.body.appendChild(deleteCategoryPopup);
 
         const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
-
         deleteCategoryPopupBtn.addEventListener('click', () => {
             createListEl.remove();
             updateLS();
@@ -152,8 +154,8 @@ function createList(todoCategoryName) {
         selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
         findSelectedCategory();
         listCategorySelect();
-        e.target.classList.add('selected');
-        todoCategoryName = e.target.innerText.split(' ').join('-').toLowerCase();
+        e.currentTarget.classList.add('selected');
+        todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
 
     if(!createListEl.classList.contains('selected'))
@@ -187,8 +189,10 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.target.classList.add('selected');
+        e.currentTarget.classList.add('selected');
         updateLS();
+        const catBtns = cat.querySelector('.category-btns');
+        catBtns.style.marginRight = "0.5rem";
     });
 });
 
@@ -200,13 +204,17 @@ function listCategorySelect() {
     });
 }
 
+allCategories.forEach(cat => {
+    cat.classList.remove('selected');     
+});
+
 function filterTodosWhenClicked(){
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     const allTodos      = document.querySelectorAll('.todo-item');
     
     allCategories.forEach(cat => {
         cat.addEventListener('click', (e) => {
-            clickedItemEl = e.target.innerText.split(' ').join('-').toLowerCase();
+            clickedItemEl = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
             
             allTodos.forEach(oneTodo => {
                 if(oneTodo.classList.contains(clickedItemEl))
