@@ -135,7 +135,6 @@ function createList(todoCategoryName) {
             <i class="fas fa-times close-delete-list"></i>Do you want to delete this list?
             <button id="delete-list__button">delete List</button>
         `;
-
         document.body.appendChild(deleteCategoryPopup);
     }
 
@@ -144,8 +143,7 @@ function createList(todoCategoryName) {
     filterTodosWhenClicked(createListEl);
     
     createListEl.addEventListener('click', (e) => {
-        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
-       
+        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
         findSelectedCategory();
         listCategorySelect();
         e.target.classList.add('selected');
