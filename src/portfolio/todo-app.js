@@ -114,7 +114,7 @@ function createList(todoCategoryName) {
 
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
-        <i class="fas fa-list-alt icon"></i>${todoCategoryName}
+        <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
         <ul class="category-btns">
             <li class="category-btn cat-save cat-hidden"><i class="fas fa-save"></i></li>
             <li class="category-btn cat-edit"><i class="fas fa-edit"></i></li>
@@ -124,10 +124,27 @@ function createList(todoCategoryName) {
 
     todoCategoryContainer.appendChild(createListEl);
     
+    const categoryText      = createListEl.querySelector('.category-text');
+    const saveCategoryBtn   = createListEl.querySelector('.cat-save');
+    const editCategoryBtn   = createListEl.querySelector('.cat-edit');
     const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
+
+    saveCategoryBtn.addEventListener('click', () => {
+        categoryText.setAttribute('contenteditable', 'false');
+        categoryText.classList.remove('category-edit-mode');
+        saveCategoryBtn.classList.add('cat-hidden');
+        editCategoryBtn.classList.remove('cat-hidden');
+    });
+
+    editCategoryBtn.addEventListener('click', () => {
+        categoryText.setAttribute('contenteditable', 'true');
+        categoryText.classList.add('category-edit-mode');
+        saveCategoryBtn.classList.remove('cat-hidden');
+        editCategoryBtn.classList.add('cat-hidden');
+    });
+
     deleteCategoryBtn.addEventListener('click', (e) => {
         showDeleteCategoryPopup();
-        console.log(e.currentTarget)
     });
 
     function showDeleteCategoryPopup(){
