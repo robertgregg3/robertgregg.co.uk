@@ -118,24 +118,30 @@ function createList(todoCategoryName) {
         <ul class="category-btns">
             <li class="category-btn cat-save cat-hidden"><i class="fas fa-save"></i></li>
             <li class="category-btn cat-edit"><i class="fas fa-edit"></i></li>
-            <li class="category-btn delete"><i class="fas fa-trash-alt"></i></li>
+            <li class="category-btn cat-delete"><i class="fas fa-trash-alt"></i></li>
         </ul>  
     `;
 
     todoCategoryContainer.appendChild(createListEl);
     
-    const deleteCategoryBtn = createListEl.querySelector('.delete');
-
+    const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
     deleteCategoryBtn.addEventListener('click', () => {showDeleteCategoryPopup();});
 
     function showDeleteCategoryPopup(){
         const deleteCategoryPopup = document.createElement('div');
         deleteCategoryPopup.classList.add('delete-list-popup');
         deleteCategoryPopup.innerHTML = `
-            <i class="fas fa-times close-delete-list"></i>Do you want to delete this list?
-            <button id="delete-list__button">delete List</button>
+            <i class="fas fa-times close-delete-list"></i>Are you sure you want to delete the list '${todoCategoryName}'?  This action cannot be undone
+            <button class="delete-list__button">Yes, delete the list</button>
         `;
         document.body.appendChild(deleteCategoryPopup);
+
+        const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
+
+        deleteCategoryPopupBtn.addEventListener('click', () => {
+            createListEl.remove();
+            updateLS();
+        });
     }
 
     findSelectedCategory();
