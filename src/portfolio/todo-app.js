@@ -197,7 +197,7 @@ allCategories.forEach(cat => {
         e.currentTarget.classList.add('selected');
         updateLS();
         const catBtns = cat.querySelector('.category-btns');
-        catBtns.style.marginRight = "0.5rem";
+        catBtns.style.right = "2.1rem";
     });
 });
 
