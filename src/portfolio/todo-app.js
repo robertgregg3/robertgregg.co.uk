@@ -144,6 +144,11 @@ function createList(todoCategoryName) {
             createListEl.remove();
             updateLS();
         });
+
+        const closeDeleteListPopupBtn = deleteCategoryPopup.querySelector('.close-delete-list');
+        closeDeleteListPopupBtn.addEventListener('click', () => {
+            deleteCategoryPopup.remove();
+        });
     }
 
     findSelectedCategory();

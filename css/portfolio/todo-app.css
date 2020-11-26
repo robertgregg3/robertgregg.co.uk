@@ -108,6 +108,17 @@ body{
     padding-left: 0.6rem;
 }
 
+.delete-list__button {
+    border: none;
+    background: #a93500;
+    color: #fff;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
 .delete-list-popup {
     position: absolute;
     top: 50%;
@@ -126,6 +137,21 @@ body{
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: all 500ms ease;
+}
+
+.close-delete-list {
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    color: #33333390;
+    background: #fff;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0.3rem 0 0 0rem;
+    cursor: pointer;
 }
 
 .selected {
