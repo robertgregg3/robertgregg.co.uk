@@ -50,11 +50,19 @@ let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 
 let todoCategoryName        = '';
+let selectedCatName         = '';   
+
+    todoCategories.forEach(oneCat => {
+        if(oneCat.classList.contains('selected')){
+            selectedCatName = oneCat.innerText.split(' ').join('-').toLowerCase();
+        }
+    });
 
 function findSelectedCategory(){
     let selectedCatName = '';   
     todoCategories.forEach(oneCat => {
         if(oneCat.classList.contains('selected')){
+            console.log(cat)
             selectedCatName = oneCat.innerText.split(' ').join('-').toLowerCase();
         }
     });
@@ -103,6 +111,7 @@ createListPopupBtn.addEventListener('click', () => {
     updateLS();
 });
 
+// create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
@@ -113,12 +122,8 @@ createListInput.addEventListener('keypress', (e) => {
     }
 }); 
 
-
-
+// create category on the dom
 function createList(todoCategoryName) {
-    const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
-    allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
-
     const createListEl = document.createElement('li');
 
     if(todosFromLS) {
@@ -126,19 +131,42 @@ function createList(todoCategoryName) {
     } else {
         createListEl.classList.add('todo-list-category-li', 'selected');
     }
+
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i>${todoCategoryName}
+        <div class="category-btns">
+            <span class="category-btn save hidden"><i class="fas fa-save"></i></span>
+            <span class="category-btn edit"><i class="fas fa-edit"></i></span>
+            <span class="category-btn delete"><i class="fas fa-trash-alt"></i></span>
+        </div>  
     `;
 
     todoCategoryContainer.appendChild(createListEl);
 
+    const deleteCategoryBtn = createListEl.querySelector('.delete');
+
+    deleteCategoryBtn.addEventListener('click', () => {showDeleteCategoryPopup();});
+
+    function showDeleteCategoryPopup(){
+        const deleteCategoryPopup = document.createElement('div');
+
+        deleteCategoryPopup.classList.add('delete-list-popup');
+        deleteCategoryPopup.innerHTML = `
+            <i class="fas fa-times close-delete-list"></i>Do you want to delete this list?
+            <button id="delete-list__button">delete List</button>
+        `;
+
+        document.body.appendChild(deleteCategoryPopup);
+    }
+
     findSelectedCategory();
     filterTodos();
-    filterTodosWhenClicked(createListEl);
+    filterTodosWhenClicked();
 
-    createListEl.addEventListener('click', () => {
+    createListEl.addEventListener('click', (e) => {
         listCategorySelect();
+        e.target.classList.add('selected');
     });
 
     updateLS();
@@ -155,8 +183,9 @@ function filterTodos(){
         if(!oneTodo.classList.contains(todoCategoryName.split(' ').join('-').toLowerCase()))
             oneTodo.classList.add('hidden');
     });
-
 }
+
+// add the event listener here so it is called on refresh. Otherwise the classes don't change straight away (remove and add selected)
 const allCategories = document.querySelectorAll('.todo-list-category-li');
     
 allCategories.forEach(cat => {
@@ -181,7 +210,6 @@ function filterTodosWhenClicked(){
     
     allCategories.forEach(cat => {
         cat.addEventListener('click', (e) => {
-            
             clickedItemEl = e.target.innerText.split(' ').join('-').toLowerCase();
             
             allTodos.forEach(oneTodo => {
@@ -195,7 +223,6 @@ function filterTodosWhenClicked(){
 }
 
 filterTodosWhenClicked();
-
 
 // hide the toolbar on page load
 toolbar.classList.add('hidden');
@@ -434,32 +461,31 @@ function addTodo(el){
         subtaskContainer.appendChild(subtaskEl);
         updateLS();
     }    
-    
-    // completing/un-completing a todo        
-    if(el && el.completed) {
-        todoItemCheckbox.checked = true;
-        todoInputText.classList.add('completed');  
-        todoItem.classList.add('hidden');
-        updateLS();
-    }
-    
-    todoItemCheckbox.addEventListener('click', () => {
-        todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
-        todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-        updateLS();
+        // completing/un-completing a todo        
+        if(el && el.completed) {
+            todoItemCheckbox.checked = true;
+            todoInputText.classList.add('completed');  
+            todoItem.classList.add('hidden');
+            updateLS();
+        }
+        
+        todoItemCheckbox.addEventListener('click', () => {
+            todoInputText.classList[todoInputText.classList.contains('completed') ? 'remove' : 'add']('completed');
+            todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+            updateLS();
+            countTodos();
+            toolbarButtons();
+        });   
+        
+        // text area note   
+        if(el && el.todoNote)
+            todoNote.value = el.todoNote;
+        
+        filterTodosWhenClicked()
         countTodos();
-        toolbarButtons();
-    });   
-    
-    // text area note   
-    if(el && el.todoNote)
-        todoNote.value = el.todoNote;
-    
-    filterTodosWhenClicked()
-    countTodos();
-    updateLS();
-    input.value ='';
-}
+        updateLS();
+        input.value ='';
+    }
 }
 
 
