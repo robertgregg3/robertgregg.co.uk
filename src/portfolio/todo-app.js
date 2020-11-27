@@ -117,6 +117,10 @@ function createList(todoCategoryName) {
 
     todoCategoryContainer.appendChild(createListEl);
 
+    selectedCategory = todoCategoryName.split(' ').join('-').toLowerCase();
+    
+    updateLS();
+
     catId++;
     
     const categoryText      = createListEl.querySelector('.category-text');
@@ -125,6 +129,7 @@ function createList(todoCategoryName) {
     const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
 
     saveCategoryBtn.addEventListener('click', () => {
+        updateLS();
         categoryText.setAttribute('contenteditable', 'false');
         categoryText.classList.remove('category-edit-mode');
         saveCategoryBtn.classList.add('cat-hidden');
@@ -133,6 +138,7 @@ function createList(todoCategoryName) {
     });
     
     editCategoryBtn.addEventListener('click', () => {
+        updateLS();
         categoryText.setAttribute('contenteditable', 'true');
         categoryText.classList.add('category-edit-mode');
         saveCategoryBtn.classList.remove('cat-hidden');
@@ -203,12 +209,6 @@ function saveNewListName(selectedCategory) {
         }
     });
 }
-
-// work out what the selected class is
-// I want to select all of the todos withouty the class 'hidden'.
-// Remove the selected classes class from the todos
-// when I press ENTER or save, I want to select all of those todos and add the class from the new input
-// needs to be in 2 stages I think because the compiler needs to know what class to remove (step 1) and then what class to add (step 2)
 
 function findSelectedCategory(){
     todoCategories.forEach(oneCat => {
