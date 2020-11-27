@@ -5,14 +5,13 @@
 */ 
 
 /* Sidebar:
-    1) Upload image
+    // 1) Upload image
     // 2) Write your name
     // 3) Add todo list
-    4) Select icon for the todo list
-    5) Reorder the projects
-    6) bug if list names are the same
-    7) when in edit mode you can't edit another
-    8) If no category seledcted then cant make a note
+    4) Reorder the projects
+    5) bug if list names are the same
+    6) when in edit mode you can't edit another
+    7) If no category seledcted then cant make a note
 */
 
 const form                  = document.getElementById('form');
@@ -51,7 +50,7 @@ let catId                   =  1;
 function createProfile(){
     if(profileImageFromLS)
         profileImgUrl = profileImageFromLS;
-        
+
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
     profileEl.innerHTML = `
@@ -136,8 +135,13 @@ createListInput.addEventListener('keypress', (e) => {
 
 // create category on the dom
 function createList(todoCategoryName) {
+
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
-    allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
+    allTodoCategories.forEach(cat => {
+        cat.classList.remove('selected');
+        if(cat.innerText === todoCategoryName)
+            todoCategoryName = todoCategoryName + ' (copy)';
+    });
 
     const createListEl = document.createElement('li');
     createListEl.id = catId;
@@ -147,6 +151,8 @@ function createList(todoCategoryName) {
     } else {
         createListEl.classList.add('todo-list-category-li', 'selected');
     }
+
+    if(todoCategoryName)
 
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
