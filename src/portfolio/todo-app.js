@@ -9,9 +9,8 @@
     // 2) Write your name
     // 3) Add todo list
     4) Reorder the projects
-    5) bug if list names are the same
-    6) when in edit mode you can't edit another
-    7) If no category seledcted then cant make a note
+    // 5) bug if list names are the same
+    6) If no category seledcted then cant make a note
 */
 
 const form                  = document.getElementById('form');
@@ -26,6 +25,7 @@ const toolbar               = document.getElementById('toolbar');
 
 const profileContainer      = document.getElementById('todo-profile');
 const profileEmail          = document.getElementById('todo-profile__email');
+
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
 
@@ -297,11 +297,13 @@ function editListGetClassToRemove(selectedCategory) {
     updateLS();
 }
 
+// when sdving the new category confirm the NEW selectCategory name
 function saveNewListName(selectedCategory) {
     updateLS();
     updateClassAfterEditing(selectedCategory);
 }
 
+// apply the NEW selectCategory name to the list items
 function updateClassAfterEditing(selectedCategory) {
     const allTodos = document.querySelectorAll('.todo-item');
     
@@ -312,7 +314,6 @@ function updateClassAfterEditing(selectedCategory) {
         }
     });
     updateLS();
-
 }
 
 function findSelectedCategory(){
@@ -345,7 +346,7 @@ allCategories.forEach(cat => {
     });
 });
 
-// add selected class to category
+// remove selected class function
 function removeCategorySelectedClass() {
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     allCategories.forEach(cat => {
@@ -353,6 +354,7 @@ function removeCategorySelectedClass() {
     });
 }
 
+// remove selected class on pageload
 allCategories.forEach(cat => {
     cat.classList.remove('selected');     
 });
@@ -383,6 +385,7 @@ toolbar.classList.add('hidden');
 // add the todo form
 form.addEventListener('submit', (e) => {
     e.preventDefault();
+
     addTodo();
     updateLS();
     countTodos();
