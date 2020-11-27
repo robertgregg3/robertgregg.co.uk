@@ -168,7 +168,9 @@ function createList(todoCategoryName) {
 
         const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
         deleteCategoryPopupBtn.addEventListener('click', () => {
+            removeTodos();
             createListEl.remove();
+            deleteCategoryPopup.remove();
             updateLS();
         });
 
@@ -199,6 +201,26 @@ function createList(todoCategoryName) {
     
     updateLS();
 }
+
+function removeTodos() {
+    const totalTodoItems = document.querySelectorAll('.todo-item');
+    totalTodoItems.forEach(todoItemEl => {
+        if(todoItemEl.classList.contains(selectedCategory)){
+            todoItemEl.remove();
+            updateLS();
+        }
+    });
+}
+
+function removeListOptionsOnReload() {
+    todoListCategories = document.querySelectorAll('.todo-list-category-li');
+    todoListCategories.forEach(catList => {
+        const listOptions = catList.querySelector('.category-btns');
+        listOptions.classList.add('cat-hidden');
+    });
+}
+
+removeListOptionsOnReload();
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){
