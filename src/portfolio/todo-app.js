@@ -19,12 +19,15 @@ const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
 const todosUl               = document.getElementById('todos-ul');
+
 const countTotalTodos       = document.getElementById('count-total-todos');
 const countRemainingTodos   = document.getElementById('count-remaining-todos');
 const countCompletedTodos   = document.getElementById('count-completed-todos');
-
 const toolbar               = document.getElementById('toolbar');
+
 const profileEmail          = document.getElementById('todo-profile__email');
+// const profileImageUpload    = document.getElementById('profile-image');
+// const profileImage          = profileImageUpload.querySelector('.todo-profile__img');;
 
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
@@ -42,6 +45,37 @@ let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1;
+
+const inpFile = document.getElementById('profile-image');
+const imageContainer = document.getElementById('image-preview');
+const previewImage = document.querySelector('.todo-profile__img');
+
+inpFile.addEventListener('change', () => {
+    const file = inpFile.files[0];
+
+    if(file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            previewImage.setAttribute('src', inpFile.result);
+        });
+        reader.readAsDataURL(file);
+    }
+    
+});
+
+
+// profileImageUpload.addEventListener('change', () => {
+//     const newFile = profileImageUpload.files[0];
+    
+//     if(newFile) {
+//         const reader = new FileReader();
+
+//         reader.addEventListener('load', () => {
+//             profileImage.setAttribute('src', newFile.results);
+//         });
+//         reader.readAsDataURL(newFile);
+//     }
+// });
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
@@ -189,6 +223,7 @@ function createList(todoCategoryName) {
         removeCatOptions();
         showCatOptions(createListEl);
         e.currentTarget.classList.add('selected');
+        toolbarButtons();
         todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
 

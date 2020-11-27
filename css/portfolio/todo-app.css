@@ -33,7 +33,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem ;
     font-size: 1rem;
     height: 9vh;
     background-color: #fff;
@@ -48,6 +48,27 @@ body{
     height: 50px;
     object-fit: cover;
     object-position: top;
+    cursor: pointer;
+}
+
+#todo-profile input{
+    display: none;
+}
+
+.fa-camera {
+    color: #e1a041;
+    position: absolute;
+    left: 2.2rem;
+    bottom: -0.4rem;
+    background: #ffffff;
+    padding: 0.2rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+#todo-profile label {
+    position: relative;
 }
 
 #todo-profile__email {
@@ -266,7 +287,7 @@ body{
     padding: 1rem 3rem;
     font-size: 1rem;
     font-family: inherit;
-    background: #e1a041;
+    background: #419fe1;
     color: #fff;
     border-radius: 8px;
     cursor: pointer;
