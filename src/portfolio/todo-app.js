@@ -46,36 +46,20 @@ let todoCategoryName        = ''; // variable to convert the category name into 
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1;
 
-const inpFile = document.getElementById('profile-image');
-const imageContainer = document.getElementById('image-preview');
-const previewImage = document.querySelector('.todo-profile__img');
-
-inpFile.addEventListener('change', () => {
-    const file = inpFile.files[0];
-
-    if(file) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-            previewImage.setAttribute('src', inpFile.result);
-        });
-        reader.readAsDataURL(file);
+function previewFile() {
+    const preview = document.querySelector('img');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+  
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      preview.src = reader.result;
+    }, false);
+  
+    if (file) {
+      reader.readAsDataURL(file);
     }
-    
-});
-
-
-// profileImageUpload.addEventListener('change', () => {
-//     const newFile = profileImageUpload.files[0];
-    
-//     if(newFile) {
-//         const reader = new FileReader();
-
-//         reader.addEventListener('load', () => {
-//             profileImage.setAttribute('src', newFile.results);
-//         });
-//         reader.readAsDataURL(newFile);
-//     }
-// });
+  }
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
