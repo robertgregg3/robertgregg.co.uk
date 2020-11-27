@@ -25,6 +25,7 @@ const countRemainingTodos   = document.getElementById('count-remaining-todos');
 const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 
+const profileContainer      = document.getElementById('todo-profile');
 const profileEmail          = document.getElementById('todo-profile__email');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
@@ -39,9 +40,36 @@ let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
+let profileImageFromLS      = localStorage.getItem('profileImage');
+
+let profileImgUrl           = '../images/rob.jpg'
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1;
+
+// create profile section
+function createProfile(){
+    if(profileImageFromLS)
+        profileImgUrl = profileImageFromLS;
+        
+    const profileEl = document.createElement('div');
+    profileEl.classList.add('profile-container');
+    profileEl.innerHTML = `
+        <label for="profile-image">
+        <input id="profile-image" type="file" accept="image/*" multiple="false" onchange="previewFile()">
+        <img 
+            src="${profileImgUrl}" 
+            alt="Upload profile Image" 
+            class="todo-profile__img"
+            id="todo-profile__img"
+            />
+        <i class="fas fa-camera"></i>
+        </label>
+        `;
+    profileContainer.appendChild(profileEl);
+}
+
+createProfile();
 
 function previewFile() {
     const preview = document.querySelector('img');
@@ -50,10 +78,13 @@ function previewFile() {
   
     reader.addEventListener("load", () => {
       preview.src = reader.result;
+      console.log()
+      localStorage.setItem("profileImage", preview.src)
     }, false);
   
     if (file) 
         reader.readAsDataURL(file);
+
   }
 
 // add created categories to the sidebar
