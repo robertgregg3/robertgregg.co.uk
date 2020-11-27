@@ -15,9 +15,19 @@
   <div id="todos-container">
     <div id="todo-categories-container">
       <div id="todo-profile">
-        <!-- <i class="fas fa-user"></i> -->
-        <i class="fas fa-camera"></i>
-        <img src="../images/rob.jpg" class="todo-profile__img" />
+        <label for="profile-image">
+          <div class="image-preview" id="image-preview">
+            <img src="../images/rob.jpg" alt="profile image" class="todo-profile__img" />
+          </div>
+          <i class="fas fa-camera"></i>
+        </label>
+        <input 
+          type="file" 
+          name="profile-image" 
+          id="profile-image" 
+          multiple="false" 
+          accept="image/*"
+          />
         <div id="todo-profile__email" contenteditable="true" data-text="Add your email">hi@robertgregg.co.uk</div>
       </div>
       <div id="todo-categories">
