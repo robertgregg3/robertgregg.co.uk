@@ -129,11 +129,12 @@ function createList(todoCategoryName) {
     const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
 
     saveCategoryBtn.addEventListener('click', () => {
-        updateLS();
         categoryText.setAttribute('contenteditable', 'false');
+        updateLS();
         categoryText.classList.remove('category-edit-mode');
         saveCategoryBtn.classList.add('cat-hidden');
         editCategoryBtn.classList.remove('cat-hidden');
+        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
         saveNewListName(selectedCategory);
     });
     
@@ -193,13 +194,23 @@ function editListGetClassToRemove(selectedCategory) {
     const allTodos = document.querySelectorAll('.todo-item');
 
     allTodos.forEach(todo => {
-        if(todo.classList.contains(selectedCategory))
+        if(todo.classList.contains(selectedCategory)){
             todo.classList.remove(selectedCategory);
             todo.classList.add('list-modifying');   
+        }
     });
+    updateLS();
+
 }
 
 function saveNewListName(selectedCategory) {
+    updateLS();
+    updateClassAfterEditing(selectedCategory);
+}
+
+function updateClassAfterEditing(selectedCategory) {
+    console.log(selectedCategory)
+
     const allTodos = document.querySelectorAll('.todo-item');
     
     allTodos.forEach(todo => {
@@ -208,6 +219,8 @@ function saveNewListName(selectedCategory) {
             todo.classList.add(selectedCategory);
         }
     });
+    updateLS();
+
 }
 
 function findSelectedCategory(){
