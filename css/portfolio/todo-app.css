@@ -92,20 +92,34 @@ body{
 
 .category-btns {
     position: absolute;
-    right: 1rem;
-    top: 0;
+    right: 0.3rem;
+    top: -0.5rem;
     color: #8c9bad;
     list-style: none;
     display: flex;
     align-items: center;
     height: 100%;
     width: 55px;
+    opacity: 1;
+    transition: opacity 300ms ease;
 }
 
 .category-btn {
     right: 3rem;
     position: relative;
     padding-left: 0.6rem;
+    font-size: 0.7rem;
+}
+
+.cat-save {
+    position: absolute;
+    right: 2.7rem;
+}
+
+.cat-hidden{
+    transition: opacity 300ms ease-in-out;
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
 .delete-list__button {
@@ -140,6 +154,14 @@ body{
     transition: all 500ms ease;
 }
 
+.cat-options {
+    position: absolute;
+    right: 0.8rem;
+    top: 1.2rem;
+    color: #33333390;
+    cursor: pointer;
+}
+
 .category-edit-mode {
     background: #fdebcb;
     padding: 0.2rem 1rem 0.2rem 0.5rem;
@@ -170,6 +192,7 @@ body{
     transform: scale(1.1);
     padding-left: 1.9rem;
     transition: all 300ms ease-in-out;
+    width: 95%;
 }
 
 .selected .icon {
@@ -472,17 +495,6 @@ input[type="checkbox"]:before {
 .hidden{
     height: 0px;
     transition: all 500ms ease-in-out;
-    font-size: 0rem;
-    width: 0px !important;
-    opacity: 0 !important;
-    pointer-events: none;
-    margin: 0;
-    padding: 0;
-}
-
-.cat-hidden{
-    height: 0px;
-    transition: opacity 500ms ease-in-out;
     font-size: 0rem;
     width: 0px !important;
     opacity: 0 !important;

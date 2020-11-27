@@ -2,7 +2,6 @@
     1) Drag not working on mobile
     2) Sort issues with safari
     3) refactor Enter press or set attributyes code
-    4) create list button appears when the text is there
 */ 
 
 /* Sidebar:
@@ -108,11 +107,12 @@ function createList(todoCategoryName) {
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
         <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
-        <ul class="category-btns">
-            <li class="category-btn cat-save cat-hidden"><i class="fas fa-save"></i></li>
-            <li class="category-btn cat-edit"><i class="fas fa-edit"></i></li>
-            <li class="category-btn cat-delete"><i class="fas fa-trash-alt"></i></li>
+        <ul class="category-btns cat-hidden">
+            <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
+            <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
+            <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
         </ul>  
+        <span class="cat-options"> <i class="fas fa-ellipsis-v"></i></span>
     `;
 
     todoCategoryContainer.appendChild(createListEl);
@@ -123,10 +123,16 @@ function createList(todoCategoryName) {
 
     catId++;
     
-    const categoryText      = createListEl.querySelector('.category-text');
-    const saveCategoryBtn   = createListEl.querySelector('.cat-save');
-    const editCategoryBtn   = createListEl.querySelector('.cat-edit');
-    const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
+    const categoryText       = createListEl.querySelector('.category-text');
+    const categoryBtns       = createListEl.querySelector('.category-btns');
+    const saveCategoryBtn    = createListEl.querySelector('.cat-save');
+    const editCategoryBtn    = createListEl.querySelector('.cat-edit');
+    const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
+    const categoryOptionsBtn = createListEl.querySelector('.cat-options');
+
+    categoryOptionsBtn.addEventListener('click', () => {
+        categoryBtns.classList.toggle('cat-hidden');
+    });
 
     saveCategoryBtn.addEventListener('click', () => {
         categoryText.setAttribute('contenteditable', 'false');
@@ -136,9 +142,10 @@ function createList(todoCategoryName) {
         editCategoryBtn.classList.remove('cat-hidden');
         selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
         saveNewListName(selectedCategory);
+        categoryBtns.classList.add('cat-hidden');
     });
     
-    editCategoryBtn.addEventListener('click', () => {
+    editCategoryBtn.addEventListener('click', () => {       
         updateLS();
         categoryText.setAttribute('contenteditable', 'true');
         categoryText.classList.add('category-edit-mode');
@@ -178,8 +185,8 @@ function createList(todoCategoryName) {
     
     createListEl.addEventListener('click', (e) => {
         selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
+        removeCategorySelectedClass();
         findSelectedCategory();
-        listCategorySelect();
         e.currentTarget.classList.add('selected');
         todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
@@ -200,7 +207,6 @@ function editListGetClassToRemove(selectedCategory) {
         }
     });
     updateLS();
-
 }
 
 function saveNewListName(selectedCategory) {
@@ -248,18 +254,16 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');
+        e.currentTarget.classList.add('selected');        
         updateLS();
-        const catBtns = cat.querySelector('.category-btns');
-        catBtns.style.right = "2.1rem";
     });
 });
 
 // add selected class to category
-function listCategorySelect() {
+function removeCategorySelectedClass() {
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     allCategories.forEach(cat => {
-        cat.classList.remove('selected');     
+        cat.classList.remove('selected'); 
     });
 }
 
