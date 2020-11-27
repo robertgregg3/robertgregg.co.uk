@@ -189,6 +189,7 @@ function createList(todoCategoryName) {
         removeCatOptions();
         showCatOptions(createListEl);
         e.currentTarget.classList.add('selected');
+        toolbarButtons();
         todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
 

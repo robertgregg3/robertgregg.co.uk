@@ -50,6 +50,18 @@ body{
     object-position: top;
 }
 
+.fa-camera {
+    color: #e1a041;
+    position: relative;
+    right: -3.6rem;
+    bottom: -1rem;
+    background: #ffffff;
+    padding: 0.2rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
 #todo-profile__email {
     word-break: break-word;
     width: 100%;
@@ -266,7 +278,7 @@ body{
     padding: 1rem 3rem;
     font-size: 1rem;
     font-family: inherit;
-    background: #e1a041;
+    background: #419fe1;
     color: #fff;
     border-radius: 8px;
     cursor: pointer;
