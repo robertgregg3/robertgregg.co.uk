@@ -134,6 +134,12 @@ function createList(todoCategoryName) {
         categoryBtns.classList.toggle('cat-hidden');
     });
 
+    categoryText.addEventListener('keypress', (e) => {
+        if(e.code === 'Enter' || e.keyCode === 13){
+            e.preventDefault();
+        }
+    });
+
     saveCategoryBtn.addEventListener('click', () => {
         categoryText.setAttribute('contenteditable', 'false');
         updateLS();
