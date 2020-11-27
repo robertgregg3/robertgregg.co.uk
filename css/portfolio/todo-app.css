@@ -129,6 +129,10 @@ body{
     right: 2.9rem;
 }
 
+.cat-delete {
+    top: -0.25rem;
+}
+
 .cat-hidden{
     transition: opacity 300ms ease-in-out;
     opacity: 0 !important;

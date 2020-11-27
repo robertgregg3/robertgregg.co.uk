@@ -124,20 +124,20 @@ function createList(todoCategoryName) {
     catId++;
     
     const categoryText       = createListEl.querySelector('.category-text');
-    const categoryBtns       = createListEl.querySelector('.category-btns');
     const saveCategoryBtn    = createListEl.querySelector('.cat-save');
     const editCategoryBtn    = createListEl.querySelector('.cat-edit');
     const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
     const categoryOptionsBtn = createListEl.querySelector('.cat-options');
 
-    categoryOptionsBtn.addEventListener('click', () => {
-        categoryBtns.classList.toggle('cat-hidden');
+    categoryOptionsBtn.addEventListener('click', (e) => {
+        removeCatOptions();
+        showCatOptions(createListEl);
+        console.log(e.target, e.currentTarget);
     });
 
     categoryText.addEventListener('keypress', (e) => {
-        if(e.code === 'Enter' || e.keyCode === 13){
+        if(e.code === 'Enter' || e.keyCode === 13)
             e.preventDefault();
-        }
     });
 
     saveCategoryBtn.addEventListener('click', () => {
@@ -203,6 +203,20 @@ function createList(todoCategoryName) {
     updateLS();
 }
 
+function removeCatOptions(){
+    const allCatBtns = document.querySelectorAll('.category-btns');
+
+    allCatBtns.forEach(catBtn => {
+        if(!catBtn.classList.contains('cat-hidden'))
+            catBtn.classList.toggle('cat-hidden');
+    });
+}
+
+function showCatOptions(createListEl) {
+    const catBtns = createListEl.querySelector('ul');
+    catBtns.classList.toggle('cat-hidden');
+}
+
 function editListGetClassToRemove(selectedCategory) {
     const allTodos = document.querySelectorAll('.todo-item');
 
@@ -221,8 +235,6 @@ function saveNewListName(selectedCategory) {
 }
 
 function updateClassAfterEditing(selectedCategory) {
-    console.log(selectedCategory)
-
     const allTodos = document.querySelectorAll('.todo-item');
     
     allTodos.forEach(todo => {
