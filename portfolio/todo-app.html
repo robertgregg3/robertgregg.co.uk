@@ -12,31 +12,17 @@
     <title>Todo App</title>
 </head>
 <body>
-
-  <!-- <label for="profile-image">
-    <div class="image-preview" id="image-preview">
-      <img src="../images/rob.jpg" alt="profile image" class="todo-profile__img" />
-    </div>
-    <i class="fas fa-camera"></i>
-  </label>
-  <input 
-    type='file' 
-    id="profile-image" 
-    multiple="false" 
-    onchange="previewFile()"
-    /> -->
-
-
-  
-
   <div id="todos-container">
     <div id="todo-categories-container">
       <div id="todo-profile">
         <label for="profile-image">
-        <input id="profile-image" type="file" onchange="previewFile()">
-<img src="../images/rob.jpg" alt="Image preview..." class="todo-profile__img">
-<i class="fas fa-camera"></i>
-      </label>
+          <input id="profile-image" type="file" accept="image/*" multiple="false" onchange="previewFile()">
+          <img 
+            src="../images/rob.jpg" 
+            alt="Upload profile Image" 
+            class="todo-profile__img" />
+          <i class="fas fa-camera"></i>
+        </label>
         <div id="todo-profile__email" contenteditable="true" data-text="Add your email">hi@robertgregg.co.uk</div>
       </div>
       <div id="todo-categories">

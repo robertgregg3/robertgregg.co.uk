@@ -26,9 +26,6 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 
 const profileEmail          = document.getElementById('todo-profile__email');
-// const profileImageUpload    = document.getElementById('profile-image');
-// const profileImage          = profileImageUpload.querySelector('.todo-profile__img');;
-
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
 
@@ -51,14 +48,12 @@ function previewFile() {
     const file = document.querySelector('input[type=file]').files[0];
     const reader = new FileReader();
   
-    reader.addEventListener("load", function () {
-      // convert image file to base64 string
+    reader.addEventListener("load", () => {
       preview.src = reader.result;
     }, false);
   
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    if (file) 
+        reader.readAsDataURL(file);
   }
 
 // add created categories to the sidebar
