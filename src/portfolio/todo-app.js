@@ -115,19 +115,15 @@ function createList(todoCategoryName) {
     `;
 
     todoCategoryContainer.appendChild(createListEl);
-
-    selectedCategory = todoCategoryName.split(' ').join('-').toLowerCase();
     
-    updateLS();
-
-    catId++;
-    
+    selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
     const categoryText       = createListEl.querySelector('.category-text');
     const categoryBtns       = createListEl.querySelector('.category-btns');
     const saveCategoryBtn    = createListEl.querySelector('.cat-save');
     const editCategoryBtn    = createListEl.querySelector('.cat-edit');
     const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
-
+    catId++;
+    
     categoryText.addEventListener('keypress', (e) => {
         if(e.code === 'Enter' || e.keyCode === 13)
             e.preventDefault();
