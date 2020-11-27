@@ -81,6 +81,7 @@ body{
     transition: all 300ms ease-in-out;
     pointer-events: all;
     position: relative;
+    display: flex;
 }
 
 .todo-list-category-li i.icon {
@@ -90,30 +91,42 @@ body{
     pointer-events: none;
 }
 
+.category-text {
+    font-size: 0.8rem;
+    max-width: 66%;
+}
+
 .category-btns {
     position: absolute;
-    right: 0.3rem;
-    top: -0.5rem;
+    right: 0rem;
+    top: 0.5rem;
     color: #8c9bad;
     list-style: none;
-    display: flex;
     align-items: center;
-    height: 100%;
-    width: 55px;
+    width: 38px;
     opacity: 1;
     transition: opacity 300ms ease;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .category-btn {
     right: 3rem;
     position: relative;
-    padding-left: 0.6rem;
+    padding-left: 0.7rem;
     font-size: 0.7rem;
 }
 
 .cat-save {
     position: absolute;
-    right: 2.7rem;
+    right: 1.6rem;
+}
+
+.cat-edit {
+    right: 2.9rem;
 }
 
 .cat-hidden{
