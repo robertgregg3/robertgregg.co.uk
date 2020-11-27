@@ -98,7 +98,7 @@ body{
 
 .category-btns {
     position: absolute;
-    right: 0rem;
+    right: -0.7rem;
     top: 0.5rem;
     color: #8c9bad;
     list-style: none;
@@ -181,7 +181,7 @@ body{
 
 .category-edit-mode {
     background: #fdebcb;
-    padding: 0.2rem 1rem 0.2rem 0.5rem;
+    padding: 0rem 1rem 0rem 0.5rem;
     border-radius: 1rem;
 }
 

@@ -112,7 +112,6 @@ function createList(todoCategoryName) {
             <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
             <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
         </ul>  
-        <span class="cat-options"> <i class="fas fa-ellipsis-v"></i></span>
     `;
 
     todoCategoryContainer.appendChild(createListEl);
@@ -124,16 +123,10 @@ function createList(todoCategoryName) {
     catId++;
     
     const categoryText       = createListEl.querySelector('.category-text');
+    const categoryBtns       = createListEl.querySelector('.category-btns');
     const saveCategoryBtn    = createListEl.querySelector('.cat-save');
     const editCategoryBtn    = createListEl.querySelector('.cat-edit');
     const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
-    const categoryOptionsBtn = createListEl.querySelector('.cat-options');
-
-    categoryOptionsBtn.addEventListener('click', (e) => {
-        removeCatOptions();
-        showCatOptions(createListEl);
-        console.log(e.target, e.currentTarget);
-    });
 
     categoryText.addEventListener('keypress', (e) => {
         if(e.code === 'Enter' || e.keyCode === 13)
@@ -185,6 +178,8 @@ function createList(todoCategoryName) {
         });
     }
 
+    removeCatOptions();
+    showCatOptions(createListEl);
     findSelectedCategory();
     filterTodos();
     filterTodosWhenClicked(createListEl);
@@ -193,6 +188,8 @@ function createList(todoCategoryName) {
         selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
         removeCategorySelectedClass();
         findSelectedCategory();
+        removeCatOptions();
+        showCatOptions(createListEl);
         e.currentTarget.classList.add('selected');
         todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
@@ -203,20 +200,22 @@ function createList(todoCategoryName) {
     updateLS();
 }
 
+// gets all of the category options buttons and removes them
 function removeCatOptions(){
     const allCatBtns = document.querySelectorAll('.category-btns');
-
     allCatBtns.forEach(catBtn => {
         if(!catBtn.classList.contains('cat-hidden'))
-            catBtn.classList.toggle('cat-hidden');
+            catBtn.classList.add('cat-hidden');
     });
 }
 
+// Show the category options buttons for the current EL
 function showCatOptions(createListEl) {
     const catBtns = createListEl.querySelector('ul');
-    catBtns.classList.toggle('cat-hidden');
+    catBtns.classList.remove('cat-hidden');
 }
 
+// When editing a category we grab the selected categroy and use that as the class to remove
 function editListGetClassToRemove(selectedCategory) {
     const allTodos = document.querySelectorAll('.todo-item');
 
@@ -272,7 +271,7 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');        
+        e.currentTarget.classList.add('selected');              
         updateLS();
     });
 });
