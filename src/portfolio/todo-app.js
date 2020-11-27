@@ -2,27 +2,17 @@
     1) Drag not working on mobile
     2) Sort issues with safari
     3) refactor Enter press or set attributyes code
-    4) create list button appears when the text is there
 */ 
 
 /* Sidebar:
     1) Upload image
-    2) Write your name
-    3) Add todo list
+    // 2) Write your name
+    // 3) Add todo list
     4) Select icon for the todo list
     5) Reorder the projects
-    6) bug if list bames are the same
-*/
-
-/* Test 1
-    1) list gets crerated with correct class
-    2) todo item gets created with correct class
-    3) when two or more lists are created, by clicking on the category you can see the list and correct todos
-    4) Refresh has the same effect
-
-Test 2
-    1) Create 2 lists with no todos. Correct classes applied
-    2) Then create the todos as above. 
+    6) bug if list names are the same
+    7) when in edit mode you can't edit another
+    8) If no category seledcted then cant make a note
 */
 
 const form                  = document.getElementById('form');
@@ -51,6 +41,7 @@ let todoCategoryFromLS      = localStorage.getItem('todoCategory');
 let todosFromLS             = JSON.parse(localStorage.getItem('todos'));
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
+let catId                   =  1;
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
@@ -105,6 +96,7 @@ function createList(todoCategoryName) {
     allTodoCategories.forEach(cat => {cat.classList.remove('selected');});
 
     const createListEl = document.createElement('li');
+    createListEl.id = catId;
 
     if(todosFromLS) {
         createListEl.classList.add('todo-list-category-li');
@@ -114,20 +106,51 @@ function createList(todoCategoryName) {
 
     createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
     createListEl.innerHTML = `
-        <i class="fas fa-list-alt icon"></i>${todoCategoryName}
-        <ul class="category-btns">
-            <li class="category-btn cat-save cat-hidden"><i class="fas fa-save"></i></li>
-            <li class="category-btn cat-edit"><i class="fas fa-edit"></i></li>
-            <li class="category-btn cat-delete"><i class="fas fa-trash-alt"></i></li>
+        <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
+        <ul class="category-btns cat-hidden">
+            <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
+            <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
+            <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
         </ul>  
     `;
 
     todoCategoryContainer.appendChild(createListEl);
     
-    const deleteCategoryBtn = createListEl.querySelector('.cat-delete');
+    selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
+    const categoryText       = createListEl.querySelector('.category-text');
+    const categoryBtns       = createListEl.querySelector('.category-btns');
+    const saveCategoryBtn    = createListEl.querySelector('.cat-save');
+    const editCategoryBtn    = createListEl.querySelector('.cat-edit');
+    const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
+    catId++;
+    
+    categoryText.addEventListener('keypress', (e) => {
+        if(e.code === 'Enter' || e.keyCode === 13)
+            e.preventDefault();
+    });
+
+    saveCategoryBtn.addEventListener('click', () => {
+        categoryText.setAttribute('contenteditable', 'false');
+        updateLS();
+        categoryText.classList.remove('category-edit-mode');
+        saveCategoryBtn.classList.add('cat-hidden');
+        editCategoryBtn.classList.remove('cat-hidden');
+        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
+        saveNewListName(selectedCategory);
+        categoryBtns.classList.add('cat-hidden');
+    });
+    
+    editCategoryBtn.addEventListener('click', () => {       
+        updateLS();
+        categoryText.setAttribute('contenteditable', 'true');
+        categoryText.classList.add('category-edit-mode');
+        saveCategoryBtn.classList.remove('cat-hidden');
+        editCategoryBtn.classList.add('cat-hidden');
+        editListGetClassToRemove(selectedCategory);
+    });
+
     deleteCategoryBtn.addEventListener('click', (e) => {
         showDeleteCategoryPopup();
-        console.log(e.currentTarget)
     });
 
     function showDeleteCategoryPopup(){
@@ -141,7 +164,9 @@ function createList(todoCategoryName) {
 
         const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
         deleteCategoryPopupBtn.addEventListener('click', () => {
+            removeTodos();
             createListEl.remove();
+            deleteCategoryPopup.remove();
             updateLS();
         });
 
@@ -151,14 +176,18 @@ function createList(todoCategoryName) {
         });
     }
 
+    removeCatOptions();
+    showCatOptions(createListEl);
     findSelectedCategory();
     filterTodos();
     filterTodosWhenClicked(createListEl);
     
     createListEl.addEventListener('click', (e) => {
         selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
+        removeCategorySelectedClass();
         findSelectedCategory();
-        listCategorySelect();
+        removeCatOptions();
+        showCatOptions(createListEl);
         e.currentTarget.classList.add('selected');
         todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
     });
@@ -167,6 +196,72 @@ function createList(todoCategoryName) {
         createListEl.classList.add('selected')
     
     updateLS();
+}
+
+function removeTodos() {
+    const totalTodoItems = document.querySelectorAll('.todo-item');
+    totalTodoItems.forEach(todoItemEl => {
+        if(todoItemEl.classList.contains(selectedCategory)){
+            todoItemEl.remove();
+            updateLS();
+        }
+    });
+}
+
+function removeListOptionsOnReload() {
+    todoListCategories = document.querySelectorAll('.todo-list-category-li');
+    todoListCategories.forEach(catList => {
+        const listOptions = catList.querySelector('.category-btns');
+        listOptions.classList.add('cat-hidden');
+    });
+}
+
+removeListOptionsOnReload();
+
+// gets all of the category options buttons and removes them
+function removeCatOptions(){
+    const allCatBtns = document.querySelectorAll('.category-btns');
+    allCatBtns.forEach(catBtn => {
+        if(!catBtn.classList.contains('cat-hidden'))
+            catBtn.classList.add('cat-hidden');
+    });
+}
+
+// Show the category options buttons for the current EL
+function showCatOptions(createListEl) {
+    const catBtns = createListEl.querySelector('ul');
+    catBtns.classList.remove('cat-hidden');
+}
+
+// When editing a category we grab the selected categroy and use that as the class to remove
+function editListGetClassToRemove(selectedCategory) {
+    const allTodos = document.querySelectorAll('.todo-item');
+
+    allTodos.forEach(todo => {
+        if(todo.classList.contains(selectedCategory)){
+            todo.classList.remove(selectedCategory);
+            todo.classList.add('list-modifying');   
+        }
+    });
+    updateLS();
+}
+
+function saveNewListName(selectedCategory) {
+    updateLS();
+    updateClassAfterEditing(selectedCategory);
+}
+
+function updateClassAfterEditing(selectedCategory) {
+    const allTodos = document.querySelectorAll('.todo-item');
+    
+    allTodos.forEach(todo => {
+        if(todo.classList.contains('list-modifying')){
+            todo.classList.remove('list-modifying');   
+            todo.classList.add(selectedCategory);
+        }
+    });
+    updateLS();
+
 }
 
 function findSelectedCategory(){
@@ -194,18 +289,16 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');
+        e.currentTarget.classList.add('selected');              
         updateLS();
-        const catBtns = cat.querySelector('.category-btns');
-        catBtns.style.right = "2.1rem";
     });
 });
 
 // add selected class to category
-function listCategorySelect() {
+function removeCategorySelectedClass() {
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     allCategories.forEach(cat => {
-        cat.classList.remove('selected');     
+        cat.classList.remove('selected'); 
     });
 }
 
@@ -265,19 +358,17 @@ function addTodo(el){
         todoText = el.text; 
         todoCategoryName = el.todoCategory;    
     }
-
     
     if(todoText) {  
         const todoItem = document.createElement('li');  
         
         todoItem.classList.add('todo-item', 'draggable', 'todo-item-height'); 
 
-        if(el)
+        if(el) {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-
-        if(selectedCategory === '') {
+        } else if (selectedCategory === '') {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if(selectedCategory !== '') {
+        } else if (selectedCategory !== '') {
             todoItem.className += ' ' + selectedCategory;
         }
 

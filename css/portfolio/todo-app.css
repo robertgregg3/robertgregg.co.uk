@@ -81,6 +81,7 @@ body{
     transition: all 300ms ease-in-out;
     pointer-events: all;
     position: relative;
+    display: flex;
 }
 
 .todo-list-category-li i.icon {
@@ -90,22 +91,52 @@ body{
     pointer-events: none;
 }
 
+.category-text {
+    font-size: 0.8rem;
+    max-width: 66%;
+}
+
 .category-btns {
     position: absolute;
-    right: 1.5rem;
-    top: 0;
+    right: -0.7rem;
+    top: 0.5rem;
     color: #8c9bad;
     list-style: none;
-    display: flex;
     align-items: center;
-    height: 100%;
-    width: 55px;
+    width: 38px;
+    opacity: 1;
+    transition: opacity 300ms ease;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .category-btn {
     right: 3rem;
     position: relative;
-    padding-left: 0.6rem;
+    padding-left: 0.7rem;
+    font-size: 0.7rem;
+}
+
+.cat-save {
+    position: absolute;
+    right: 1.6rem;
+}
+
+.cat-edit {
+    right: 2.9rem;
+}
+
+.cat-delete {
+    top: -0.25rem;
+}
+
+.cat-hidden{
+    transition: opacity 300ms ease-in-out;
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
 .delete-list__button {
@@ -134,9 +165,29 @@ body{
     box-shadow: 0 0 14px rgb(0,0,0,0.8);
     height: 220px;
     margin-bottom: 0;
+    font-size: 1rem;
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: all 500ms ease;
+}
+
+.cat-options {
+    position: absolute;
+    right: 0.8rem;
+    top: 1.2rem;
+    color: #33333390;
+    cursor: pointer;
+}
+
+.category-edit-mode {
+    background: #fdebcb;
+    padding: 0rem 1rem 0rem 0.5rem;
+    border-radius: 1rem;
+}
+
+.category-edit-mode:focus {
+    outline: 0px;
+    outline-offset: none;
 }
 
 .close-delete-list {
@@ -158,6 +209,7 @@ body{
     transform: scale(1.1);
     padding-left: 1.9rem;
     transition: all 300ms ease-in-out;
+    width: 95%;
 }
 
 .selected .icon {
@@ -457,8 +509,7 @@ input[type="checkbox"]:before {
     box-shadow: 0px 0px 14px rgb(0, 0, 0, 0.5);
 }
 
-.hidden, 
-.save-hidden{
+.hidden{
     height: 0px;
     transition: all 500ms ease-in-out;
     font-size: 0rem;
