@@ -114,7 +114,11 @@ if(profileEmail)
 if(!todosFromLS)
     createListPopup.classList.remove('create-list--hidden')
 
-createListBtn.addEventListener('click',      () => {createListPopup.classList.remove('create-list--hidden');});
+createListBtn.addEventListener('click',      () => {
+    createListPopup.classList.remove('create-list--hidden');
+    selectListPopup.classList.add('ok-hidden');
+});
+
 closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
 
 // create a new list button press
@@ -388,10 +392,12 @@ toolbar.classList.add('hidden');
 // add the todo form
 form.addEventListener('submit', (e) => {
     const todoCategoriesForValidation = document.querySelectorAll('.todo-list-category-li');
-    e.preventDefault();
+    e.preventDefault(); 
     todoCategoriesForValidation.forEach(todoCatForValidation => {
+        
         if(!todoCatForValidation.classList.contains('selected')){
             selectListPopup.classList.remove('ok-hidden');
+            createListPopup.classList.add('create-list--hidden');
         } else {
             addTodo();
             updateLS();
@@ -402,6 +408,7 @@ form.addEventListener('submit', (e) => {
     });
 });
 
+// popups
 selectListokBtn.addEventListener('click', () => {
     selectListPopup.classList.add('ok-hidden');
 });
