@@ -86,8 +86,7 @@ function previewFile() {
   
     if (file) 
         reader.readAsDataURL(file);
-
-  }
+}
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
