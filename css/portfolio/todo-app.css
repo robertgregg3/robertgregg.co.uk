@@ -252,7 +252,7 @@ body{
     cursor: pointer;
 }
 
-#create-list-popup, 
+.create-list-popup, 
 #select-list-popup {
     position: absolute;
     top: 50%;
@@ -270,6 +270,31 @@ body{
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: all 500ms ease;
+}
+
+.create-list-popup-initial {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background: #fff;
+    padding: 2.5rem 5rem;
+    box-shadow: 0 0 14px rgb(0,0,0,0.8);
+    height: 100vh;
+    align-content: center;
+    opacity: 1;
+    transition: all 500ms ease;
+}
+
+.create-list-popup-initial .close-create-list {
+    display: none;
+}
+
+.create-list-popup-initial input {
+    max-width: 350px;
 }
 
 .select-list-text {

@@ -111,8 +111,11 @@ if(profileEmail)
     profileEmail.innerText = profileEmailFromLS;
 
 // show/hide the create list box
-if(!todosFromLS)
-    createListPopup.classList.remove('create-list--hidden')
+if(!todosFromLS) {
+    createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
+    createListPopup.classList.add('create-list-popup-initial');
+    updateLS();
+}
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
@@ -123,6 +126,10 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
+    if(createListPopup.classList.contains('create-list-popup-initial')) {
+        createListPopup.classList.remove('create-list-popup-initial');
+        createListPopup.classList.add('create-list-popup');
+    }
     todoCategoryName = createListInput.value;
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
@@ -135,6 +142,10 @@ createListPopupBtn.addEventListener('click', () => {
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
+        if(createListPopup.classList.contains('create-list-popup-initial')) {
+            createListPopup.classList.remove('create-list-popup-initial');
+            createListPopup.classList.add('create-list-popup');
+        }
         todoCategoryName = createListInput.value;
         createList(todoCategoryName);
         createListPopup.classList.add('create-list--hidden');
