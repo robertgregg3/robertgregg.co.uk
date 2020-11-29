@@ -127,6 +127,7 @@ createListPopupBtn.addEventListener('click', () => {
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
     createListInput.value = '';
+    reorderCategoryLists();
     updateLS();
 });
 
@@ -138,6 +139,7 @@ createListInput.addEventListener('keypress', (e) => {
         createList(todoCategoryName);
         createListPopup.classList.add('create-list--hidden');
         createListInput.value = '';
+        reorderCategoryLists();
         updateLS();
     }
 }); 
@@ -256,6 +258,7 @@ function createList(todoCategoryName) {
     }
 }
 
+// remove the todo items associated with the category you are deleting
 function removeTodos() {
     const totalTodoItems = document.querySelectorAll('.todo-item');
     totalTodoItems.forEach(todoItemEl => {
@@ -282,9 +285,6 @@ if(todoCategoriesFromLS){
         }
     })
 }
-
-
-
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){
@@ -403,6 +403,7 @@ form.addEventListener('submit', (e) => {
     countTodos();
     toolbarButtons();
     dragItems();
+    dragItemsMobile();
 });
 
 // popups
