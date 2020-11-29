@@ -76,6 +76,7 @@ body{
     word-break: break-word;
     width: 100%;
     margin-left: 1rem;
+    font-size: 0.85rem;
 }
 
 #todo-categories {
