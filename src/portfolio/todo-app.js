@@ -252,11 +252,6 @@ function createList(todoCategoryName) {
             todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
         });
 
-        if(!createListEl.classList.contains('selected')){
-            createListEl.classList.add('selected');
-            categoryBtns.classList.remove('cat-hidden');
-        }
-        
         updateLS();
     }
 }
@@ -270,6 +265,24 @@ function removeTodos() {
         }
     });
 }
+
+// get selected category from local storage and apply it to the category after reload
+let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
+
+if(todoCategoriesFromLS){
+    const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
+    removeCatOptions();
+    allTodoCategoriesAfterReload.forEach(todoCatAfterReload => {
+        const categoryBtns = todoCatAfterReload.querySelector('.category-btns');
+        if(todoCatAfterReload.classList.contains(newSelectedCategory)){
+            todoCatAfterReload.classList.add('selected');
+            categoryBtns.classList.remove('cat-hidden');
+        }
+    })
+}
+
+
+
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){
