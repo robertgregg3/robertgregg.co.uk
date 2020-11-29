@@ -10,7 +10,7 @@
     // 3) Add todo list
     4) Reorder the projects
     // 5) bug if list names are the same
-    6) If no category seledcted then cant make a note
+    6) If no category seledcted then cant make a note - VALIDATION
 */
 
 const form                  = document.getElementById('form');
@@ -34,6 +34,9 @@ const createListPopup       = document.getElementById('create-list-popup');
 const closeCreateListBtn    = createListPopup.querySelector('.close-create-list');
 const createListInput       = createListPopup.querySelector('input');
 const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
+
+const selectListPopup       = document.getElementById('select-list-popup');
+const selectListokBtn       = document.getElementById('ok');
 
 let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
@@ -70,14 +73,14 @@ function createProfile(){
 
 createProfile();
 
+// save the profile image tolocal storage
 function previewFile() {
     const preview = document.querySelector('img');
-    const file = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
+    const file    = document.querySelector('input[type=file]').files[0];
+    const reader  = new FileReader();
   
     reader.addEventListener("load", () => {
       preview.src = reader.result;
-      console.log()
       localStorage.setItem("profileImage", preview.src)
     }, false);
   
@@ -135,7 +138,6 @@ createListInput.addEventListener('keypress', (e) => {
 
 // create category on the dom
 function createList(todoCategoryName) {
-
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
     allTodoCategories.forEach(cat => {
         cat.classList.remove('selected');
@@ -144,7 +146,7 @@ function createList(todoCategoryName) {
     });
 
     const createListEl = document.createElement('li');
-    createListEl.id = catId;
+    createListEl.id    = catId;
 
     if(todosFromLS) {
         createListEl.classList.add('todo-list-category-li');
@@ -152,101 +154,101 @@ function createList(todoCategoryName) {
         createListEl.classList.add('todo-list-category-li', 'selected');
     }
 
-    if(todoCategoryName)
-
-    createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-    createListEl.innerHTML = `
-        <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
-        <ul class="category-btns cat-hidden">
-            <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
-            <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
-            <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
-        </ul>  
-    `;
-
-    todoCategoryContainer.appendChild(createListEl);
-    
-    selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
-    const categoryText       = createListEl.querySelector('.category-text');
-    const categoryBtns       = createListEl.querySelector('.category-btns');
-    const saveCategoryBtn    = createListEl.querySelector('.cat-save');
-    const editCategoryBtn    = createListEl.querySelector('.cat-edit');
-    const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
-    catId++;
-    
-    categoryText.addEventListener('keypress', (e) => {
-        if(e.code === 'Enter' || e.keyCode === 13)
-            e.preventDefault();
-    });
-
-    saveCategoryBtn.addEventListener('click', () => {
-        categoryText.setAttribute('contenteditable', 'false');
-        updateLS();
-        categoryText.classList.remove('category-edit-mode');
-        saveCategoryBtn.classList.add('cat-hidden');
-        editCategoryBtn.classList.remove('cat-hidden');
-        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
-        saveNewListName(selectedCategory);
-        categoryBtns.classList.add('cat-hidden');
-    });
-    
-    editCategoryBtn.addEventListener('click', () => {       
-        updateLS();
-        categoryText.setAttribute('contenteditable', 'true');
-        categoryText.classList.add('category-edit-mode');
-        saveCategoryBtn.classList.remove('cat-hidden');
-        editCategoryBtn.classList.add('cat-hidden');
-        editListGetClassToRemove(selectedCategory);
-    });
-
-    deleteCategoryBtn.addEventListener('click', (e) => {
-        showDeleteCategoryPopup();
-    });
-
-    function showDeleteCategoryPopup(){
-        const deleteCategoryPopup = document.createElement('div');
-        deleteCategoryPopup.classList.add('delete-list-popup');
-        deleteCategoryPopup.innerHTML = `
-            <i class="fas fa-times close-delete-list"></i>Are you sure you want to delete the list '${todoCategoryName}'?  This action cannot be undone
-            <button class="delete-list__button">Yes, delete the list</button>
+    if(todoCategoryName) {
+        createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
+        createListEl.innerHTML = `
+            <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
+            <ul class="category-btns cat-hidden">
+                <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
+                <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
+                <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
+            </ul>  
         `;
-        document.body.appendChild(deleteCategoryPopup);
 
-        const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
-        deleteCategoryPopupBtn.addEventListener('click', () => {
-            removeTodos();
-            createListEl.remove();
-            deleteCategoryPopup.remove();
+        todoCategoryContainer.appendChild(createListEl);
+        
+        selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
+        const categoryText       = createListEl.querySelector('.category-text');
+        const categoryBtns       = createListEl.querySelector('.category-btns');
+        const saveCategoryBtn    = createListEl.querySelector('.cat-save');
+        const editCategoryBtn    = createListEl.querySelector('.cat-edit');
+        const deleteCategoryBtn  = createListEl.querySelector('.cat-delete');
+        catId++;
+        
+        categoryText.addEventListener('keypress', (e) => {
+            if(e.code === 'Enter' || e.keyCode === 13)
+                e.preventDefault();
+        });
+
+        saveCategoryBtn.addEventListener('click', () => {
+            categoryText.setAttribute('contenteditable', 'false');
             updateLS();
+            categoryText.classList.remove('category-edit-mode');
+            saveCategoryBtn.classList.add('cat-hidden');
+            editCategoryBtn.classList.remove('cat-hidden');
+            selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
+            saveNewListName(selectedCategory);
+            categoryBtns.classList.add('cat-hidden');
+        });
+        
+        editCategoryBtn.addEventListener('click', () => {       
+            updateLS();
+            categoryText.setAttribute('contenteditable', 'true');
+            categoryText.classList.add('category-edit-mode');
+            saveCategoryBtn.classList.remove('cat-hidden');
+            editCategoryBtn.classList.add('cat-hidden');
+            editListGetClassToRemove(selectedCategory);
         });
 
-        const closeDeleteListPopupBtn = deleteCategoryPopup.querySelector('.close-delete-list');
-        closeDeleteListPopupBtn.addEventListener('click', () => {
-            deleteCategoryPopup.remove();
+        deleteCategoryBtn.addEventListener('click', (e) => {
+            showDeleteCategoryPopup();
         });
-    }
 
-    removeCatOptions();
-    showCatOptions(createListEl);
-    findSelectedCategory();
-    filterTodos();
-    filterTodosWhenClicked(createListEl);
-    
-    createListEl.addEventListener('click', (e) => {
-        selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
-        removeCategorySelectedClass();
-        findSelectedCategory();
+        function showDeleteCategoryPopup(){
+            const deleteCategoryPopup = document.createElement('div');
+            deleteCategoryPopup.classList.add('delete-list-popup');
+            deleteCategoryPopup.innerHTML = `
+                <i class="fas fa-times close-delete-list"></i>Are you sure you want to delete the list '${todoCategoryName}'?  This action cannot be undone
+                <button class="delete-list__button">Yes, delete the list</button>
+            `;
+            document.body.appendChild(deleteCategoryPopup);
+
+            const deleteCategoryPopupBtn = deleteCategoryPopup.querySelector('.delete-list__button');
+            deleteCategoryPopupBtn.addEventListener('click', () => {
+                removeTodos();
+                createListEl.remove();
+                deleteCategoryPopup.remove();
+                updateLS();
+            });
+
+            const closeDeleteListPopupBtn = deleteCategoryPopup.querySelector('.close-delete-list');
+            closeDeleteListPopupBtn.addEventListener('click', () => {
+                deleteCategoryPopup.remove();
+            });
+        }
+
         removeCatOptions();
         showCatOptions(createListEl);
-        e.currentTarget.classList.add('selected');
-        toolbarButtons();
-        todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
-    });
+        findSelectedCategory();
+        filterTodos();
+        filterTodosWhenClicked(createListEl);
+        
+        createListEl.addEventListener('click', (e) => {
+            selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
+            removeCategorySelectedClass();
+            findSelectedCategory();
+            removeCatOptions();
+            showCatOptions(createListEl);
+            e.currentTarget.classList.add('selected');
+            toolbarButtons();
+            todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
+        });
 
-    if(!createListEl.classList.contains('selected'))
-        createListEl.classList.add('selected')
-    
-    updateLS();
+        if(!createListEl.classList.contains('selected'))
+            createListEl.classList.add('selected')
+        
+        updateLS();
+    }
 }
 
 function removeTodos() {
@@ -316,6 +318,7 @@ function updateClassAfterEditing(selectedCategory) {
     updateLS();
 }
 
+// set todocategoryName for the selected list category
 function findSelectedCategory(){
     todoCategories.forEach(oneCat => {
         if(oneCat.classList.contains('selected'))
@@ -384,13 +387,23 @@ toolbar.classList.add('hidden');
 
 // add the todo form
 form.addEventListener('submit', (e) => {
+    const todoCategoriesForValidation = document.querySelectorAll('.todo-list-category-li');
     e.preventDefault();
+    todoCategoriesForValidation.forEach(todoCatForValidation => {
+        if(!todoCatForValidation.classList.contains('selected')){
+            selectListPopup.classList.remove('ok-hidden');
+        } else {
+            addTodo();
+            updateLS();
+            countTodos();
+            toolbarButtons();
+            dragItems();
+        }
+    });
+});
 
-    addTodo();
-    updateLS();
-    countTodos();
-    toolbarButtons();
-    dragItems();
+selectListokBtn.addEventListener('click', () => {
+    selectListPopup.classList.add('ok-hidden');
 });
 
 // create todos from localStorage
