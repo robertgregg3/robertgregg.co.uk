@@ -114,7 +114,7 @@ if(profileEmail)
 if(!todosFromLS)
     createListPopup.classList.remove('create-list--hidden')
 
-createListBtn.addEventListener('click',      () => {
+createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
     selectListPopup.classList.add('ok-hidden');
 });
@@ -126,6 +126,7 @@ createListPopupBtn.addEventListener('click', () => {
     todoCategoryName = createListInput.value;
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
+    createListInput.value = '';
     updateLS();
 });
 
@@ -136,21 +137,25 @@ createListInput.addEventListener('keypress', (e) => {
         todoCategoryName = createListInput.value;
         createList(todoCategoryName);
         createListPopup.classList.add('create-list--hidden');
+        createListInput.value = '';
         updateLS();
     }
 }); 
 
 // create category on the dom
 function createList(todoCategoryName) {
+    const createListEl      = document.createElement('li');
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
+
     allTodoCategories.forEach(cat => {
         cat.classList.remove('selected');
         if(cat.innerText === todoCategoryName)
             todoCategoryName = todoCategoryName + ' (copy)';
     });
 
-    const createListEl = document.createElement('li');
-    createListEl.id    = catId;
+    createListEl.draggable = true;
+    createListEl.id        = catId;
+    createListEl.classList.add('draggable-list')
 
     if(todosFromLS) {
         createListEl.classList.add('todo-list-category-li');
@@ -230,7 +235,6 @@ function createList(todoCategoryName) {
                 deleteCategoryPopup.remove();
             });
         }
-
         removeCatOptions();
         showCatOptions(createListEl);
         findSelectedCategory();
@@ -248,9 +252,6 @@ function createList(todoCategoryName) {
             todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
         });
 
-        if(!createListEl.classList.contains('selected'))
-            createListEl.classList.add('selected')
-        
         updateLS();
     }
 }
@@ -265,15 +266,23 @@ function removeTodos() {
     });
 }
 
-function removeListOptionsOnReload() {
-    todoListCategories = document.querySelectorAll('.todo-list-category-li');
-    todoListCategories.forEach(catList => {
-        const listOptions = catList.querySelector('.category-btns');
-        listOptions.classList.add('cat-hidden');
-    });
+// get selected category from local storage and apply it to the category after reload
+let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
+
+if(todoCategoriesFromLS){
+    const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
+    removeCatOptions();
+    allTodoCategoriesAfterReload.forEach(todoCatAfterReload => {
+        const categoryBtns = todoCatAfterReload.querySelector('.category-btns');
+        if(todoCatAfterReload.classList.contains(newSelectedCategory)){
+            todoCatAfterReload.classList.add('selected');
+            categoryBtns.classList.remove('cat-hidden');
+        }
+    })
 }
 
-removeListOptionsOnReload();
+
+
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){
@@ -361,11 +370,6 @@ function removeCategorySelectedClass() {
     });
 }
 
-// remove selected class on pageload
-allCategories.forEach(cat => {
-    cat.classList.remove('selected');     
-});
-
 function filterTodosWhenClicked(){
     const allCategories = document.querySelectorAll('.todo-list-category-li');
     const allTodos      = document.querySelectorAll('.todo-item');
@@ -391,21 +395,12 @@ toolbar.classList.add('hidden');
 
 // add the todo form
 form.addEventListener('submit', (e) => {
-    const todoCategoriesForValidation = document.querySelectorAll('.todo-list-category-li');
     e.preventDefault(); 
-    todoCategoriesForValidation.forEach(todoCatForValidation => {
-        
-        if(!todoCatForValidation.classList.contains('selected')){
-            selectListPopup.classList.remove('ok-hidden');
-            createListPopup.classList.add('create-list--hidden');
-        } else {
-            addTodo();
-            updateLS();
-            countTodos();
-            toolbarButtons();
-            dragItems();
-        }
-    });
+    addTodo();
+    updateLS();
+    countTodos();
+    toolbarButtons();
+    dragItems();
 });
 
 // popups
@@ -813,13 +808,12 @@ function toolbarButtons(){
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
-    const container  = document.getElementById('todos-ul');
+    const container  = document.querySelector('#todos-ul:not(#todo-list-categories-ul)');
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
             draggable.classList.add('dragging');
         });
-
         draggable.addEventListener('dragend', () => {
             draggable.classList.remove('dragging');
         });
@@ -898,3 +892,42 @@ function dragItemsMobile() {
 }
 
 dragItemsMobile();
+
+// reoder categories DRAG and DROP
+function reorderCategoryLists() {
+    const draggableLists    = document.querySelectorAll('.draggable-list');
+    const dragListContainer = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
+
+    draggableLists.forEach(dragList => {
+        dragList.addEventListener('dragstart', () => {dragList.classList.add('dragging-list');});
+        dragList.addEventListener('dragend',   () => {dragList.classList.remove('dragging-list');});
+        dragListContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragListAfterElement(dragListContainer, e.clientY);
+            const draggableList = document.querySelector('.dragging-list');
+            if(afterElement == null){
+                dragListContainer.appendChild(draggableList);
+                updateLS();
+            } else {
+                dragListContainer.insertBefore(draggableList, afterElement);
+                updateLS();
+            }
+        })
+    })
+
+    function getDragListAfterElement(dragListContainer, y){
+        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
+
+        return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if(offset < 0 && offset > closest.offset){
+                    return { offset: offset, element: child}
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+}
+
+reorderCategoryLists();

@@ -76,6 +76,7 @@ body{
     word-break: break-word;
     width: 100%;
     margin-left: 1rem;
+    font-size: 0.85rem;
 }
 
 #todo-categories {
@@ -110,7 +111,7 @@ body{
     margin-right: 1rem;
     color: #8c9bad;
     font-size: 1.2rem;
-    pointer-events: none;
+    cursor: move;
 }
 
 .category-text {
@@ -589,6 +590,12 @@ input[type="checkbox"]:before {
 .draggable.dragging{
     border: 2px solid rgb(255, 153, 0);
     box-shadow: 0 10px 14px rgb(0, 0, 0, 0.5);
+    transition: transform 100ms ease;
+}
+
+.draggable-list.dragging-list{
+    border: 2px solid rgb(255, 153, 0);
+    box-shadow: 0 0px 4px rgb(0, 0, 0, 0.5);
     transition: transform 100ms ease;
 }
 
