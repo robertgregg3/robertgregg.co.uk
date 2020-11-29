@@ -10,7 +10,7 @@
     // 3) Add todo list
     4) Reorder the projects
     // 5) bug if list names are the same
-    6) If no category seledcted then cant make a note - VALIDATION
+    // 6) If no category seledcted then cant make a note - VALIDATION
 */
 
 const form                  = document.getElementById('form');
