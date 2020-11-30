@@ -211,7 +211,6 @@ createListPopupBtn.addEventListener('click', () => {
 // create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
-        e.preventDefault();
         if(createListPopup.classList.contains('create-list-popup-initial')) {
             createListPopup.classList.remove('create-list-popup-initial');
             createListPopup.classList.add('create-list-popup');
@@ -226,12 +225,12 @@ createListInput.addEventListener('keypress', (e) => {
 }); 
 
 // create category on the dom
-function createList(todoCategoryName, todosFromLS) {
+function createList(todoCategoryName) {
     const createListEl      = document.createElement('li');
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
 
     allTodoCategories.forEach(cat => {
-        cat.classList.remove('selected');
+        cat.classList.remove('selected')
         if(cat.innerText === todoCategoryName)
             todoCategoryName = todoCategoryName + ' (copy)';
     });
@@ -240,11 +239,11 @@ function createList(todoCategoryName, todosFromLS) {
     createListEl.id        = catId;
     createListEl.classList.add('draggable-list')
 
-    if(todosFromLS) {
-        createListEl.classList.add('todo-list-category-li');
-    } else {
-        createListEl.classList.add('todo-list-category-li', 'selected');
-    }
+    createListEl.classList.add('todo-list-category-li', 'selected');
+
+    // if(todoCategoryFromLS)
+    //     todoCategoryName === todoCategoryFromLS;
+
 
     if(todoCategoryName) {
         createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
@@ -323,6 +322,7 @@ function createList(todoCategoryName, todosFromLS) {
         findSelectedCategory();
         filterTodos();
         filterTodosWhenClicked(createListEl);
+        // refreshAddSelectedAndFilterTodos();
         
         createListEl.addEventListener('click', (e) => {
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
@@ -349,31 +349,6 @@ function removeTodos() {
         }
     });
 }
-
-// get selected category from local storage and apply it to the category after reload
-if(todoCategoryFromLS){
-    let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
-
-    const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
-    const alltodosAfterReload          = document.querySelectorAll('.todo-item');
-    
-    removeCatOptions();
-    
-    allTodoCategoriesAfterReload.forEach(todoCatAfterReload => {
-        todoCatAfterReload.classList.remove('selected');
-        const categoryBtns = todoCatAfterReload.querySelector('.category-btns');
-        if(todoCatAfterReload.classList.contains(newSelectedCategory)){
-            todoCatAfterReload.classList.add('selected');
-            categoryBtns.classList.remove('cat-hidden');
-        }
-    });
-
-    alltodosAfterReload.forEach(todoAfterReload => {
-        if(!todoAfterReload.classList.contains(newSelectedCategory))
-            todoAfterReload.classList.add('hidden');
-    });
-
-} 
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){
