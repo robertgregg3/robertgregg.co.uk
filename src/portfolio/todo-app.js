@@ -12,8 +12,6 @@
     // 5) bug if list names are the same
     // 6) If no category seledcted then cant make a note - VALIDATION
 */
-const createAccContainer    = document.getElementById('create-account');
-
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
@@ -52,7 +50,8 @@ let catId                   =  1;
 
 // creaate Account 
 function createAcc(){
-    const createAccEl = document.createElement('div');
+    const createAccContainer = document.getElementById('create-account');
+    const createAccEl        = document.createElement('div');
 
     createAccEl.classList.add('form-section');
     createAccEl.innerHTML = `
@@ -79,13 +78,21 @@ function createAcc(){
         createAccEmail.value = 'test@test.com';
         createAccPassword.value = '1234';
     });
+
+    createAccBtn.addEventListener('click', () => {
+        createProfile(createAccEmail);
+        createAccContainer.style.marginLeft = '-100%';
+        createListPopup.classList.remove('create-list--hidden')
+        createListPopup.style.marginLeft = '0%';
+    });
 }
 
 createAcc();
 
 function createAccPreviewFile() {
-    const createAccPreview = document.getElementById('img-preview');
-    const createAccfile    = document.querySelector('input[type=file]').files[0];
+    const createAccContainer = document.getElementById('create-account');
+    const createAccPreview   = document.getElementById('img-preview');
+    const createAccfile      = createAccContainer.querySelector('input[type=file]').files[0];
     const reader  = new FileReader();
   
     reader.addEventListener("load", () => {
@@ -98,9 +105,11 @@ function createAccPreviewFile() {
 }
 
 // create profile section
-function createProfile(){
+function createProfile(createAccEmail){
     if(profileImageFromLS)
         profileImgUrl = profileImageFromLS;
+
+    let profileEmail = createAccEmail.value;
 
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
@@ -115,15 +124,14 @@ function createProfile(){
             />
         <i class="fas fa-camera"></i>
         </label>
+        <div id="todo-profile__email" contenteditable="true" data-text="Add your email">${profileEmail}</div>
         `;
     profileContainer.appendChild(profileEl);
 }
 
-createProfile();
-
 // save the profile image tolocal storage
 function previewFile() {
-    const preview = document.querySelector('img');
+    const preview = document.getElementById('todo-profile__img');
     const file    = document.querySelector('input[type=file]').files[0];
     const reader  = new FileReader();
   

@@ -28,6 +28,8 @@ body{
     flex-wrap: wrap;
     flex-direction: column;
     text-align: center;
+    margin-left: 0%;
+    transition: margin 700ms ease;
 }
 
 #create-account p {
@@ -354,7 +356,7 @@ body{
     height: 100vh;
     align-content: center;
     opacity: 1;
-    transition: all 500ms ease;
+    transition: margin 700ms ease;
     margin-left: 100%;
 }
 
