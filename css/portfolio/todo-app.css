@@ -165,8 +165,10 @@ body{
     list-style: none;
     padding: 1rem 0;
     font-size: 1rem;
-    overflow: hidden;
     pointer-events: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 91.5%;
 }
 
 .todo-list-category-li {

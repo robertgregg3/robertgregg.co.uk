@@ -241,10 +241,6 @@ function createList(todoCategoryName) {
 
     createListEl.classList.add('todo-list-category-li', 'selected');
 
-    // if(todoCategoryFromLS)
-    //     todoCategoryName === todoCategoryFromLS;
-
-
     if(todoCategoryName) {
         createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
         createListEl.innerHTML = `
@@ -484,7 +480,7 @@ if(todosFromLS) {
     });
 } 
 
-function addTodo(el){
+function addTodo(el, todoCategoryName){
     findSelectedCategory();
     toolbar.classList.remove('hidden');
     input.style.marginTop = '0';
@@ -732,6 +728,18 @@ function addTodo(el){
         input.value ='';
     }
 }
+
+function filterTodosOnPageReload(selectedCategory) {
+    const allCats  = document.querySelectorAll('.todo-list-category-li');
+    const allTodos = document.querySelectorAll('.todo-item');
+
+    allTodos.forEach(todo => {
+        if(!todo.classList.contains(selectedCategory))
+            todo.classList.add('hidden');
+    });
+}
+
+filterTodosOnPageReload(selectedCategory);
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
