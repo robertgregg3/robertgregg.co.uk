@@ -12,6 +12,7 @@
     // 5) bug if list names are the same
     // 6) If no category seledcted then cant make a note - VALIDATION
 */
+const createAccContainer    = document.getElementById('create-account');
 
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
@@ -48,6 +49,53 @@ let profileImgUrl           = '../images/rob.jpg'
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1;
+
+// creaate Account 
+function createAcc(){
+    const createAccEl = document.createElement('div');
+
+    createAccEl.classList.add('form-section');
+    createAccEl.innerHTML = `
+        <h2>Create Account</h2>
+        <p>This is just a test application</p>
+        <button id="use-dummy-data">Use dummy data</button>
+        <input type="email" name="create-account-email" id="create-account-email" placeholder="Email Address" />
+        <input type="password" name="create-account-password" id="create-account-password" placeholder="Password" />
+        <span class="create-account-profile-image-text">Upload Profile Pic</span>
+        <input type="file" name="create-account-profile-image" id="create-account-profile-image" accept="image/*" multiple="false" onchange="createAccPreviewFile()" />
+        <span id="img-preview"></span>
+        <button id="create-account-btn">Create Account</button>
+    `;
+
+    createAccContainer.appendChild(createAccEl);
+
+    const useDummyDataBtn    = document.getElementById('use-dummy-data');
+    const createAccEmail     = document.getElementById('create-account-email');
+    const createAccPassword  = document.getElementById('create-account-password');
+    const createAccImgUpload = document.getElementById('create-account-profile-image');
+    const createAccBtn       = document.getElementById('create-account-btn');
+
+    useDummyDataBtn.addEventListener('click', () => {
+        createAccEmail.value = 'test@test.com';
+        createAccPassword.value = '1234';
+    });
+}
+
+createAcc();
+
+function createAccPreviewFile() {
+    const createAccPreview = document.getElementById('img-preview');
+    const createAccfile    = document.querySelector('input[type=file]').files[0];
+    const reader  = new FileReader();
+  
+    reader.addEventListener("load", () => {
+        createAccPreview.src = reader.result;
+      localStorage.setItem("profileImage", createAccPreview.src)
+    }, false);
+  
+    if (createAccfile) 
+        reader.readAsDataURL(createAccfile);
+}
 
 // create profile section
 function createProfile(){
@@ -155,7 +203,7 @@ createListInput.addEventListener('keypress', (e) => {
 }); 
 
 // create category on the dom
-function createList(todoCategoryName) {
+function createList(todoCategoryName, todosFromLS) {
     const createListEl      = document.createElement('li');
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
 
@@ -280,9 +328,9 @@ function removeTodos() {
 }
 
 // get selected category from local storage and apply it to the category after reload
-if(todoCategoriesFromLS){
+if(todoCategoryFromLS){
     let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
-    
+
     const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
     
     removeCatOptions();
@@ -294,7 +342,7 @@ if(todoCategoriesFromLS){
             categoryBtns.classList.remove('cat-hidden');
         }
     })
-}
+} 
 
 // gets all of the category options buttons and removes them
 function removeCatOptions(){

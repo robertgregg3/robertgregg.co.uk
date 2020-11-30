@@ -36,7 +36,7 @@ body{
     margin-top: -1rem;
 }
 
-#form-section {
+.form-section {
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -62,14 +62,14 @@ body{
     margin-bottom: 2rem;
 }
 
-#form-section input {
+.form-section input {
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 0.8rem;
 }
 
-#form-section input:nth-child(7n) {
+.form-section input:nth-child(7n) {
     border: none !important;
 }
 
