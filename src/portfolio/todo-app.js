@@ -16,6 +16,7 @@ const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
 const todosUl               = document.getElementById('todos-ul');
+const allTodos              = document.querySelectorAll('.todo-item');
 
 const countTotalTodos       = document.getElementById('count-total-todos');
 const countRemainingTodos   = document.getElementById('count-remaining-todos');
@@ -586,6 +587,7 @@ function addTodo(el, todoCategoryName){
         // show the Extendable div
         expandTodoBtn.addEventListener('click', () => {
             todoItem.classList[todoItem.classList.contains('todo-item-height') ? 'remove' : 'add']('todo-item-height');
+            todoItem.classList[todoItem.classList.contains('todo-item-tilt') ? 'remove' : 'add']('todo-item-tilt');
             todoExtendingDiv.classList[todoExtendingDiv.classList.contains('height-100') ? 'remove' : 'add']('height-100');
             expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
         });
@@ -730,7 +732,6 @@ function addTodo(el, todoCategoryName){
 }
 
 function filterTodosOnPageReload(selectedCategory) {
-    const allCats  = document.querySelectorAll('.todo-list-category-li');
     const allTodos = document.querySelectorAll('.todo-item');
 
     allTodos.forEach(todo => {

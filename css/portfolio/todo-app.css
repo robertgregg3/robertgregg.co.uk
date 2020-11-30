@@ -572,6 +572,10 @@ h1{
     box-shadow: 0 0 14px rgb(0,0,0,0.5);
 }
 
+.todo-item-tilt {
+    transform: rotate(0deg) !important;
+}
+
 .todo-item-height {
     height: 60px;
 }
