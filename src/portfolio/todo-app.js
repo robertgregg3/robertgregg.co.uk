@@ -2,21 +2,21 @@
     1) Drag not working on mobile
     2) Sort issues with safari
     3) refactor Enter press or set attributyes code
+    4) Sort buttons when category selected
 */ 
 
-/* Sidebar:
-    // 1) Upload image
-    // 2) Write your name
-    // 3) Add todo list
-    4) Reorder the projects
-    // 5) bug if list names are the same
-    // 6) If no category seledcted then cant make a note - VALIDATION
-*/
+/* Tests:
+1) Create account > create list > refresh. List should be there (+ selected class) & create list small popup only
+2) edit email saves when refreshed
+3) create multiple lists > add items for each > change the name of one list > refresh - one list with selected class and filtered items
+4) 
 
+*/
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
 const todosUl               = document.getElementById('todos-ul');
+const allTodos              = document.querySelectorAll('.todo-item');
 
 const countTotalTodos       = document.getElementById('count-total-todos');
 const countRemainingTodos   = document.getElementById('count-remaining-todos');
@@ -24,7 +24,6 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 
 const profileContainer      = document.getElementById('todo-profile');
-const profileEmail          = document.getElementById('todo-profile__email');
 
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
@@ -47,13 +46,83 @@ let profileImageFromLS      = localStorage.getItem('profileImage');
 let profileImgUrl           = '../images/rob.jpg'
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
-let catId                   =  1;
+let catId                   =  1; // variable for sequential ID's for the list categories
+let profileEmailText        = ''; // variable for the email address 
+
+
+// creaate Account 
+function createAcc(){
+    const createAccContainer = document.getElementById('create-account');
+    const createAccEl        = document.createElement('div');
+
+    createAccEl.classList.add('form-section');
+    createAccEl.innerHTML = `
+        <h2>Create Account</h2>
+        <p>This is just a test application</p>
+        <button id="use-dummy-data">Use dummy data</button>
+        <input type="email" name="create-account-email" id="create-account-email" placeholder="Email Address" />
+        <input type="password" name="create-account-password" id="create-account-password" placeholder="Password" />
+        <span class="create-account-profile-image-text">Upload Profile Pic</span>
+        <input type="file" name="create-account-profile-image" id="create-account-profile-image" accept="image/*" multiple="false" onchange="createAccPreviewFile()" />
+        <span id="img-preview"></span>
+        <button id="create-account-btn">Create Account</button>
+    `;
+
+    createAccContainer.appendChild(createAccEl);
+
+    const useDummyDataBtn    = document.getElementById('use-dummy-data');
+    const createAccEmail     = document.getElementById('create-account-email');
+    const createAccPassword  = document.getElementById('create-account-password');
+    const createAccImgUpload = document.getElementById('create-account-profile-image');
+    const createAccBtn       = document.getElementById('create-account-btn');
+
+    useDummyDataBtn.addEventListener('click', () => {
+        createAccEmail.value = 'test@test.com';
+        createAccPassword.value = '1234';
+    });
+
+    createAccBtn.addEventListener('click', () => {
+        createProfile(createAccEmail);
+        createAccContainer.style.marginLeft = '-100%';
+        createListPopup.classList.remove('create-list--hidden')
+        createListPopup.style.marginLeft = '0%';
+    });
+}
+
+function createAccPreviewFile() {
+    const createAccContainer = document.getElementById('create-account');
+    const createAccPreview   = document.getElementById('img-preview');
+    const createAccfile      = createAccContainer.querySelector('input[type=file]').files[0];
+    const reader  = new FileReader();
+  
+    reader.addEventListener("load", () => {
+        createAccPreview.src = reader.result;
+      localStorage.setItem("profileImage", createAccPreview.src)
+    }, false);
+  
+    if (createAccfile) 
+        reader.readAsDataURL(createAccfile);
+}
+
+if(!todosFromLS && !todoCategoriesFromLS && !profileEmailFromLS){
+    createAcc();
+} else {
+    const createAccContainer = document.getElementById('create-account');
+    createAccContainer.style.display = 'none';
+    createProfile();
+}
 
 // create profile section
-function createProfile(){
+function createProfile(createAccEmail){
     if(profileImageFromLS)
         profileImgUrl = profileImageFromLS;
-
+    
+    if(profileEmailFromLS) {
+        profileEmailText = profileEmailFromLS;
+    } else {
+        profileEmailText = createAccEmail.value;
+    }
+        
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
     profileEl.innerHTML = `
@@ -67,27 +136,42 @@ function createProfile(){
             />
         <i class="fas fa-camera"></i>
         </label>
+        <div id="todo-profile__email" contenteditable="true" data-text="Add your email">${profileEmailText}</div>
         `;
     profileContainer.appendChild(profileEl);
+
+    updateEmail(profileEmailText);
+    updateLS(profileEmailText);
 }
 
-createProfile();
+function updateEmail() {
+     const profileEmail = document.getElementById('todo-profile__email');
+     
+     profileEmail.addEventListener('keypress', (e) => {
+         if (e.code === 'Enter' || e.keyCode === 13) {
+             e.preventDefault();
+             profileEmail.setAttribute('contenteditable', 'false');
+             profileEmail.setAttribute('contenteditable', 'true');
+             profileEmailText = profileEmail.innerText;
+             updateLS(profileEmailText);
+            }
+        });
+}
 
 // save the profile image tolocal storage
 function previewFile() {
-    const preview = document.querySelector('img');
+    const preview = document.getElementById('todo-profile__img');
     const file    = document.querySelector('input[type=file]').files[0];
     const reader  = new FileReader();
   
     reader.addEventListener("load", () => {
       preview.src = reader.result;
-      localStorage.setItem("profileImage", preview.src)
+      localStorage.setItem('profileImage', preview.src)
     }, false);
   
     if (file) 
         reader.readAsDataURL(file);
-
-  }
+}
 
 // add created categories to the sidebar
 if(todoCategoriesFromLS){
@@ -97,25 +181,12 @@ if(todoCategoriesFromLS){
     });
 }
 
-//profile section
-profileEmail.addEventListener('keypress', (e) => {
-    if (e.code === 'Enter' || e.keyCode === 13) {
-        e.preventDefault();
-        profileEmail.setAttribute('contenteditable', 'false');
-        profileEmail.setAttribute('contenteditable', 'true');
-        updateLS();
-      }
-});
-
-if(profileEmail)
-    profileEmail.innerText = profileEmailFromLS;
-
 // show/hide the create list box
-if(!todosFromLS) {
+if(!todoCategoriesFromLS) {
     createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
     createListPopup.classList.add('create-list-popup-initial');
     updateLS();
-}
+} 
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
@@ -141,7 +212,6 @@ createListPopupBtn.addEventListener('click', () => {
 // create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
-        e.preventDefault();
         if(createListPopup.classList.contains('create-list-popup-initial')) {
             createListPopup.classList.remove('create-list-popup-initial');
             createListPopup.classList.add('create-list-popup');
@@ -161,7 +231,7 @@ function createList(todoCategoryName) {
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
 
     allTodoCategories.forEach(cat => {
-        cat.classList.remove('selected');
+        cat.classList.remove('selected')
         if(cat.innerText === todoCategoryName)
             todoCategoryName = todoCategoryName + ' (copy)';
     });
@@ -170,11 +240,7 @@ function createList(todoCategoryName) {
     createListEl.id        = catId;
     createListEl.classList.add('draggable-list')
 
-    if(todosFromLS) {
-        createListEl.classList.add('todo-list-category-li');
-    } else {
-        createListEl.classList.add('todo-list-category-li', 'selected');
-    }
+    createListEl.classList.add('todo-list-category-li', 'selected');
 
     if(todoCategoryName) {
         createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
@@ -253,6 +319,7 @@ function createList(todoCategoryName) {
         findSelectedCategory();
         filterTodos();
         filterTodosWhenClicked(createListEl);
+        // refreshAddSelectedAndFilterTodos();
         
         createListEl.addEventListener('click', (e) => {
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
@@ -278,23 +345,6 @@ function removeTodos() {
             updateLS();
         }
     });
-}
-
-// get selected category from local storage and apply it to the category after reload
-if(todoCategoriesFromLS){
-    let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
-    
-    const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
-    
-    removeCatOptions();
-    
-    allTodoCategoriesAfterReload.forEach(todoCatAfterReload => {
-        const categoryBtns = todoCatAfterReload.querySelector('.category-btns');
-        if(todoCatAfterReload.classList.contains(newSelectedCategory)){
-            todoCatAfterReload.classList.add('selected');
-            categoryBtns.classList.remove('cat-hidden');
-        }
-    })
 }
 
 // gets all of the category options buttons and removes them
@@ -370,7 +420,8 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');              
+        e.currentTarget.classList.add('selected');    
+        filterTodos();          
         updateLS();
     });
 });
@@ -430,7 +481,7 @@ if(todosFromLS) {
     });
 } 
 
-function addTodo(el){
+function addTodo(el, todoCategoryName){
     findSelectedCategory();
     toolbar.classList.remove('hidden');
     input.style.marginTop = '0';
@@ -536,6 +587,7 @@ function addTodo(el){
         // show the Extendable div
         expandTodoBtn.addEventListener('click', () => {
             todoItem.classList[todoItem.classList.contains('todo-item-height') ? 'remove' : 'add']('todo-item-height');
+            todoItem.classList[todoItem.classList.contains('todo-item-tilt') ? 'remove' : 'add']('todo-item-tilt');
             todoExtendingDiv.classList[todoExtendingDiv.classList.contains('height-100') ? 'remove' : 'add']('height-100');
             expandTodoBtn.classList[expandTodoBtn.classList.contains('expand-todo--rotate') ? 'remove' : 'add']('expand-todo--rotate');
         });
@@ -679,6 +731,16 @@ function addTodo(el){
     }
 }
 
+function filterTodosOnPageReload(selectedCategory) {
+    const allTodos = document.querySelectorAll('.todo-item');
+
+    allTodos.forEach(todo => {
+        if(!todo.classList.contains(selectedCategory))
+            todo.classList.add('hidden');
+    });
+}
+
+filterTodosOnPageReload(selectedCategory);
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
@@ -725,7 +787,8 @@ function updateLS() {
     });
 
     // add profile email to local storage
-    localStorage.setItem('email', profileEmail.innerText);
+    localStorage.setItem('email', profileEmailText);
+    console.log(profileEmailText);
 
     // add the category selected to LS
     let todoCategories      = [];

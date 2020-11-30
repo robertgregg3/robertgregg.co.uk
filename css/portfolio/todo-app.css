@@ -16,6 +16,76 @@ body{
     overflow: hidden;
 }
 
+#create-account {
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    position: absolute;
+    background: #fff;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 0%;
+    transition: margin 700ms ease;
+}
+
+#create-account p {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    margin-top: -1rem;
+}
+
+.form-section {
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#use-dummy-data,
+#create-account-btn {
+    background: #018401;
+    border: none;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#use-dummy-data:focus,
+#create-account-btn:focus {
+    outline-offset: 0px;
+    outline: none;
+}
+#use-dummy-data {
+    margin-bottom: 2rem;
+}
+
+.form-section input {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+}
+
+.form-section input:nth-child(7n) {
+    border: none !important;
+}
+
+.create-account-profile-image-text {
+    font-size: 0.9rem;
+    margin-left: -52%;
+    margin-top: 0.5rem;
+    color: #00000099;
+}
+
+#create-account-btn{
+    background: #419fe1;
+}
+
 #todos-container {
     width: 100%;
     display: grid;
@@ -31,7 +101,6 @@ body{
 #todo-profile {
     width: 100%;
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     padding: 1rem ;
@@ -50,6 +119,12 @@ body{
     object-fit: cover;
     object-position: top;
     cursor: pointer;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #todo-profile input{
@@ -90,8 +165,10 @@ body{
     list-style: none;
     padding: 1rem 0;
     font-size: 1rem;
-    overflow: hidden;
     pointer-events: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 91.5%;
 }
 
 .todo-list-category-li {
@@ -286,7 +363,8 @@ body{
     height: 100vh;
     align-content: center;
     opacity: 1;
-    transition: all 500ms ease;
+    transition: margin 700ms ease;
+    margin-left: 100%;
 }
 
 .create-list-popup-initial .close-create-list {
@@ -492,6 +570,10 @@ h1{
 .todo-item:hover {
     transform: rotate(-0.5deg);
     box-shadow: 0 0 14px rgb(0,0,0,0.5);
+}
+
+.todo-item-tilt {
+    transform: rotate(0deg) !important;
 }
 
 .todo-item-height {
