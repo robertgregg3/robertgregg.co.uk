@@ -23,7 +23,6 @@ const countCompletedTodos   = document.getElementById('count-completed-todos');
 const toolbar               = document.getElementById('toolbar');
 
 const profileContainer      = document.getElementById('todo-profile');
-const profileEmail          = document.getElementById('todo-profile__email');
 
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
@@ -104,13 +103,19 @@ function createAccPreviewFile() {
         reader.readAsDataURL(createAccfile);
 }
 
+let profileEmailText = '';
+
 // create profile section
 function createProfile(createAccEmail){
     if(profileImageFromLS)
         profileImgUrl = profileImageFromLS;
-
-    let profileEmail = createAccEmail.value;
-
+    
+    if(profileEmailFromLS) {
+        profileEmailText = profileEmailFromLS;
+    } else {
+        profileEmailText = createAccEmail.value;
+    }
+        
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
     profileEl.innerHTML = `
@@ -124,9 +129,23 @@ function createProfile(createAccEmail){
             />
         <i class="fas fa-camera"></i>
         </label>
-        <div id="todo-profile__email" contenteditable="true" data-text="Add your email">${profileEmail}</div>
+        <div id="todo-profile__email" contenteditable="true" data-text="Add your email">${profileEmailText}</div>
         `;
     profileContainer.appendChild(profileEl);
+
+    updateLS(profileEmailText);
+
+    //profile section
+    const profileEmail = profileEl.querySelector('#todo-profile__email');
+
+    profileEmail.addEventListener('keypress', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            profileEmail.setAttribute('contenteditable', 'false');
+            profileEmail.setAttribute('contenteditable', 'true');
+            updateLS();
+        }
+    });
 }
 
 // save the profile image tolocal storage
@@ -152,25 +171,12 @@ if(todoCategoriesFromLS){
     });
 }
 
-//profile section
-profileEmail.addEventListener('keypress', (e) => {
-    if (e.code === 'Enter' || e.keyCode === 13) {
-        e.preventDefault();
-        profileEmail.setAttribute('contenteditable', 'false');
-        profileEmail.setAttribute('contenteditable', 'true');
-        updateLS();
-      }
-});
-
-if(profileEmail)
-    profileEmail.innerText = profileEmailFromLS;
-
 // show/hide the create list box
-if(!todosFromLS) {
+if(!todoCategoriesFromLS) {
     createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
     createListPopup.classList.add('create-list-popup-initial');
     updateLS();
-}
+} 
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
@@ -780,7 +786,8 @@ function updateLS() {
     });
 
     // add profile email to local storage
-    localStorage.setItem('email', profileEmail.innerText);
+    localStorage.setItem('email', profileEmailText);
+    console.log(profileEmailText);
 
     // add the category selected to LS
     let todoCategories      = [];
