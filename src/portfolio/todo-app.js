@@ -143,20 +143,18 @@ function createProfile(createAccEmail){
     updateLS(profileEmailText);
 }
 
-function updateEmail(profileEmailText) {
+function updateEmail() {
      const profileEmail = document.getElementById('todo-profile__email');
-     console.log(profileEmailText)
-
+     
      profileEmail.addEventListener('keypress', (e) => {
          if (e.code === 'Enter' || e.keyCode === 13) {
              e.preventDefault();
              profileEmail.setAttribute('contenteditable', 'false');
              profileEmail.setAttribute('contenteditable', 'true');
+             profileEmailText = profileEmail.innerText;
+             updateLS(profileEmailText);
             }
         });
-        profileEmailText = profileEmail.innerText;
-    updateLS(profileEmailText);
-    console.log(profileEmailText)
 }
 
 // save the profile image tolocal storage
