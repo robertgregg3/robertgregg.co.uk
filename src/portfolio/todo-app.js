@@ -45,8 +45,8 @@ let profileImageFromLS      = localStorage.getItem('profileImage');
 let profileImgUrl           = '../images/rob.jpg'
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
-let catId                   =  1;
-let profileEmailText        = '';
+let catId                   =  1; // variable for sequential ID's for the list categories
+let profileEmailText        = ''; // variable for the email address 
 
 
 // creaate Account 
@@ -103,7 +103,7 @@ function createAccPreviewFile() {
         reader.readAsDataURL(createAccfile);
 }
 
-if(!todosFromLS && !todoCategoriesFromLS && !profileImageFromLS){
+if(!todosFromLS && !todoCategoriesFromLS && !profileEmailFromLS){
     createAcc();
 } else {
     const createAccContainer = document.getElementById('create-account');
@@ -139,19 +139,24 @@ function createProfile(createAccEmail){
         `;
     profileContainer.appendChild(profileEl);
 
+    updateEmail(profileEmailText);
     updateLS(profileEmailText);
+}
 
-    //profile section
-    const profileEmail = profileEl.querySelector('#todo-profile__email');
+function updateEmail(profileEmailText) {
+     const profileEmail = document.getElementById('todo-profile__email');
+     console.log(profileEmailText)
 
-    profileEmail.addEventListener('keypress', (e) => {
-        if (e.code === 'Enter' || e.keyCode === 13) {
-            e.preventDefault();
-            profileEmail.setAttribute('contenteditable', 'false');
-            profileEmail.setAttribute('contenteditable', 'true');
-            updateLS();
-        }
-    });
+     profileEmail.addEventListener('keypress', (e) => {
+         if (e.code === 'Enter' || e.keyCode === 13) {
+             e.preventDefault();
+             profileEmail.setAttribute('contenteditable', 'false');
+             profileEmail.setAttribute('contenteditable', 'true');
+            }
+        });
+        profileEmailText = profileEmail.innerText;
+    updateLS(profileEmailText);
+    console.log(profileEmailText)
 }
 
 // save the profile image tolocal storage
@@ -162,7 +167,7 @@ function previewFile() {
   
     reader.addEventListener("load", () => {
       preview.src = reader.result;
-      localStorage.setItem("profileImage", preview.src)
+      localStorage.setItem('profileImage', preview.src)
     }, false);
   
     if (file) 
@@ -745,7 +750,6 @@ function addTodo(el){
         input.value ='';
     }
 }
-
 
 function updateLS() {
     const todosEls = document.querySelectorAll('.todo-item');    
