@@ -2,15 +2,15 @@
     1) Drag not working on mobile
     2) Sort issues with safari
     3) refactor Enter press or set attributyes code
+    4) Sort buttons when category selected
 */ 
 
-/* Sidebar:
-    // 1) Upload image
-    // 2) Write your name
-    // 3) Add todo list
-    4) Reorder the projects
-    // 5) bug if list names are the same
-    // 6) If no category seledcted then cant make a note - VALIDATION
+/* Tests:
+1) Create account > create list > refresh. List should be there (+ selected class) & create list small popup only
+2) edit email saves when refreshed
+3) create multiple lists > add items for each > change the name of one list > refresh - one list with selected class and filtered items
+4) 
+
 */
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
@@ -355,16 +355,24 @@ if(todoCategoryFromLS){
     let newSelectedCategory = todoCategoryFromLS.split(' ').join('-').toLowerCase();
 
     const allTodoCategoriesAfterReload = document.querySelectorAll('.todo-list-category-li');
+    const alltodosAfterReload          = document.querySelectorAll('.todo-item');
     
     removeCatOptions();
     
     allTodoCategoriesAfterReload.forEach(todoCatAfterReload => {
+        todoCatAfterReload.classList.remove('selected');
         const categoryBtns = todoCatAfterReload.querySelector('.category-btns');
         if(todoCatAfterReload.classList.contains(newSelectedCategory)){
             todoCatAfterReload.classList.add('selected');
             categoryBtns.classList.remove('cat-hidden');
         }
-    })
+    });
+
+    alltodosAfterReload.forEach(todoAfterReload => {
+        if(!todoAfterReload.classList.contains(newSelectedCategory))
+            todoAfterReload.classList.add('hidden');
+    });
+
 } 
 
 // gets all of the category options buttons and removes them
@@ -440,7 +448,8 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');              
+        e.currentTarget.classList.add('selected');    
+        filterTodos();          
         updateLS();
     });
 });
