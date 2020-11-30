@@ -46,6 +46,8 @@ let profileImgUrl           = '../images/rob.jpg'
 let todoCategoryName        = ''; // variable to convert the category name into a class name for the todo
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1;
+let profileEmailText        = '';
+
 
 // creaate Account 
 function createAcc(){
@@ -86,8 +88,6 @@ function createAcc(){
     });
 }
 
-createAcc();
-
 function createAccPreviewFile() {
     const createAccContainer = document.getElementById('create-account');
     const createAccPreview   = document.getElementById('img-preview');
@@ -103,7 +103,13 @@ function createAccPreviewFile() {
         reader.readAsDataURL(createAccfile);
 }
 
-let profileEmailText = '';
+if(!todosFromLS && !todoCategoriesFromLS && !profileImageFromLS){
+    createAcc();
+} else {
+    const createAccContainer = document.getElementById('create-account');
+    createAccContainer.style.display = 'none';
+    createProfile();
+}
 
 // create profile section
 function createProfile(createAccEmail){
