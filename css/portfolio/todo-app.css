@@ -392,6 +392,16 @@ body{
     height: 60px;
 }
 
+#create-list__input:focus{
+    outline: 0px;
+    outline-offset: none;
+}
+
+#create-list-popup h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
 #create-list__button,
 #ok {
     border: none;
@@ -654,6 +664,17 @@ input[type="checkbox"]:before {
 .hidden{
     height: 0px;
     transition: all 500ms ease-in-out;
+    font-size: 0rem;
+    width: 0px !important;
+    opacity: 0 !important;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toolbar-hidden{
+    height: 0px;
+    transition: height 500ms ease-in-out;
     font-size: 0rem;
     width: 0px !important;
     opacity: 0 !important;

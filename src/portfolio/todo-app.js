@@ -9,9 +9,14 @@
 1) Create account > create list > refresh. List should be there (+ selected class) & create list small popup only
 2) edit email saves when refreshed
 3) create multiple lists > add items for each > change the name of one list > refresh - one list with selected class and filtered items
-4) 
-
+4) Create subtasks and notes > refresh
+5) Reorder Todos > refresh
+6) Reorder lists > refresh
 */
+
+const createListText        = document.querySelector('.create-list');
+const createFirstListText   = document.querySelector('.create-first-list');
+
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
@@ -73,7 +78,6 @@ function createAcc(){
     const useDummyDataBtn    = document.getElementById('use-dummy-data');
     const createAccEmail     = document.getElementById('create-account-email');
     const createAccPassword  = document.getElementById('create-account-password');
-    const createAccImgUpload = document.getElementById('create-account-profile-image');
     const createAccBtn       = document.getElementById('create-account-btn');
 
     useDummyDataBtn.addEventListener('click', () => {
@@ -86,20 +90,23 @@ function createAcc(){
         createAccContainer.style.marginLeft = '-100%';
         createListPopup.classList.remove('create-list--hidden')
         createListPopup.style.marginLeft = '0%';
+        createAccPreviewFile();
     });
 }
 
 function createAccPreviewFile() {
     const createAccContainer = document.getElementById('create-account');
-    const createAccPreview   = document.getElementById('img-preview');
+    const createAccPreview   = document.getElementById('todo-profile__img');
     const createAccfile      = createAccContainer.querySelector('input[type=file]').files[0];
-    const reader  = new FileReader();
-  
-    reader.addEventListener("load", () => {
-        createAccPreview.src = reader.result;
-      localStorage.setItem("profileImage", createAccPreview.src)
-    }, false);
-  
+    const reader = new FileReader();
+
+  if(createAccPreview){
+        reader.addEventListener("load", () => {
+            createAccPreview.src = reader.result;
+            localStorage.setItem("profileImage", createAccPreview.src)
+        }, false);
+    }
+
     if (createAccfile) 
         reader.readAsDataURL(createAccfile);
 }
@@ -119,9 +126,9 @@ function createProfile(createAccEmail){
     
     if(profileEmailFromLS) {
         profileEmailText = profileEmailFromLS;
-    } else {
+    } else if(createAccEmail){
         profileEmailText = createAccEmail.value;
-    }
+    } 
         
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
@@ -185,11 +192,14 @@ if(todoCategoriesFromLS){
 if(!todoCategoriesFromLS) {
     createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
     createListPopup.classList.add('create-list-popup-initial');
+    createFirstListText.classList.remove('hidden');
     updateLS();
 } 
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
+    createFirstListText.classList.add('hidden');
+    createListText.classList.remove('hidden');
     selectListPopup.classList.add('ok-hidden');
 });
 
@@ -199,6 +209,8 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 createListPopupBtn.addEventListener('click', () => {
     if(createListPopup.classList.contains('create-list-popup-initial')) {
         createListPopup.classList.remove('create-list-popup-initial');
+        createFirstListText.classList.remove('hidden');
+        createListText.classList.remove('hidden');
         createListPopup.classList.add('create-list-popup');
     }
     todoCategoryName = createListInput.value;
@@ -225,7 +237,6 @@ createListInput.addEventListener('keypress', (e) => {
     }
 }); 
 
-// create category on the dom
 function createList(todoCategoryName) {
     const createListEl      = document.createElement('li');
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
@@ -455,7 +466,7 @@ function filterTodosWhenClicked(){
 filterTodosWhenClicked();
 
 // hide the toolbar on page load
-toolbar.classList.add('hidden');
+toolbar.classList.add('toolbar-hidden');
 
 // add the todo form
 form.addEventListener('submit', (e) => {
@@ -483,7 +494,7 @@ if(todosFromLS) {
 
 function addTodo(el, todoCategoryName){
     findSelectedCategory();
-    toolbar.classList.remove('hidden');
+    toolbar.classList.remove('toolbar-hidden');
     input.style.marginTop = '0';
    
     let todoText = input.value; 
@@ -500,9 +511,9 @@ function addTodo(el, todoCategoryName){
 
         if(el) {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if (selectedCategory === '') {
+        } else if (el && selectedCategory === '') {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if (selectedCategory !== '') {
+        } else if (el && selectedCategory !== '') {
             todoItem.className += ' ' + selectedCategory;
         }
 
@@ -788,7 +799,6 @@ function updateLS() {
 
     // add profile email to local storage
     localStorage.setItem('email', profileEmailText);
-    console.log(profileEmailText);
 
     // add the category selected to LS
     let todoCategories      = [];
