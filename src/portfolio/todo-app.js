@@ -14,6 +14,8 @@
 6) Reorder lists > refresh
 */
 
+const initialScreensBg      = document.getElementById('initial-screens');
+const createAccContainer    = document.getElementById('create-account');
 const createListText        = document.querySelector('.create-list');
 const createFirstListText   = document.querySelector('.create-first-list');
 
@@ -42,6 +44,7 @@ const createListPopupBtn    = createListPopup.querySelector('#create-list__butto
 const selectListPopup       = document.getElementById('select-list-popup');
 const selectListokBtn       = document.getElementById('ok');
 
+let showCreateAccount       = localStorage.getItem('accountCreated');
 let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
@@ -87,9 +90,9 @@ function createAcc(){
 
     createAccBtn.addEventListener('click', () => {
         createProfile(createAccEmail);
-        createAccContainer.style.marginLeft = '-100%';
+        createAccContainer.style.marginTop = '-100%';
         createListPopup.classList.remove('create-list--hidden')
-        createListPopup.style.marginLeft = '0%';
+        createListPopup.style.marginTop = '0%';
         createAccPreviewFile();
     });
 }
@@ -189,16 +192,48 @@ if(todoCategoriesFromLS){
 }
 
 // show/hide the create list box
-if(!todoCategoriesFromLS) {
+if(!showCreateAccount) {
+    showCreateAccountScreen();
+} else {
+    hideCreateAccount();
+}
+
+function showCreateAccountScreen() {
     createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
     createListPopup.classList.add('create-list-popup-initial');
     createFirstListText.classList.remove('hidden');
+    
+    const createFirstListBtn = document.querySelector('.create-list-popup-initial #create-list__button');
+    
+    createFirstListBtn.addEventListener('click', addRemoveClasses);
+    createListInput.addEventListener('keypress', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            addRemoveClasses();
+        }
+    });
+}
+
+function hideCreateAccount(){
+    createListPopup.classList.remove('create-list-popup-initial');
+    createFirstListText.classList.add('hidden');
+    initialScreensBg.classList.add('initial-hidden');
+    createAccContainer.classList.add('initial-hidden');
     updateLS();
-} 
+}
+
+function addRemoveClasses(){
+    closeCreateListBtn.classList.add('hidden');
+    createListPopup.classList.remove('create-list-popup-initial');
+    createFirstListText.classList.add('hidden');
+    initialScreensBg.classList.add('initial-hidden');
+    createAccContainer.classList.add('initial-hidden');
+    updateLS();
+}
+
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
-    createFirstListText.classList.add('hidden');
     createListText.classList.remove('hidden');
     selectListPopup.classList.add('ok-hidden');
 });
@@ -207,12 +242,6 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
-    if(createListPopup.classList.contains('create-list-popup-initial')) {
-        createListPopup.classList.remove('create-list-popup-initial');
-        createFirstListText.classList.remove('hidden');
-        createListText.classList.remove('hidden');
-        createListPopup.classList.add('create-list-popup');
-    }
     todoCategoryName = createListInput.value;
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
@@ -754,6 +783,10 @@ function filterTodosOnPageReload(selectedCategory) {
 filterTodosOnPageReload(selectedCategory);
 
 function updateLS() {
+    // When first list is created initial screens are true
+    const initialScreensBgLS = document.getElementById('initial-screens'); 
+    localStorage.setItem('accountCreated', initialScreensBgLS.classList.contains('initial-hidden'));
+
     const todosEls = document.querySelectorAll('.todo-item');    
     
     let todos = [];
