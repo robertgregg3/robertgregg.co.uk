@@ -230,6 +230,7 @@ function showCreateAccountScreen() {
 }
 
 function hideCreateAccount(){
+    mobileListBtn.classList.add('hidden');
     createListPopup.classList.remove('create-list-popup-initial');
     createFirstListText.classList.add('hidden');
     initialScreensBg.classList.add('initial-hidden');
@@ -238,6 +239,7 @@ function hideCreateAccount(){
 }
 
 function addRemoveClasses(){
+    mobileListBtn.classList.remove('hidden');
     closeCreateListBtn.classList.add('hidden');
     createListPopup.classList.remove('create-list-popup-initial');
     createListPopup.classList.add('create-list-popup');
