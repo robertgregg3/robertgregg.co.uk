@@ -367,10 +367,8 @@ function createList(todoCategoryName) {
             removeCatOptions();
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
-            toolbarButtons();
             todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
         });
-
         updateLS();
     }
 }
@@ -459,7 +457,7 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');    
+        e.currentTarget.classList.add('selected');  
         filterTodos();          
         updateLS();
     });
@@ -502,7 +500,6 @@ form.addEventListener('submit', (e) => {
     addTodo();
     updateLS();
     countTodos();
-    toolbarButtons();
     dragItems();
     dragItemsMobile();
 });
@@ -511,7 +508,6 @@ form.addEventListener('submit', (e) => {
 if(todosFromLS) {
     todosFromLS.forEach(el => {
         addTodo(el);
-        toolbarButtons();
     });
 } 
 
@@ -753,7 +749,6 @@ function addTodo(el, todoCategoryName){
             todoItem.classList[todoItem.classList.contains('hidden') ? 'remove' : 'add']('hidden');
             updateLS();
             countTodos();
-            toolbarButtons();
         });   
         
         // text area note   
@@ -850,6 +845,7 @@ function updateLS() {
     // add todos to local storage
     localStorage.setItem('todos', JSON.stringify(todos));    
     countTodos();
+    toolbarButtons();
 }
 
 function countTodos() {
@@ -883,14 +879,13 @@ function toolbarButtons(){
     const totalTodoItems     = document.querySelectorAll('.todo-item');
     
     showAllBtn.addEventListener('click', () => {
-        totalTodos.forEach(totalTodo => {
-            totalTodo.parentNode.classList.remove('hidden');
+        totalTodoItems.forEach(item =>{
+            item.classList.remove('hidden2');
+            item.classList.remove('hidden');
+            console.log('yesy')
         });
         todoItemCategories.forEach(todoItemCategory => {
             todoItemCategory.classList.remove('selected');
-        });
-        totalTodoItems.forEach(item =>{
-            item.classList.remove('hidden2');
         });
     });
 
@@ -921,6 +916,8 @@ function toolbarButtons(){
         updateLS();
     });
 }
+
+toolbarButtons();
 
 function dragItems() {
     const draggables = document.querySelectorAll('.draggable');
