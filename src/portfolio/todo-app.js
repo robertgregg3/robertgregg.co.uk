@@ -12,6 +12,9 @@
 6) Reorder lists > refresh
 7) add subtasks, notes, due dates, favorite subtasks > refresh
 */
+const mobileListBtn         = document.getElementById('mobile-todo-list-btn');
+const mobileListHeaderIcon  = mobileListBtn.querySelector('.icon');
+const mobileListHeaderIcon2 = mobileListBtn.querySelector('.icon-2');
 
 const initialScreensBg      = document.getElementById('initial-screens');
 const createAccContainer    = document.getElementById('create-account');
@@ -31,8 +34,10 @@ const toolbar               = document.getElementById('toolbar');
 
 const profileContainer      = document.getElementById('todo-profile');
 
+const todoCategoriesCont    = document.getElementById('todo-categories-container');
 const todoCategoryContainer = document.getElementById('todo-list-categories-ul');
 const todoCategories        = document.querySelectorAll('.todo-list-category-li');
+const todoColumn            = document.getElementById('todo-col');
 
 const createListBtn         = document.getElementById('create-list-btn');
 const createListPopup       = document.getElementById('create-list-popup');
@@ -52,6 +57,15 @@ let todoCategoryName        = ''; // variable to convert the category name into 
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1; // variable for sequential ID's for the list categories
 let profileEmailText        = ''; // variable for the email address 
+
+mobileListBtn.addEventListener('click', () => {
+    todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
+    mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    mobileListBtn.classList[mobileListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
+    createListBtn.classList[createListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
+    todoColumn.classList[todoColumn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
+});
 
 // creaate Account 
 function createAcc(){
