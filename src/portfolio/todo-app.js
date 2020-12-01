@@ -41,9 +41,6 @@ const closeCreateListBtn    = createListPopup.querySelector('.close-create-list'
 const createListInput       = createListPopup.querySelector('input');
 const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
 
-const selectListPopup       = document.getElementById('select-list-popup');
-const selectListokBtn       = document.getElementById('ok');
-
 let showCreateAccount       = localStorage.getItem('accountCreated');
 let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
@@ -109,7 +106,6 @@ function createAccPreviewFile() {
             localStorage.setItem("profileImage", createAccPreview.src)
         }, false);
     }
-
     if (createAccfile) 
         reader.readAsDataURL(createAccfile);
 }
@@ -225,17 +221,17 @@ function hideCreateAccount(){
 function addRemoveClasses(){
     closeCreateListBtn.classList.add('hidden');
     createListPopup.classList.remove('create-list-popup-initial');
+    createListPopup.classList.add('create-list-popup');
     createFirstListText.classList.add('hidden');
     initialScreensBg.classList.add('initial-hidden');
     createAccContainer.classList.add('initial-hidden');
     updateLS();
 }
 
-
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
     createListText.classList.remove('hidden');
-    selectListPopup.classList.add('ok-hidden');
+    closeCreateListBtn.classList.remove('hidden');
 });
 
 closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
@@ -506,11 +502,6 @@ form.addEventListener('submit', (e) => {
     toolbarButtons();
     dragItems();
     dragItemsMobile();
-});
-
-// popups
-selectListokBtn.addEventListener('click', () => {
-    selectListPopup.classList.add('ok-hidden');
 });
 
 // create todos from localStorage

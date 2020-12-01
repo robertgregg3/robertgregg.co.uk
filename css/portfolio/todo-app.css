@@ -454,8 +454,8 @@ body{
     width: 0px;
     height: 0px;
     margin-left: -100%;
-    margin-top: 100%;
-    transition: all 500ms ease;
+    margin-top: 100% !important;
+    transition: margin 500ms ease;
 }
 
 #todo-col {
@@ -696,15 +696,6 @@ input[type="checkbox"]:before {
     transition: height 500ms ease-in-out;
     font-size: 0rem;
     width: 0px !important;
-    opacity: 0 !important;
-    pointer-events: none;
-    margin: 0;
-    padding: 0;
-}
-
-.ok-hidden{
-    transition: all 500ms ease-in-out;
-    font-size: 0rem;
     opacity: 0 !important;
     pointer-events: none;
     margin: 0;
