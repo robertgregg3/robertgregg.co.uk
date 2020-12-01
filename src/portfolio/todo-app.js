@@ -1,8 +1,6 @@
 /* //Todo:
     1) Drag not working on mobile
     2) Sort issues with safari
-    3) refactor Enter press or set attributyes code
-    4) Sort buttons when category selected
 */ 
 
 /* Tests:
@@ -53,7 +51,6 @@ let todoCategoryName        = ''; // variable to convert the category name into 
 let selectedCategory        = ''; // variable to use when 2 or more lists are created before a todo is added. 
 let catId                   =  1; // variable for sequential ID's for the list categories
 let profileEmailText        = ''; // variable for the email address 
-
 
 // creaate Account 
 function createAcc(){
@@ -155,16 +152,20 @@ function updateEmail() {
      const profileEmail = document.getElementById('todo-profile__email');
      
      profileEmail.addEventListener('keypress', (e) => {
-         if (e.code === 'Enter' || e.keyCode === 13) {
-             e.preventDefault();
-             profileEmail.setAttribute('contenteditable', 'false');
-             profileEmail.setAttribute('contenteditable', 'true');
-             profileEmailText = profileEmail.innerText;
-             updateLS(profileEmailText);
-            }
-        });
+        updateInputWhenEnterPressed(profileEmail, e);
+        profileEmailText = profileEmail.innerText;
+        updateLS(profileEmailText);
+    });
 }
 
+function updateInputWhenEnterPressed(el, e) {
+    if (e.code === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        el.setAttribute('contenteditable', 'false');
+        el.setAttribute('contenteditable', 'true');
+        updateLS();
+    }
+}
 // save the profile image tolocal storage
 function previewFile() {
     const profileContainer = document.getElementById('todo-profile');
@@ -578,12 +579,8 @@ function addTodo(el, todoCategoryName){
         let months             = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         todosUl.addEventListener('keypress', (e) => {
-            if (e.code === 'Enter' || e.keyCode === 13) {
-                e.preventDefault();
-                toDoInputText.setAttribute('contenteditable', 'false');
-                toDoInputText.setAttribute('contenteditable', 'true');
-                updateLS();
-            }
+            if (e.code === 'Enter' || e.keyCode === 13)
+                updateInputWhenEnterPressed(todoInputText, e);
         });
                 
         // add a due date picker
@@ -630,20 +627,15 @@ function addTodo(el, todoCategoryName){
         subtaskInput.addEventListener('keypress', (e) => {
             if (e.code === 'Enter' || e.keyCode === 13) {
                 subtaskInputClicked = true;
-                e.preventDefault();
-                subtaskInput.setAttribute('contenteditable', 'false');
-                subtaskInput.setAttribute('contenteditable', 'true');
+                updateInputWhenEnterPressed(subtaskInput, e)
                 createSubtask(subtaskInputClicked);
                 subtaskInputClicked = false;
-                updateLS();
             }
         }); 
         
-        if(el && el.subTasks){
-            for (let i=0; i<el.subTasks.length; i++){
+        if(el && el.subTasks)
+            for (let i=0; i<el.subTasks.length; i++)
                 createSubtask(i);  
-            }
-        };
     
         function createSubtask(i){      
             const subtaskEl  = document.createElement('li');
