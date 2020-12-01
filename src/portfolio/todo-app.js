@@ -9,9 +9,16 @@
 1) Create account > create list > refresh. List should be there (+ selected class) & create list small popup only
 2) edit email saves when refreshed
 3) create multiple lists > add items for each > change the name of one list > refresh - one list with selected class and filtered items
-4) 
-
+4) Create subtasks and notes > refresh
+5) Reorder Todos > refresh
+6) Reorder lists > refresh
 */
+
+const initialScreensBg      = document.getElementById('initial-screens');
+const createAccContainer    = document.getElementById('create-account');
+const createListText        = document.querySelector('.create-list');
+const createFirstListText   = document.querySelector('.create-first-list');
+
 const form                  = document.getElementById('form');
 const input                 = document.getElementById('item');
 const todosContainer        = document.getElementById('todos-container');
@@ -34,9 +41,7 @@ const closeCreateListBtn    = createListPopup.querySelector('.close-create-list'
 const createListInput       = createListPopup.querySelector('input');
 const createListPopupBtn    = createListPopup.querySelector('#create-list__button');
 
-const selectListPopup       = document.getElementById('select-list-popup');
-const selectListokBtn       = document.getElementById('ok');
-
+let showCreateAccount       = localStorage.getItem('accountCreated');
 let profileEmailFromLS      = localStorage.getItem('email');
 let todoCategoriesFromLS    = JSON.parse(localStorage.getItem('todoCategories'));
 let todoCategoryFromLS      = localStorage.getItem('todoCategory');
@@ -73,7 +78,6 @@ function createAcc(){
     const useDummyDataBtn    = document.getElementById('use-dummy-data');
     const createAccEmail     = document.getElementById('create-account-email');
     const createAccPassword  = document.getElementById('create-account-password');
-    const createAccImgUpload = document.getElementById('create-account-profile-image');
     const createAccBtn       = document.getElementById('create-account-btn');
 
     useDummyDataBtn.addEventListener('click', () => {
@@ -83,23 +87,25 @@ function createAcc(){
 
     createAccBtn.addEventListener('click', () => {
         createProfile(createAccEmail);
-        createAccContainer.style.marginLeft = '-100%';
+        createAccContainer.style.marginTop = '-100%';
         createListPopup.classList.remove('create-list--hidden')
-        createListPopup.style.marginLeft = '0%';
+        createListPopup.style.marginTop = '0%';
+        createAccPreviewFile();
     });
 }
 
 function createAccPreviewFile() {
     const createAccContainer = document.getElementById('create-account');
-    const createAccPreview   = document.getElementById('img-preview');
+    const createAccPreview   = document.getElementById('todo-profile__img');
     const createAccfile      = createAccContainer.querySelector('input[type=file]').files[0];
-    const reader  = new FileReader();
-  
-    reader.addEventListener("load", () => {
-        createAccPreview.src = reader.result;
-      localStorage.setItem("profileImage", createAccPreview.src)
-    }, false);
-  
+    const reader = new FileReader();
+
+  if(createAccPreview){
+        reader.addEventListener("load", () => {
+            createAccPreview.src = reader.result;
+            localStorage.setItem("profileImage", createAccPreview.src)
+        }, false);
+    }
     if (createAccfile) 
         reader.readAsDataURL(createAccfile);
 }
@@ -119,9 +125,9 @@ function createProfile(createAccEmail){
     
     if(profileEmailFromLS) {
         profileEmailText = profileEmailFromLS;
-    } else {
+    } else if(createAccEmail){
         profileEmailText = createAccEmail.value;
-    }
+    } 
         
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
@@ -182,25 +188,56 @@ if(todoCategoriesFromLS){
 }
 
 // show/hide the create list box
-if(!todoCategoriesFromLS) {
+if(!showCreateAccount) {
+    showCreateAccountScreen();
+} else {
+    hideCreateAccount();
+}
+
+function showCreateAccountScreen() {
     createListPopup.classList.remove('create-list--hidden', 'create-list-popup');
     createListPopup.classList.add('create-list-popup-initial');
+    createFirstListText.classList.remove('hidden');
+    
+    const createFirstListBtn = document.querySelector('.create-list-popup-initial #create-list__button');
+    
+    createFirstListBtn.addEventListener('click', addRemoveClasses);
+    createListInput.addEventListener('keypress', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            addRemoveClasses();
+        }
+    });
+}
+
+function hideCreateAccount(){
+    createListPopup.classList.remove('create-list-popup-initial');
+    createFirstListText.classList.add('hidden');
+    initialScreensBg.classList.add('initial-hidden');
+    createAccContainer.classList.add('initial-hidden');
     updateLS();
-} 
+}
+
+function addRemoveClasses(){
+    closeCreateListBtn.classList.add('hidden');
+    createListPopup.classList.remove('create-list-popup-initial');
+    createListPopup.classList.add('create-list-popup');
+    createFirstListText.classList.add('hidden');
+    initialScreensBg.classList.add('initial-hidden');
+    createAccContainer.classList.add('initial-hidden');
+    updateLS();
+}
 
 createListBtn.addEventListener('click', () => {
     createListPopup.classList.remove('create-list--hidden');
-    selectListPopup.classList.add('ok-hidden');
+    createListText.classList.remove('hidden');
+    closeCreateListBtn.classList.remove('hidden');
 });
 
 closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.add('create-list--hidden');});
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
-    if(createListPopup.classList.contains('create-list-popup-initial')) {
-        createListPopup.classList.remove('create-list-popup-initial');
-        createListPopup.classList.add('create-list-popup');
-    }
     todoCategoryName = createListInput.value;
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
@@ -225,7 +262,6 @@ createListInput.addEventListener('keypress', (e) => {
     }
 }); 
 
-// create category on the dom
 function createList(todoCategoryName) {
     const createListEl      = document.createElement('li');
     const allTodoCategories = document.querySelectorAll('.todo-list-category-li');
@@ -455,7 +491,7 @@ function filterTodosWhenClicked(){
 filterTodosWhenClicked();
 
 // hide the toolbar on page load
-toolbar.classList.add('hidden');
+toolbar.classList.add('toolbar-hidden');
 
 // add the todo form
 form.addEventListener('submit', (e) => {
@@ -468,11 +504,6 @@ form.addEventListener('submit', (e) => {
     dragItemsMobile();
 });
 
-// popups
-selectListokBtn.addEventListener('click', () => {
-    selectListPopup.classList.add('ok-hidden');
-});
-
 // create todos from localStorage
 if(todosFromLS) {
     todosFromLS.forEach(el => {
@@ -483,7 +514,7 @@ if(todosFromLS) {
 
 function addTodo(el, todoCategoryName){
     findSelectedCategory();
-    toolbar.classList.remove('hidden');
+    toolbar.classList.remove('toolbar-hidden');
     input.style.marginTop = '0';
    
     let todoText = input.value; 
@@ -500,9 +531,11 @@ function addTodo(el, todoCategoryName){
 
         if(el) {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if (selectedCategory === '') {
+        } else if (el && selectedCategory === '') {
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
-        } else if (selectedCategory !== '') {
+        } else if (el && selectedCategory !== '') {
+            todoItem.className += ' ' + selectedCategory;
+        } else{
             todoItem.className += ' ' + selectedCategory;
         }
 
@@ -743,6 +776,10 @@ function filterTodosOnPageReload(selectedCategory) {
 filterTodosOnPageReload(selectedCategory);
 
 function updateLS() {
+    // When first list is created initial screens are true
+    const initialScreensBgLS = document.getElementById('initial-screens'); 
+    localStorage.setItem('accountCreated', initialScreensBgLS.classList.contains('initial-hidden'));
+
     const todosEls = document.querySelectorAll('.todo-item');    
     
     let todos = [];
@@ -788,7 +825,6 @@ function updateLS() {
 
     // add profile email to local storage
     localStorage.setItem('email', profileEmailText);
-    console.log(profileEmailText);
 
     // add the category selected to LS
     let todoCategories      = [];
