@@ -21,9 +21,17 @@ body{
     display: none;
 }
 
-#mobile-todo-list-btn .icon {
-    margin-right: 1rem;
+#mobile-todo-list-btn .icon,
+#mobile-todo-list-btn .icon-2 {
     cursor: pointer;
+}
+
+#mobile-todo-list-btn .icon-1{
+    margin-right: 1rem;
+}
+
+#mobile-todo-list-btn .icon-2{
+    margin-right: 2rem;
 }
 
 #create-account p {
@@ -93,31 +101,12 @@ body{
     width: 300px;
 }
 
-@media (max-width: 915px){
-    #todo-categories-container {
-       margin-left: -20rem;
-    } 
-    #todos-container {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-        margin-top: -1.5rem;
-    }
-    #todo-col {
-        width: auto;
-        max-width: 100%;
-        margin-left: 0;
-    }
-    #mobile-todo-list-btn{
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-        background: #e59f47;
-        color: #fff;
-        font-size: 2rem;
-        cursor: pointer;
-    }
+.toggle-list-container-on-mobile{
+    z-index: 1;
+    width: 100% !important;
+    margin-left: -1rem !important;
+    margin-top: -1.5rem;
+    transition: margin 300ms ease-in-out;
 }
 
 #todo-profile {
@@ -125,7 +114,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem ;
+    padding: 2.7rem 0 2.8rem 1rem;
     font-size: 1rem;
     height: 9vh;
     background-color: #fff;
@@ -206,7 +195,8 @@ body{
     display: flex;
 }
 
-.todo-list-category-li i.icon {
+.todo-list-category-li i.icon,
+.todo-list-category-li i.icon-2 {
     margin-right: 1rem;
     color: #8c9bad;
     font-size: 1.2rem;
@@ -491,7 +481,7 @@ body{
 .create-list--hidden {
     width: 0px;
     height: 0px;
-    margin-left: -100%;
+    margin-left: -105%;
     margin-top: 100% !important;
     transition: margin 500ms ease;
 }
@@ -966,4 +956,118 @@ textarea {
 textarea:focus{
     outline: none;
     outline-offset: 0px;
+}
+
+@media (max-width: 915px){
+    #todo-categories-container {
+        margin-left: -20rem;
+        margin-top: 0rem;
+        transition: margin 300ms ease-in-out;
+        z-index: 5;
+        display: flex;
+        background: #fff;
+        flex-direction: column;
+    } 
+    #todos-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        margin-top: -1.5rem;
+    }
+    #todo-col {
+        width: auto;
+        max-width: 100%;
+        margin-left: 0;
+        margin-top: 6.5rem;
+    }
+    #mobile-todo-list-btn{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        height: 15vh;
+        background: #e59f47;
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        min-height: 115px;
+    }
+    .fixed{
+        position: fixed !important;
+    }
+
+    #todo-profile {
+        border-radius: 0px !important;
+        height: 10vh !important;
+        border-bottom: 1px solid #cccccc80;
+        padding: 1rem 0 2.8rem 1rem !important;
+    }
+
+    #todo-profile__email {
+        font-size: 1.1rem !important;
+    }
+
+    #todo-list-categories-ul {
+        padding: 0 !important;
+        height: auto !important;
+        margin-bottom: 5rem !important;
+    }
+
+    #todo-categories {
+        border-radius: 0px !important;
+        overflow-y: auto !important;
+        margin-top: -1rem !important;
+        height: auto !important;
+    }
+
+    .todo-list-category-li {
+        padding: 2rem 0 2rem 1.5rem !important;
+        align-items: center !important;
+    }
+
+    .todo-list-category-li i.icon,
+    .todo-list-category-li i.icon-2 {
+        font-size: 2rem !important;
+    }
+
+    .selected {
+        padding-left: 2.5rem !important;
+    }
+
+    .category-text {
+        font-size: 1.5rem !important;
+    }
+
+    .category-btns {
+        position: absolute !important;
+        right: 0rem !important;
+        top: 1rem !important;
+        background: transparent !important;
+    }
+
+    .category-btn {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .cat-save {
+        right: 0.9rem !important;
+    }
+
+    #create-list-popup {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        justify-content: center;
+        align-content: center !important;
+        border-radius: 0 !important;
+        z-index: 11;
+        position: fixed;
+    }
+    .close-create-list {
+        right: 0rem;
+        top: 0.2rem;
+    }
 }
