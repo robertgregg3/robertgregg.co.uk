@@ -4,12 +4,13 @@
 */ 
 
 /* Tests:
-1) Create account > create list > refresh. List should be there (+ selected class) & create list small popup only
+1) Create account > create list > refresh. 
 2) edit email saves when refreshed
-3) create multiple lists > add items for each > change the name of one list > refresh - one list with selected class and filtered items
+3) create multiple lists > add items for each > change name of a list > refresh 
 4) Create subtasks and notes > refresh
 5) Reorder Todos > refresh
 6) Reorder lists > refresh
+7) add subtasks, notes, due dates, favorite subtasks > refresh
 */
 
 const initialScreensBg      = document.getElementById('initial-screens');
