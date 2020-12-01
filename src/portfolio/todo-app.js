@@ -108,6 +108,7 @@ function createAccPreviewFile() {
     }
     if (createAccfile) 
         reader.readAsDataURL(createAccfile);
+    updateLS();
 }
 
 if(!todosFromLS && !todoCategoriesFromLS && !profileEmailFromLS){
@@ -166,9 +167,10 @@ function updateEmail() {
 
 // save the profile image tolocal storage
 function previewFile() {
-    const preview = document.getElementById('todo-profile__img');
-    const file    = document.querySelector('input[type=file]').files[0];
-    const reader  = new FileReader();
+    const profileContainer = document.getElementById('todo-profile');
+    const preview          = document.getElementById('todo-profile__img');
+    const file             = profileContainer.querySelector('input[type=file]').files[0];
+    const reader           = new FileReader();
   
     reader.addEventListener("load", () => {
       preview.src = reader.result;
@@ -177,6 +179,7 @@ function previewFile() {
   
     if (file) 
         reader.readAsDataURL(file);
+    updateLS();
 }
 
 // add created categories to the sidebar
