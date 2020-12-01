@@ -13,7 +13,8 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #create-account p {
@@ -80,6 +81,8 @@ body{
 
 #todo-categories-container {
     height: 100vh;
+    position: fixed;
+    width: 300px;
 }
 
 #todo-profile {
@@ -461,7 +464,7 @@ body{
 #todo-col {
     width: 100%;
     max-width: 600px;
-    margin-left: 2rem;
+    margin-left: 20rem;
 }
 
 .sb-todo {
