@@ -544,6 +544,8 @@ function addTodo(el, todoCategoryName){
             todoItem.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
         } else if (el && selectedCategory !== '') {
             todoItem.className += ' ' + selectedCategory;
+        } else{
+            todoItem.className += ' ' + selectedCategory;
         }
 
         todoItem.setAttribute('draggable', 'true');
