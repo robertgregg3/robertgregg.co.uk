@@ -17,6 +17,15 @@ body{
     overflow-y: auto;
 }
 
+#mobile-todo-list-btn{
+    display: none;
+}
+
+#mobile-todo-list-btn .icon {
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
 #create-account p {
     font-size: 0.9rem;
     margin-bottom: 2rem;
@@ -76,13 +85,39 @@ body{
     display: grid;
     grid-template-columns: 1fr 2fr;
     max-width: 1200px;
-    padding-right: 4rem;
 }
 
 #todo-categories-container {
     height: 100vh;
     position: fixed;
     width: 300px;
+}
+
+@media (max-width: 915px){
+    #todo-categories-container {
+       margin-left: -20rem;
+    } 
+    #todos-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        margin-top: -1.5rem;
+    }
+    #todo-col {
+        width: auto;
+        max-width: 100%;
+        margin-left: 0;
+    }
+    #mobile-todo-list-btn{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        background: #e59f47;
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
+    }
 }
 
 #todo-profile {
@@ -461,10 +496,12 @@ body{
     transition: margin 500ms ease;
 }
 
-#todo-col {
-    width: 100%;
-    max-width: 600px;
-    margin-left: 20rem;
+@media (min-width: 915px){
+    #todo-col {
+        width: 100%;
+        max-width: 600px;
+        margin-left: 20rem;
+    }
 }
 
 .sb-todo {
@@ -497,7 +534,7 @@ small {
     display: grid;
     grid-template-columns: 33% 33% 33%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
     padding: 0.5rem;
     box-shadow: 0 1px 2px rgb(0,0,0,0.4);
