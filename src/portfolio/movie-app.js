@@ -8,13 +8,11 @@ const form       = document.getElementById('form');
 const search     = document.getElementById('search');
 
 /*   TODO
-
     1)  Hide api keys
     2) like the recipe app show the movie details in a pop up
     3) Sort out overview padding and spacing
-    4) Add teh search term to the header when you search
-    5) Pagination?
-    
+    4) Add the search term to the header when you search
+    5) Pagination?   
 */
 
 //initially get fav movies
@@ -30,7 +28,8 @@ async function getMovies(url) {
 function showMovies(movies) {
     main.innerHTML = '';
     movies.forEach((movie) => {
-        const { poster_path, title, vote_average, overview} = movie;
+        console.log(movie)
+        const { poster_path, vote_average } = movie;
 
         if(poster_path) {
         const movieEl = document.createElement('div');
@@ -46,15 +45,46 @@ function showMovies(movies) {
             <h3>${movie.title}</h3>
             <span class="${getClassByRate(vote_average)}">${movie.vote_average}</span>
             </div>
-            <div class="overview">
-                <h4>Overview:</h4>
-                ${overview}</div>
         `;
 
         main.appendChild(movieEl);
+
+        movieEl.addEventListener('click', () => {
+            showMoviePopup();
+        });
+
+        // create the popup
+        function showMoviePopup() {
+            const popupEl = document.createElement('div');
+
+            popupEl.classList.add('movie-popup');
+            popupEl.innerHTML = `
+                <div class="movie-popup-header">
+                    <div class="movie-popup-header-img">
+                        <img 
+                        src="${img_url + movie.poster_path}" 
+                        alt="${movie.title}"
+                        width="150px"
+                        />
+                    </div>
+                    <div class="movie-popup-header-info">
+                        <div class="movie-popup-header-ratings">Rating: ${movie.vote_average}</div>
+                        <h2 class="movie-popup-header-title">${movie.title}</h2>
+                        <span class="movie-popup-header-length">Release Date: ${movie.release_date}</span>
+                    </div>
+                </div>
+                <div class="movie-popup-body">
+                ${movie.overview}
+                </div>
+                <div class="movie-popup-footer">
+                </div>
+
+            `;
+            document.body.append(popupEl);
+        }
+
         }
     });
-
 }
 
 function getClassByRate(vote) {
