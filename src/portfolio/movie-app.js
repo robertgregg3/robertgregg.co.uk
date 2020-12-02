@@ -8,13 +8,11 @@ const form       = document.getElementById('form');
 const search     = document.getElementById('search');
 
 /*   TODO
-
     1)  Hide api keys
     2) like the recipe app show the movie details in a pop up
     3) Sort out overview padding and spacing
-    4) Add teh search term to the header when you search
-    5) Pagination?
-    
+    4) Add the search term to the header when you search
+    5) Pagination?   
 */
 
 //initially get fav movies
@@ -30,31 +28,73 @@ async function getMovies(url) {
 function showMovies(movies) {
     main.innerHTML = '';
     movies.forEach((movie) => {
-        const { poster_path, title, vote_average, overview} = movie;
-
+        const { poster_path, vote_average } = movie;
+console.log(movie)
         if(poster_path) {
-        const movieEl = document.createElement('div');
+            const movieEl = document.createElement('div');
 
-        movieEl.classList.add('movie');
+            movieEl.classList.add('movie');
 
-        movieEl.innerHTML = `
-            <img 
-            src="${img_url + movie.poster_path}" 
-            alt="${movie.title}"
-            />
-            <div class="movie-info">
-            <h3>${movie.title}</h3>
-            <span class="${getClassByRate(vote_average)}">${movie.vote_average}</span>
-            </div>
-            <div class="overview">
-                <h4>Overview:</h4>
-                ${overview}</div>
-        `;
+            movieEl.innerHTML = `
+                <img 
+                src="${img_url + movie.poster_path}" 
+                alt="${movie.title}"
+                />
+                <div class="movie-info">
+                <h3>${movie.title}</h3>
+                <span class="${getClassByRate(vote_average)}">${movie.vote_average}</span>
+                </div>
+            `;
 
-        main.appendChild(movieEl);
+            main.appendChild(movieEl);
+
+            movieEl.addEventListener('click', () => {
+                removePopups();
+                showMoviePopup();
+            });
+
+            // create the popup
+            function showMoviePopup() {
+                const popupEl = document.createElement('div');
+
+                popupEl.classList.add('movie-popup');
+                popupEl.innerHTML = `
+                    <i class="fas fa-times close-popup"></i>
+                    <div class="movie-popup-header">
+                        <div class="movie-popup-header-img">
+                            <img 
+                            src="${img_url + movie.poster_path}" 
+                            alt="${movie.title}"
+                            width="150px"
+                            />
+                        </div>
+                        <div class="movie-popup-header-info">
+                            <div class="movie-popup-header-ratings">Rating: ${movie.vote_average}</div>
+                            <h2 class="movie-popup-header-title">${movie.title}</h2>
+                            <span class="movie-popup-header-length">Release Date: ${movie.release_date}</span>
+                        </div>
+                    </div>
+                    <div class="movie-popup-body">
+                    ${movie.overview}
+                    </div>
+                    <div class="movie-popup-footer">
+                    </div>
+                `;
+                const closePopupBtn = popupEl.querySelector('.close-popup');
+
+                closePopupBtn.addEventListener('click', () => {popupEl.remove()})
+
+                document.body.append(popupEl);
+            }
         }
     });
+}
 
+function removePopups(){
+    const allPopups = document.querySelectorAll('.movie-popup')
+        allPopups.forEach(popup => {
+            popup.remove();
+    });
 }
 
 function getClassByRate(vote) {
