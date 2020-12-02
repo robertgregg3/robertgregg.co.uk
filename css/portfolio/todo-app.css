@@ -31,7 +31,7 @@ body{
 }
 
 #mobile-todo-list-btn .icon-2{
-    margin-right: 2rem;
+    padding-right: 1rem;
 }
 
 #create-account p {
@@ -997,9 +997,14 @@ textarea:focus{
         z-index: 10;
         top: 0;
         left: 0;
-        min-height: 115px;
-        max-height: 115px;
+        min-height: 105px;
+        max-height: 105px;
     }
+
+    .mobile-btn-margin-top {
+        margin-top: 0.5rem;
+    }
+
     .fixed{
         position: fixed !important;
     }

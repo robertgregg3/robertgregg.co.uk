@@ -65,6 +65,7 @@ mobileListBtn.addEventListener('click', () => {
     mobileListBtn.classList[mobileListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
     createListBtn.classList[createListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
     todoColumn.classList[todoColumn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
+    mobileListBtn.classList[mobileListBtn.classList.contains('mobile-btn-margin-top') ? 'remove' : 'add']('mobile-btn-margin-top');
 });
 
 // creaate Account 
