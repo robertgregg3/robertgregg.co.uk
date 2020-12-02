@@ -55,6 +55,7 @@ body{
     padding: 1rem 2rem;
     border-radius: 4px;
     cursor: pointer;
+    font-size: inherit;
 }
 
 #use-dummy-data:focus,
@@ -206,6 +207,7 @@ body{
 .category-text {
     font-size: 0.8rem;
     max-width: 66%;
+    word-break: break-all;
 }
 
 .category-btns {
@@ -281,6 +283,7 @@ body{
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: all 500ms ease;
+    z-index: 11;
 }
 
 .cat-options {
@@ -774,6 +777,7 @@ input[type="checkbox"]:before {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #cccccc80;
+    border-top: 1px solid #cccccc80;
     position: relative;
     border-radius: 4px;
 }
@@ -1015,6 +1019,7 @@ textarea:focus{
         padding: 0 !important;
         margin-bottom: 5rem !important;
         height: auto !important;
+        margin-top: 0rem;
     }
 
     #todo-categories {
@@ -1024,7 +1029,7 @@ textarea:focus{
     }
 
     .todo-list-category-li {
-        padding: 2rem 0 2rem 1.5rem !important;
+        padding: 1.5rem 0 1.5rem 1.5rem !important;
         align-items: center !important;
     }
 
@@ -1039,12 +1044,13 @@ textarea:focus{
 
     .category-text {
         font-size: 1.5rem !important;
+        padding: 0.5rem 1rem !important;
     }
 
     .category-btns {
         position: absolute !important;
         right: 0rem !important;
-        top: 1rem !important;
+        top: 0.7rem !important;
         background: transparent !important;
     }
 
@@ -1066,9 +1072,49 @@ textarea:focus{
         border-radius: 0 !important;
         z-index: 11;
         position: fixed;
+        padding: 1rem;
     }
     .close-create-list {
         right: 0rem;
         top: 0.2rem;
+    }
+
+    #create-account {
+        position: fixed !important;
+    }
+
+    .delete-list-popup {
+        max-width: 100%;
+        padding: 1rem;
+        border-radius: 0px;
+        box-shadow: none;
+        height: 100%;
+        align-content: center;
+        text-align: center;
+    }
+
+    .close-delete-list {
+        right: 0;
+        top: 0;
+    }
+}
+
+@media(max-width:550px){
+    .sub-task-items {
+        grid-column: 1/3;
+        grid-row: 2;
+    }
+
+    .todo-extend-div {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .sb-todo-date {
+        justify-self: flex-start;
+        margin-left: 0;
+        padding: 1rem;
+        border: none;
     }
 }

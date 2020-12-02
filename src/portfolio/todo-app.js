@@ -100,9 +100,11 @@ function createAcc(){
     createAccBtn.addEventListener('click', () => {
         createProfile(createAccEmail);
         createAccContainer.style.marginTop = '-100%';
+        createAccContainer.classList.add('hidden');
         createListPopup.classList.remove('create-list--hidden')
         createListPopup.style.marginTop = '0%';
         createAccPreviewFile();
+
     });
 }
 
@@ -230,7 +232,7 @@ function showCreateAccountScreen() {
 }
 
 function hideCreateAccount(){
-    mobileListBtn.classList.add('hidden');
+    mobileListBtn.classList.remove('hidden');
     createListPopup.classList.remove('create-list-popup-initial');
     createFirstListText.classList.add('hidden');
     initialScreensBg.classList.add('initial-hidden');
@@ -246,6 +248,7 @@ function addRemoveClasses(){
     createFirstListText.classList.add('hidden');
     initialScreensBg.classList.add('initial-hidden');
     createAccContainer.classList.add('initial-hidden');
+    createAccContainer.classList.add('hidden');    
     updateLS();
 }
 
@@ -766,6 +769,7 @@ function addTodo(el, todoCategoryName){
         
         filterTodosWhenClicked()
         countTodos();
+        toolbarButtons();
         updateLS();
         input.value ='';
     }
