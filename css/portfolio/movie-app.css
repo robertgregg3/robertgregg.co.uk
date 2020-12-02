@@ -47,6 +47,7 @@ main{
     flex-direction: column;
     margin: 0.5rem;
     position: relative;
+    cursor: pointer;
 }
 
 @media (max-width:650px) {
@@ -143,9 +144,14 @@ main{
     justify-content: center;
     border-radius: 8px;
     max-width: 500px;
-    max-height: 600px;
     box-shadow: 0 0 14px rgb(0,0,0, 1);
     padding: 2rem;
+}
+
+@media(max-width: 900px){
+    .movie-popup {
+        width: 80%;
+    }
 }
 
 .movie-popup-header {
@@ -155,4 +161,16 @@ main{
 
 .movie-popup-header-info {
     padding: 1rem;
+}
+
+.close-popup {
+    position: absolute;
+    right: -0.5rem;
+    top: -0.5rem;
+    font-size: 2rem;
+    background: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
 }

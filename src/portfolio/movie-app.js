@@ -28,62 +28,72 @@ async function getMovies(url) {
 function showMovies(movies) {
     main.innerHTML = '';
     movies.forEach((movie) => {
-        console.log(movie)
         const { poster_path, vote_average } = movie;
-
+console.log(movie)
         if(poster_path) {
-        const movieEl = document.createElement('div');
+            const movieEl = document.createElement('div');
 
-        movieEl.classList.add('movie');
+            movieEl.classList.add('movie');
 
-        movieEl.innerHTML = `
-            <img 
-            src="${img_url + movie.poster_path}" 
-            alt="${movie.title}"
-            />
-            <div class="movie-info">
-            <h3>${movie.title}</h3>
-            <span class="${getClassByRate(vote_average)}">${movie.vote_average}</span>
-            </div>
-        `;
-
-        main.appendChild(movieEl);
-
-        movieEl.addEventListener('click', () => {
-            showMoviePopup();
-        });
-
-        // create the popup
-        function showMoviePopup() {
-            const popupEl = document.createElement('div');
-
-            popupEl.classList.add('movie-popup');
-            popupEl.innerHTML = `
-                <div class="movie-popup-header">
-                    <div class="movie-popup-header-img">
-                        <img 
-                        src="${img_url + movie.poster_path}" 
-                        alt="${movie.title}"
-                        width="150px"
-                        />
-                    </div>
-                    <div class="movie-popup-header-info">
-                        <div class="movie-popup-header-ratings">Rating: ${movie.vote_average}</div>
-                        <h2 class="movie-popup-header-title">${movie.title}</h2>
-                        <span class="movie-popup-header-length">Release Date: ${movie.release_date}</span>
-                    </div>
+            movieEl.innerHTML = `
+                <img 
+                src="${img_url + movie.poster_path}" 
+                alt="${movie.title}"
+                />
+                <div class="movie-info">
+                <h3>${movie.title}</h3>
+                <span class="${getClassByRate(vote_average)}">${movie.vote_average}</span>
                 </div>
-                <div class="movie-popup-body">
-                ${movie.overview}
-                </div>
-                <div class="movie-popup-footer">
-                </div>
-
             `;
-            document.body.append(popupEl);
-        }
 
+            main.appendChild(movieEl);
+
+            movieEl.addEventListener('click', () => {
+                removePopups();
+                showMoviePopup();
+            });
+
+            // create the popup
+            function showMoviePopup() {
+                const popupEl = document.createElement('div');
+
+                popupEl.classList.add('movie-popup');
+                popupEl.innerHTML = `
+                    <i class="fas fa-times close-popup"></i>
+                    <div class="movie-popup-header">
+                        <div class="movie-popup-header-img">
+                            <img 
+                            src="${img_url + movie.poster_path}" 
+                            alt="${movie.title}"
+                            width="150px"
+                            />
+                        </div>
+                        <div class="movie-popup-header-info">
+                            <div class="movie-popup-header-ratings">Rating: ${movie.vote_average}</div>
+                            <h2 class="movie-popup-header-title">${movie.title}</h2>
+                            <span class="movie-popup-header-length">Release Date: ${movie.release_date}</span>
+                        </div>
+                    </div>
+                    <div class="movie-popup-body">
+                    ${movie.overview}
+                    </div>
+                    <div class="movie-popup-footer">
+                    </div>
+                `;
+                const closePopupBtn = popupEl.querySelector('.close-popup');
+
+                closePopupBtn.addEventListener('click', () => {popupEl.remove()})
+
+                document.body.append(popupEl);
+            }
         }
+    });
+}
+
+function removePopups(){
+    const allPopups = document.querySelectorAll('.movie-popup')
+        allPopups.forEach(popup => {
+            popup.remove();
     });
 }
 
