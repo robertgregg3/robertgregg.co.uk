@@ -35,6 +35,105 @@ const portfolioCategoryData = [
 // portfolio Item
 const portfolioItemData = [
     {
+        title: 'todo-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Features: Multiple todo lists, todo items, subtasks, due dates, add a note, view all todos, view remaining, view completed, delete completed, reorder todos, reorder todo Lists, delete todod item, delete todo list, edit todo list names, edit todo item name, add favorite subtask, create account, edit email, upload profile pic, mobile responsive (portrait).',
+        url: '/portfolio/todo-app.html'
+    },    
+    {
+        title: 'recipe-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'This recipe app uses a third-party API and allows users to save their favorite meals to the local storage (just for demo purposes). As well as add meals you can also remove them once added, and also search using the search bar',
+        url: '/portfolio/recipe-app.html'
+    },         
+    {
+        title: 'note-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'This Notes app allows users to create and save notes to the local storage (just for demo purposes)',
+        url: '/portfolio/note-app.html'
+    },
+    {
+        title: 'movie-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'This Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.',
+        url: '/portfolio/movie-app.html'
+    },    
+    {
+        title: 'password-generator',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Generate a password using numbers, letters (uppercase and/or lowecase) and symbols. You can then copy to the clipboard.',
+        url: '/portfolio/password-generator.html'
+    },    
+    {
+        title: 'drawing-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Using the canvas element I created a simple drawing app allowing you to change the size of the pen and the color.  Currently this is not for mobile/touch screen.',
+        url: '/portfolio/drawing-app.html'
+    },    
+    {
+        title: 'github-profiles',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Type in the username from someone on github and the page will show their profile along with their repos.',
+        url: '/portfolio/github-profiles.html'
+    },    
+    {
+        title: 'countdown-timer',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'A simple countdown timer',
+        url: '/portfolio/countdown-timer.html'
+    },    
+    {
+        title: 'quiz-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'A simple quiz app that displays the number of correct answers at the end',
+        url: '/portfolio/quiz-app.html'
+    },
+    {
+        title: 'scroll-animation',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Displaying some scroll based animation. Shiney object ahoy!',
+        url: '/portfolio/scroll-animation.html'
+    },
+    {
+        title: 'bootstrap-dashboard',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'uiux',
+        details: 'Showing an example of a dashboard built using bootstrap',
+        url: '/portfolio/bootstrap-dashboard.html'    
+    },
+    {
         title: 'HowToStreetDance',
         skill1: 'front-end',
         skill2: 'html',
@@ -83,105 +182,6 @@ const portfolioItemData = [
         skill6: 'websites',
         details: 'This website was created with a wordpress theme. Dealing with the client from beginning to completion',
         url: 'http://www.takt.co.uk'    
-    },
-    {
-        title: 'recipe-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'This recipe app uses a third-party API and allows users to save their favorite meals to the local storage (just for demo purposes). As well as add meals you can also remove them once added, and also search using the search bar',
-        url: '/portfolio/recipe-app.html'
-    },         
-    {
-        title: 'note-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'This Notes app allows users to create and save notes to the local storage (just for demo purposes)',
-        url: '/portfolio/note-app.html'
-    },
-    {
-        title: 'movie-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'This Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.',
-        url: '/portfolio/movie-app.html'
-    },    
-    {
-        title: 'password-generator',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'Generate a password using numbers, letters (uppercase and/or lowecase) and symbols. You can then copy to the clipboard.',
-        url: '/portfolio/password-generator.html'
-    },    
-    {
-        title: 'drawing-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'Using the canvas element I created a simple drawing app allowing you to change the size of the pen and the color.  Currently this is not for mobile/touch screen.',
-        url: '/portfolio/drawing-app.html'
-    },    
-    {
-        title: 'todo-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'This toto app allows users to create and save todos to the local storage (just for demo purposes)',
-        url: '/portfolio/todo-app.html'
-    },    
-    {
-        title: 'github-profiles',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'Type in the username from someone on github and the page will show their profile along with their repos.',
-        url: '/portfolio/github-profiles.html'
-    },    
-    {
-        title: 'countdown-timer',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'A simple countdown timer',
-        url: '/portfolio/countdown-timer.html'
-    },    
-    {
-        title: 'quiz-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'A simple quiz app that displays the number of correct answers at the end',
-        url: '/portfolio/quiz-app.html'
-    },
-    {
-        title: 'scroll-animation',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'Displaying some scroll based animation. Shiney object ahoy!',
-        url: '/portfolio/scroll-animation.html'
-    },
-    {
-        title: 'bootstrap-dashboard',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'uiux',
-        details: 'Showing an example of a dashboard built using bootstrap',
-        url: '/portfolio/bootstrap-dashboard.html'    
     },
     {
         title: 'in-progress',
@@ -234,14 +234,7 @@ function addPortfolioCategory() {
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
-                if(!item.classList.contains(pfCategory.innerText.toLowerCase())) {
-                    item.classList.add('hidden');
-                }
-                if(item.classList.contains(pfCategory.innerText.toLowerCase())) {
-                    item.classList.remove('hidden');
-                }
-            
-                // item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
+              item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
             });   
         }
         
