@@ -1,20 +1,17 @@
-/* //Todo:
-    1) Drag not working on mobile
-    2) Sort issues with safari
-*/ 
-
 /* Tests:
-1) Create account > create list > refresh. 
-2) edit email saves when refreshed
-3) create multiple lists > add items for each > change name of a list > refresh 
-4) Create subtasks and notes > refresh
-5) Reorder Todos > refresh
-6) Reorder lists > refresh
-7) add subtasks, notes, due dates, favorite subtasks > refresh
+    1) Create account > create list > refresh. 
+    2) edit email saves when refreshed
+    3) create multiple lists > add items for each > change name of a list > refresh 
+    4) Create subtasks and notes > refresh
+    5) Reorder Todos > refresh
+    6) Reorder lists > refresh
+    7) add subtasks, notes, due dates, favorite subtasks > refresh
 */
 const mobileListBtn         = document.getElementById('mobile-todo-list-btn');
 const mobileListHeaderIcon  = mobileListBtn.querySelector('.icon');
 const mobileListHeaderIcon2 = mobileListBtn.querySelector('.icon-2');
+const mobileBtnInactive     = mobileListBtn.querySelector('.mobile-btn-inactive');
+const mobileBtnActive       = mobileListBtn.querySelector('.mobile-btn-active');
 
 const initialScreensBg      = document.getElementById('initial-screens');
 const createAccContainer    = document.getElementById('create-account');
@@ -58,14 +55,15 @@ let selectedCategory        = ''; // variable to use when 2 or more lists are cr
 let catId                   =  1; // variable for sequential ID's for the list categories
 let profileEmailText        = ''; // variable for the email address 
 
+// mobile responsive actions - hide lists - what happens when the list is shown
 mobileListBtn.addEventListener('click', () => {
+    mobileBtnInactive.innerHTML = `<i class="fas fa-list-alt icon"></i></i> All Todo Lists`; 
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-    mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-    mobileListBtn.classList[mobileListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
-    createListBtn.classList[createListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
-    todoColumn.classList[todoColumn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
-    mobileListBtn.classList[mobileListBtn.classList.contains('mobile-btn-margin-top') ? 'remove' : 'add']('mobile-btn-margin-top');
+    mobileListHeaderIcon2.classList[mobileListHeaderIcon2.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
+    mobileBtnInactive.classList[mobileBtnInactive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
+    mobileBtnActive.classList[mobileBtnActive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
 });
 
 // creaate Account 
@@ -263,7 +261,10 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
+    todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
+    todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     todoCategoryName = createListInput.value;
+    mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${createListInput.value}`; 
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
     createListInput.value = '';
@@ -274,11 +275,15 @@ createListPopupBtn.addEventListener('click', () => {
 // create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
+        todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
+        todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
         if(createListPopup.classList.contains('create-list-popup-initial')) {
             createListPopup.classList.remove('create-list-popup-initial');
             createListPopup.classList.add('create-list-popup');
         }
         todoCategoryName = createListInput.value;
+        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${createListInput.value}`; 
+        todoColumn.classList.remove('mobile-btn-hidden');
         createList(todoCategoryName);
         createListPopup.classList.add('create-list--hidden');
         createListInput.value = '';
@@ -307,14 +312,19 @@ function createList(todoCategoryName) {
         createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
         createListEl.innerHTML = `
             <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
-            <ul class="category-btns cat-hidden">
-                <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
-                <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
-                <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
-            </ul>  
         `;
 
         todoCategoryContainer.appendChild(createListEl);
+
+        const createCategoryBtns = document.createElement('ul');
+        createCategoryBtns.classList.add('category-btns', 'cat-hidden');
+        createCategoryBtns.innerHTML = `
+                <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
+                <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
+                <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
+        `;
+
+        createListEl.appendChild(createCategoryBtns);
         
         selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
         const categoryText       = createListEl.querySelector('.category-text');
@@ -381,6 +391,8 @@ function createList(todoCategoryName) {
         filterTodos();
         filterTodosWhenClicked(createListEl);
         // refreshAddSelectedAndFilterTodos();
+
+
         
         createListEl.addEventListener('click', (e) => {
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
@@ -389,6 +401,15 @@ function createList(todoCategoryName) {
             removeCatOptions();
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
+            mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
+            if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') 
+                && (!e.target.classList.contains('fa-edit'))
+                && (!e.target.classList.contains('fa-trash-alt'))
+                && (!e.target.classList.contains('fa-save'))
+                && (!e.target.classList.contains('category-text'))){
+                todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
+                todoColumn.classList.remove('mobile-btn-hidden');
+            }
             todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
         });
         updateLS();
@@ -479,7 +500,8 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');  
+        e.currentTarget.classList.add('selected'); 
+        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
         filterTodos();          
         updateLS();
     });
@@ -567,11 +589,11 @@ function addTodo(el, todoCategoryName){
             <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
             <i class="fas fa-times remove-date close-hidden"></i><span class="date-text"></span>
             <div class="todo-extend-div">
+                <div class="extended-todo-item sb-todo-date">Set a due date? 
+                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
+                </div>
                 <div class="extended-todo-item sub-task-items">
                     <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
-                </div>
-                <div class="extended-todo-item sb-todo-date">
-                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
                 </div>
                 <ul class="subtasks">
                 </ul>
