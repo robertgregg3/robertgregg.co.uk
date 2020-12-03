@@ -994,7 +994,7 @@ background:  #e59f47;
     } 
     #todos-container {
         grid-template-columns: 1fr;
-        padding: 1rem 1.5rem 1rem 1rem;
+        padding: 1rem;
         margin-top: -1.5rem;
     }
     #todo-col {
@@ -1075,13 +1075,16 @@ background:  #e59f47;
     .category-btns {
         position: absolute !important;
         right: 0rem !important;
-        top: 0.7rem !important;
+        top: 1.7rem !important;
         background: transparent !important;
+        display: grid;
+        grid-template-columns: 40px 45px;
+        width: 75px;
     }
 
     .category-btn {
         font-size: 1.5rem !important;
-        margin-bottom: 1rem !important;
+        top: 0.4rem;
     }
     
     .cat-save {

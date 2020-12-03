@@ -57,10 +57,11 @@ let profileEmailText        = ''; // variable for the email address
 
 // mobile responsive actions - hide lists - what happens when the list is shown
 mobileListBtn.addEventListener('click', () => {
+    mobileBtnInactive.innerHTML = `<i class="fas fa-list-alt icon"></i></i> All Todo Lists`; 
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-    mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-    mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('mobile-btn-margin') ? 'remove' : 'add']('mobile-btn-margin');
+    mobileListHeaderIcon2.classList[mobileListHeaderIcon2.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    mobileListHeaderIcon2.classList[mobileListHeaderIcon2.classList.contains('mobile-btn-margin') ? 'remove' : 'add']('mobile-btn-margin');
     todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     mobileBtnInactive.classList[mobileBtnInactive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     mobileBtnActive.classList[mobileBtnActive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
@@ -261,6 +262,7 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
+    mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     todoCategoryName = createListInput.value;
@@ -274,6 +276,7 @@ createListPopupBtn.addEventListener('click', () => {
 // create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
+        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
         todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
         todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
         if(createListPopup.classList.contains('create-list-popup-initial')) {
@@ -393,7 +396,7 @@ function createList(todoCategoryName) {
             removeCatOptions();
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
-            mobileBtnActive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${e.currentTarget.innerText}`; 
+            mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
             if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile')){
                 todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
                 todoColumn.classList.remove('mobile-btn-hidden');
@@ -489,7 +492,7 @@ allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
         e.currentTarget.classList.add('selected'); 
-        // mobileBtnActive.innerTHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${e.currentTarget.innerText}`; 
+        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
         filterTodos();          
         updateLS();
     });
