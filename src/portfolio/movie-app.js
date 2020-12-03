@@ -7,14 +7,6 @@ const main       = document.getElementById('main');
 const form       = document.getElementById('form');
 const search     = document.getElementById('search');
 
-/*   TODO
-    1)  Hide api keys
-    2) like the recipe app show the movie details in a pop up
-    3) Sort out overview padding and spacing
-    4) Add the search term to the header when you search
-    5) Pagination?   
-*/
-
 //initially get fav movies
 getMovies(api_url);
 
@@ -29,7 +21,6 @@ function showMovies(movies) {
     main.innerHTML = '';
     movies.forEach((movie) => {
         const { poster_path, vote_average } = movie;
-console.log(movie)
         if(poster_path) {
             const movieEl = document.createElement('div');
 
