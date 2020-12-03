@@ -55,6 +55,7 @@ let selectedCategory        = ''; // variable to use when 2 or more lists are cr
 let catId                   =  1; // variable for sequential ID's for the list categories
 let profileEmailText        = ''; // variable for the email address 
 
+// mobile responsive actions - hide lists - what happens when the list is shown
 mobileListBtn.addEventListener('click', () => {
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
@@ -382,6 +383,8 @@ function createList(todoCategoryName) {
         filterTodos();
         filterTodosWhenClicked(createListEl);
         // refreshAddSelectedAndFilterTodos();
+
+
         
         createListEl.addEventListener('click', (e) => {
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
@@ -390,6 +393,7 @@ function createList(todoCategoryName) {
             removeCatOptions();
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
+            mobileBtnActive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${e.currentTarget.innerText}`; 
             if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile')){
                 todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
                 todoColumn.classList.remove('mobile-btn-hidden');
@@ -484,7 +488,8 @@ const allCategories = document.querySelectorAll('.todo-list-category-li');
 allCategories.forEach(cat => {
     cat.addEventListener('click', (e) => {
         todoCategoryName = cat.innerText;
-        e.currentTarget.classList.add('selected');  
+        e.currentTarget.classList.add('selected'); 
+        // mobileBtnActive.innerTHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${e.currentTarget.innerText}`; 
         filterTodos();          
         updateLS();
     });
