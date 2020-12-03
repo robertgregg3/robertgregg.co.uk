@@ -61,7 +61,6 @@ mobileListBtn.addEventListener('click', () => {
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
     mobileListHeaderIcon2.classList[mobileListHeaderIcon2.classList.contains('hidden') ? 'remove' : 'add']('hidden');
-    mobileListHeaderIcon2.classList[mobileListHeaderIcon2.classList.contains('mobile-btn-margin') ? 'remove' : 'add']('mobile-btn-margin');
     todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     mobileBtnInactive.classList[mobileBtnInactive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     mobileBtnActive.classList[mobileBtnActive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
@@ -262,10 +261,10 @@ closeCreateListBtn.addEventListener('click', () => {createListPopup.classList.ad
 
 // create a new list button press
 createListPopupBtn.addEventListener('click', () => {
-    mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
     todoCategoryName = createListInput.value;
+    mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${createListInput.value}`; 
     createList(todoCategoryName);
     createListPopup.classList.add('create-list--hidden');
     createListInput.value = '';
@@ -276,7 +275,6 @@ createListPopupBtn.addEventListener('click', () => {
 // create a new list Enter press
 createListInput.addEventListener('keypress', (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
-        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
         todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
         todoColumn.classList[todoColumn.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
         if(createListPopup.classList.contains('create-list-popup-initial')) {
@@ -284,6 +282,8 @@ createListInput.addEventListener('keypress', (e) => {
             createListPopup.classList.add('create-list-popup');
         }
         todoCategoryName = createListInput.value;
+        mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${createListInput.value}`; 
+        todoColumn.classList.remove('mobile-btn-hidden');
         createList(todoCategoryName);
         createListPopup.classList.add('create-list--hidden');
         createListInput.value = '';
