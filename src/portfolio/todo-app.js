@@ -580,11 +580,11 @@ function addTodo(el, todoCategoryName){
             <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
             <i class="fas fa-times remove-date close-hidden"></i><span class="date-text"></span>
             <div class="todo-extend-div">
+                <div class="extended-todo-item sb-todo-date">Set a due date? 
+                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
+                </div>
                 <div class="extended-todo-item sub-task-items">
                     <span class="sub-task-item-input" contenteditable="true" data-text="+ Add a subtask"></span>
-                </div>
-                <div class="extended-todo-item sb-todo-date">
-                    <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
                 </div>
                 <ul class="subtasks">
                 </ul>
