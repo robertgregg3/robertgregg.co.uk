@@ -10,6 +10,8 @@
 const mobileListBtn         = document.getElementById('mobile-todo-list-btn');
 const mobileListHeaderIcon  = mobileListBtn.querySelector('.icon');
 const mobileListHeaderIcon2 = mobileListBtn.querySelector('.icon-2');
+const mobileBtnInactive     = mobileListBtn.querySelector('.mobile-btn-inactive');
+const mobileBtnActive       = mobileListBtn.querySelector('.mobile-btn-active');
 
 const initialScreensBg      = document.getElementById('initial-screens');
 const createAccContainer    = document.getElementById('create-account');
@@ -57,9 +59,12 @@ mobileListBtn.addEventListener('click', () => {
     todoCategoriesCont.classList[todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') ? 'remove' : 'add']('toggle-list-container-on-mobile');
     mobileListHeaderIcon.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
     mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('hidden') ? 'remove' : 'add']('hidden');
+    mobileListHeaderIcon2.classList[mobileListHeaderIcon.classList.contains('mobile-btn-margin') ? 'remove' : 'add']('mobile-btn-margin');
     createListBtn.classList[createListBtn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
     todoColumn.classList[todoColumn.classList.contains('fixed') ? 'remove' : 'add']('fixed');
     mobileListBtn.classList[mobileListBtn.classList.contains('mobile-btn-margin-top') ? 'remove' : 'add']('mobile-btn-margin-top');
+    mobileBtnInactive.classList[mobileBtnInactive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
+    mobileBtnActive.classList[mobileBtnActive.classList.contains('mobile-btn-hidden') ? 'remove' : 'add']('mobile-btn-hidden');
 });
 
 // creaate Account 
