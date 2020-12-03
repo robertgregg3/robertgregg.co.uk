@@ -963,6 +963,28 @@ textarea:focus{
     outline-offset: 0px;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+/* Track */
+::-webkit-scrollbar-track {
+box-shadow: inset 0 0 5px #e59f47; 
+border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background:  #e59f47; 
+border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background:  #e59f47; 
+}
+
 @media (max-width: 915px){
     #todo-categories-container {
         margin-left: -20rem;
@@ -989,7 +1011,7 @@ textarea:focus{
         width: 100%;
         justify-content: center;
         align-items: center;
-        height: 15vh;
+        height: 105px;
         background: #419fe1;
         color: #fff;
         font-size: 2rem;
@@ -997,12 +1019,7 @@ textarea:focus{
         z-index: 10;
         top: 0;
         left: 0;
-        min-height: 105px;
-        max-height: 105px;
-    }
-
-    .mobile-btn-margin-top {
-        margin-top: 0.5rem;
+        position: fixed;
     }
 
     .fixed{
