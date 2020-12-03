@@ -312,14 +312,19 @@ function createList(todoCategoryName) {
         createListEl.className += ' ' + todoCategoryName.split(' ').join('-').toLowerCase();
         createListEl.innerHTML = `
             <i class="fas fa-list-alt icon"></i><span class="category-text">${todoCategoryName}</span>
-            <ul class="category-btns cat-hidden">
-                <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
-                <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
-                <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
-            </ul>  
         `;
 
         todoCategoryContainer.appendChild(createListEl);
+
+        const createCategoryBtns = document.createElement('ul');
+        createCategoryBtns.classList.add('category-btns', 'cat-hidden');
+        createCategoryBtns.innerHTML = `
+                <li class="category-btn cat-option cat-save cat-hidden"><i class="fas fa-save"></i></li>
+                <li class="category-btn cat-option cat-edit"><i class="fas fa-edit"></i></li>
+                <li class="category-btn cat-option cat-delete"><i class="fas fa-trash-alt"></i></li>
+        `;
+
+        createListEl.appendChild(createCategoryBtns);
         
         selectedCategory         = todoCategoryName.split(' ').join('-').toLowerCase();
         const categoryText       = createListEl.querySelector('.category-text');
@@ -397,7 +402,11 @@ function createList(todoCategoryName) {
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
             mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
-            if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile')){
+            if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile') 
+                && (!e.target.classList.contains('fa-edit'))
+                && (!e.target.classList.contains('fa-trash-alt'))
+                && (!e.target.classList.contains('fa-save'))
+                && (!e.target.classList.contains('category-text'))){
                 todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
                 todoColumn.classList.remove('mobile-btn-hidden');
             }
