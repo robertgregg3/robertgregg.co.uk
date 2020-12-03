@@ -390,6 +390,10 @@ function createList(todoCategoryName) {
             removeCatOptions();
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
+            if(todoCategoriesCont.classList.contains('toggle-list-container-on-mobile')){
+                todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
+                todoColumn.classList.remove('mobile-btn-hidden');
+            }
             todoCategoryName = e.currentTarget.innerText.split(' ').join('-').toLowerCase();
         });
         updateLS();
