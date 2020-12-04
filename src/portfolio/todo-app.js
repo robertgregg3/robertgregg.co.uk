@@ -347,7 +347,6 @@ function createList(todoCategoryName) {
             editCategoryBtn.classList.remove('cat-hidden');
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();
             saveNewListName(selectedCategory);
-            categoryBtns.classList.add('cat-hidden');
         });
         
         editCategoryBtn.addEventListener('click', () => {       
@@ -385,7 +384,6 @@ function createList(todoCategoryName) {
                 deleteCategoryPopup.remove();
             });
         }
-        removeCatOptions();
         showCatOptions(createListEl);
         findSelectedCategory();
         filterTodos();
@@ -398,7 +396,7 @@ function createList(todoCategoryName) {
             selectedCategory = createListEl.innerText.split(' ').join('-').toLowerCase();       
             removeCategorySelectedClass();
             findSelectedCategory();
-            removeCatOptions();
+            
             showCatOptions(createListEl);
             e.currentTarget.classList.add('selected');
             mobileBtnInactive.innerHTML = `<i class="fas fa-chevron-circle-left icon-2"></i> ${todoCategoryName}`; 
@@ -406,7 +404,7 @@ function createList(todoCategoryName) {
                 && (!e.target.classList.contains('fa-edit'))
                 && (!e.target.classList.contains('fa-trash-alt'))
                 && (!e.target.classList.contains('fa-save'))
-                && (!e.target.classList.contains('category-text'))){
+                && (!e.target.classList.contains('category-edit-mode'))){
                 todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
                 todoColumn.classList.remove('mobile-btn-hidden');
             }

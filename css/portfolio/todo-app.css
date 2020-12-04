@@ -88,6 +88,12 @@ body{
     max-width: 1200px;
 }
 
+#todo-col{
+    width: 100vw;
+    margin-left: 20rem;
+    max-width: 600px;
+}
+
 #todo-categories-container {
     height: 100vh;
     position: fixed;
@@ -472,14 +478,6 @@ body{
     margin-left: -105%;
     margin-top: 100% !important;
     transition: margin 500ms ease;
-}
-
-@media (min-width: 915px){
-    #todo-col {
-        width: 100%;
-        max-width: 600px;
-        margin-left: 20rem;
-    }
 }
 
 .sb-todo {
@@ -1128,6 +1126,10 @@ background:  #e59f47;
     .close-delete-list {
         right: 0;
         top: 0;
+    }
+
+    .selected {
+        padding-left: 3.5rem !important;
     }
 }
 
