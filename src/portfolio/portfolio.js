@@ -227,31 +227,8 @@ function addPortfolioCategory() {
             removeClickedClass(); // remove every pfCategory clicked class before adding it
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
-            setTimeout(filterPortfolioItems, 100);             
+            setTimeout(filterPortfolioItems(pfCategory), 100);             
         });
-
-        function filterPortfolioItems(){
-            const pfFilterItems = document.querySelectorAll('.pf-item');
-
-            pfFilterItems.forEach(item => {
-                item.classList[!item.classList.contains('all') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('back-end') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('css3') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('front-end') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('html') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('javascript') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('nodejs') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('graphql') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('mysql') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('photoshop') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('premiere-pro') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('react') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('typescript') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('uiux') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('websites') ? 'add' : 'remove']('hidden');
-                item.classList[!item.classList.contains('wordpress') ? 'add' : 'remove']('hidden');
-            });   
-        }
         
         function addClickedClass(){
             pfCategory.classList.add('pf-category-clicked');
@@ -262,6 +239,15 @@ function addPortfolioCategory() {
             pfPageTransitionTitle.innerHTML = key; // make the h3 text = the button text that was clicked. 
         }
     }  
+}
+
+function filterPortfolioItems(pfCategory){
+    const pfFilterItems = document.querySelectorAll('.pf-item');
+    let filterName      = pfCategory.innerText.toLowerCase();
+
+    pfFilterItems.forEach(item => {
+        item.classList[!item.classList.contains(filterName) ? 'add' : 'remove']('hidden');
+    });   
 }
 
 // function to add the portfolio items, getting the data from the array
