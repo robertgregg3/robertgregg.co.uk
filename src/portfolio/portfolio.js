@@ -212,8 +212,8 @@ let currentPfItem = 0;  // index of portfolioItemData. Increases when
 function addPortfolioCategory() {
     for (let key of portfolioCategoryData) 
     {
+        let filterName   = '';
         const pfCategory = document.createElement('li');
-        
         pfCategory.classList.add('pf-category');
         
         pfCategory.innerHTML = `
@@ -223,18 +223,22 @@ function addPortfolioCategory() {
         `;        
         pfCatContainer.appendChild(pfCategory);
         
-        pfCategory.addEventListener('click', () =>{
+        pfCategory.addEventListener('click', (e) =>{
             removeClickedClass(); // remove every pfCategory clicked class before adding it
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
-            // setTimeout(filterPortfolioItems, 100); 
+            filterName = e.target.innerText.toLowerCase();
+            setTimeout(filterPortfolioItems, 100);             
+        });
+
+        function filterPortfolioItems(){
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
-              item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
-            });               
-        });
-
+                item.classList[!item.classList.contains(filterName) ? 'add' : 'remove']('hidden');
+            });   
+        }
+        
         function addClickedClass(){
             pfCategory.classList.add('pf-category-clicked');
         }  
