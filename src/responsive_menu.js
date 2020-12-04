@@ -1,4 +1,4 @@
-const mainNav = document.getElementById('nav-container');
+const mainNav        = document.getElementById('nav-container');
 const inputName      = document.getElementById('name');
 const inputEmail     = document.getElementById('email');
 const inputTextarea  = document.getElementById('textarea');
@@ -43,7 +43,10 @@ function toggleNav() {
 	navToggle.addEventListener('click', openMenu);
 
 	if(getInTouchBtn){ // this button is just on the home page
-		getInTouchBtn.addEventListener('click', openMenu);
+		getInTouchBtn.addEventListener('click', () => {
+			openMenu();
+			triggerContact();
+		});
 	}
 
 	function openMenu() {
@@ -91,28 +94,28 @@ function addMenuData(menuData) {
 
 	mainNav.appendChild(menuEl);
 
-	function triggerContact(){
-		const contactContainer = document.getElementById('contact-container');
-		const contactBtn       = document.getElementById('contact-button');
-		const menuItems        = document.querySelectorAll('.nav-item'); 
-		const menuItemArrow    = document.querySelector('.nav-item-arrow'); 
-		const formInputs       = document.querySelectorAll('input')
-	
-		contactBtn.addEventListener('click', () => {
-			contactContainer.classList.toggle('hidden');
-			menuItemArrow.classList.toggle('point-down');
+	const contactBtn = document.getElementById('contact-button');
+	contactBtn.addEventListener('click', triggerContact);
 
-			menuItems.forEach(item => {
-				item.classList.toggle('hidden');
-
-				formInputs.forEach(input => {
-					input.classList.toggle('form-resp-padding');
-				});
-			});
-		});	
-	}
-	triggerContact();
 	toggleNav();
+}
+
+function triggerContact(){
+	const contactContainer = document.getElementById('contact-container');
+	const menuItems        = document.querySelectorAll('.nav-item'); 
+	const menuItemArrow    = document.querySelector('.nav-item-arrow'); 
+	const formInputs       = document.querySelectorAll('input')
+
+	contactContainer.classList.toggle('hidden');
+	menuItemArrow.classList.toggle('point-down');
+
+	menuItems.forEach(item => {
+		item.classList.toggle('hidden');
+
+		formInputs.forEach(input => {
+			input.classList.toggle('form-resp-padding');
+		});
+	});
 }
 
 addMenuData(menuData);
