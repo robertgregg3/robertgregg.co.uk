@@ -798,6 +798,10 @@ input[type="date"] {
     font-size: 0.9rem;
 }
 
+.sb-todo-date-text {
+    min-width: 120px;
+}
+
 .date-text2 {
     margin-left: 1rem;
     font-size: 1rem;

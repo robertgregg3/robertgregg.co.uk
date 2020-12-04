@@ -587,7 +587,7 @@ function addTodo(el, todoCategoryName){
             <i class="fas fa-times close-todo close-hidden"></i><i class="fas fa-level-down-alt expand-todo"></i>
             <i class="fas fa-times remove-date close-hidden"></i><span class="date-text"></span>
             <div class="todo-extend-div">
-                <div class="extended-todo-item sb-todo-date">Set a due date? 
+                <div class="extended-todo-item sb-todo-date"><span class="sb-todo-date-text">Set a due date?</span> 
                     <input type="date" class="date" name="date" placeholder="dd/mm/yyyy" />
                 </div>
                 <div class="extended-todo-item sub-task-items">
@@ -605,7 +605,6 @@ function addTodo(el, todoCategoryName){
         todosUl.appendChild(todoItem);
 
         // remove the new line when enter is pressed on the main todo element
-        const toDoInputText    = todoItem.querySelector('.input-text');
         const closeTodoBtn     = todoItem.querySelector('.close-todo');
         const subtaskContainer = todoItem.querySelector('.subtasks');
         const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
