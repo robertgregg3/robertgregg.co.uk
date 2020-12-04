@@ -228,7 +228,7 @@ function addPortfolioCategory() {
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
             let filterName = pfCategory.innerText.toLowerCase();
-            setTimeout(filterPortfolioItems(filterName), 100);             
+            setTimeout(filterPortfolioItems(filterName), 300);             
         });
         
         function addClickedClass(){

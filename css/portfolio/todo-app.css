@@ -839,6 +839,11 @@ input[type="date"] {
     color: #33333380;
 } 
 
+[contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
 .todo-extend-div {
     height: 0%;
     transition: height 500ms ease-in-out;
