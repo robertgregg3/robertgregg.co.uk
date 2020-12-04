@@ -227,17 +227,14 @@ function addPortfolioCategory() {
             removeClickedClass(); // remove every pfCategory clicked class before adding it
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
-            setTimeout(filterPortfolioItems, 100);             
-        });
-
-        function filterPortfolioItems(){
+            // setTimeout(filterPortfolioItems, 100); 
             const pfFilterItems = document.querySelectorAll('.pf-item');
 
             pfFilterItems.forEach(item => {
               item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
-            });   
-        }
-        
+            });               
+        });
+
         function addClickedClass(){
             pfCategory.classList.add('pf-category-clicked');
         }  
