@@ -33,10 +33,12 @@ body{
 }
 
 .form-section {
-    max-width: 350px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
 }
 
 #use-dummy-data,
@@ -378,7 +380,7 @@ body{
     min-width: 450px;
     z-index: 1;
     top: 50%;
-    left: 50%;
+    left: 47%;
     transform: translate(-50%, -50%);
     transition-delay: 200ms;
 }
@@ -401,6 +403,7 @@ body{
     left: 47%;
     transform: translate(-50%, -50%);
     z-index: 12;
+    padding: 1rem;
 }
 
 .create-list-popup-initial .close-create-list {
@@ -975,6 +978,14 @@ background:  #e59f47;
 }
 
 @media (max-width: 915px){
+    .create-account-profile-image-text{
+        display: none;
+    }
+
+    #create-account-profile-image {
+        display: none;
+    }
+
     #todo-categories-container {
         margin-left: -110%;
         margin-top: 7rem;
@@ -983,7 +994,7 @@ background:  #e59f47;
         display: flex;
         background: #fff;
         flex-direction: column;
-        height: 81vh;
+        height: 100vh;
         width: 100% !important;
     } 
 
@@ -1030,10 +1041,7 @@ background:  #e59f47;
     }
 
     #todo-profile {
-        border-radius: 0px !important;
-        height: 10vh !important;
-        border-bottom: 1px solid #cccccc80;
-        padding: 1rem 0 2.8rem 1rem !important;
+        display: none;
     }
 
     #todo-profile__email {
@@ -1051,7 +1059,6 @@ background:  #e59f47;
 
     #todo-categories {
         border-radius: 0px !important;
-        margin-top: -1rem !important;
         overflow-y: auto;
     }
 
