@@ -272,3 +272,25 @@ nav li a {
         max-height: 100px;
     }
 }
+
+
+#contact-icons {
+    position: absolute;
+    display: grid;
+    width: 105px;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    bottom: -3rem;
+}
+
+@media(max-width:800px){
+    #contact-icons {
+        margin-left: 3.5rem;
+    }
+}
+
+@media(max-width:400px){
+    #contact-icons {
+        margin-left: 1.5rem;
+    }
+}

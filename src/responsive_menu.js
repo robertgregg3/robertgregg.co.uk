@@ -65,7 +65,10 @@ function addMenuData(menuData) {
 	menuEl.innerHTML = `
 			<div class="nav-popup-left">
 				<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
-				<a href="https://www.linkedin.com/in/robert-gregg-b1a66a32/"><span class="spring icon-linkedin icon"></span></a>
+				<div id="contact-icons">
+					<a href="https://github.com/robertgregg3"><i class="fab fa-github spring"></i></a>
+					<a href="https://www.linkedin.com/in/robert-gregg-b1a66a32/"><span class="spring icon-linkedin icon"></span></a>
+				</div>
 			</div>
 			<div class="nav-popup-right">
 				<ul>

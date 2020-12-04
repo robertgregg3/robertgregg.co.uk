@@ -52,90 +52,78 @@
 
 .icon-angular {
     background: url('../images/icons/angular.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-nodejs {
     background: url('../images/icons/nodejs.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-photoshop {
     background: url('../images/icons/photoshop.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-premiere-pro {
     background: url('../images/icons/premiere-pro.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-react {
     background: url('../images/icons/react.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-graphql {
     background: url('../images/icons/graphql.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-php {
     background: url('../images/icons/php.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-typescript {
     background: url('../images/icons/typescript.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-mongodb {
     background: url('../images/icons/mongodb.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-mysql {
     background: url('../images/icons/mysql.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-sprinkles {
     background: url('../images/icons/sprinkles.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-uiux {
     background: url('../images/icons/uiux.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-websites {
     background: url('../images/icons/websites.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-all {
     background: url('../images/icons/all.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-front-end {
     background: url('../images/icons/front-end.svg');
-    background-repeat: no-repeat;
 }
 
 .icon-back-end {
     background: url('../images/icons/backend.png');
-    background-repeat: no-repeat;
 }
 
 .icon-linkedin {
     background: url('../images/icons/linkedin.svg');
-    background-repeat: no-repeat;
     position: absolute;
-    bottom: -3rem;
-    left: 50%;
+    top: -0.4rem;
+    left: 3rem;
+}
+
+.fa-github {
+    font-size: 2.2rem;
+    color: #fff;
 }
 
 .icon-undefined {
