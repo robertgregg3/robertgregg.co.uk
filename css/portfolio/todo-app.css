@@ -200,6 +200,8 @@ body{
     font-size: 0.8rem;
     max-width: 66%;
     word-break: break-all;
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 .category-btns {
@@ -677,6 +679,8 @@ input[type="checkbox"]:before {
     top: 0;
     overflow-y: auto;
     height: 60px;
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 .input-text:focus{
@@ -825,6 +829,8 @@ input[type="date"] {
     padding: 1rem;
     word-break: break-word;
     cursor: text;
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 .sub-task-item-input:focus{
@@ -838,11 +844,6 @@ input[type="date"] {
     content:attr(data-text);
     color: #33333380;
 } 
-
-[contenteditable] {
-    -webkit-user-select: text;
-    user-select: text;
-}
 
 .todo-extend-div {
     height: 0%;
