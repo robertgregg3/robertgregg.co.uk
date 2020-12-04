@@ -36,8 +36,16 @@ body{
 @media (max-width: 700px) {
     .pf-category {
         padding: 0.5rem 0.5rem;
+        width: 30%;
     }
 }
+
+@media (max-width: 600px) {
+    .pf-category {
+        width: 45%;
+    }
+}
+
 
 .pf-category span {
     text-transform: uppercase;
