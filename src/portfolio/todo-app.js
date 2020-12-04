@@ -406,7 +406,7 @@ function createList(todoCategoryName) {
                 && (!e.target.classList.contains('fa-edit'))
                 && (!e.target.classList.contains('fa-trash-alt'))
                 && (!e.target.classList.contains('fa-save'))
-                && (!e.target.classList.contains('category-text'))){
+                && (!e.target.classList.contains('category-edit-mode'))){
                 todoCategoriesCont.classList.remove('toggle-list-container-on-mobile');
                 todoColumn.classList.remove('mobile-btn-hidden');
             }
