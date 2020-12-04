@@ -227,7 +227,7 @@ function addPortfolioCategory() {
             removeClickedClass(); // remove every pfCategory clicked class before adding it
             addClickedClass(); // set a delay so the class is added after the page transition
             triggerPageTransition(); 
-            filterName = e.target.innerText.toLowerCase();
+            filterName = e.currentTarget.innerText.toLowerCase();
             setTimeout(filterPortfolioItems, 100);             
         });
 
