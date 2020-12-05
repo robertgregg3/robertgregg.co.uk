@@ -974,12 +974,7 @@ function reorderCategoryLists() {
     const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
     
     draggables.forEach(draggable => addRemoveDraggingClasses(draggable));
-    
-    container.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const afterElement = getDragListAfterElement(container, e.clientY);
-        placeDraggingElement(afterElement, container);
-    });
+    draggingList(container);
 }
 
 // reoder categories DRAG and DROP
@@ -988,14 +983,7 @@ function reorderCategoryListsMobile() {
     const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
     
     draggables.forEach(draggable => addRemoveDraggingClassesMobile(draggable));
-
-    container.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        for (var i=0; i < e.changedTouches.length; i++) {
-            const afterElement = getDragListAfterElement(container, e.changedTouches[i].pageY);
-            placeDraggingElement(afterElement, container);
-        }  
-    });
+    draggingListMobile(container);
 }
 
 function addRemoveDraggingClasses(el){
@@ -1016,6 +1004,14 @@ function draggingItem(container) {
     });
 }
 
+function draggingList(container) {
+    container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = getDragListAfterElement(container, e.clientY);
+        placeDraggingElement(afterElement, container);
+    });
+}
+
 function draggingItemMobile(container) {
     container.addEventListener('touchmove', (e) => {
         e.preventDefault();
@@ -1023,6 +1019,16 @@ function draggingItemMobile(container) {
             const afterElement = placeElementWhereDragging(container, e.changedTouches[i].pageY); 
             placeDraggingElement(afterElement, container);
         }
+    });
+}
+
+function draggingListMobile(container) {
+     container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        for (var i=0; i < e.changedTouches.length; i++) {
+            const afterElement = getDragListAfterElement(container, e.changedTouches[i].pageY);
+            placeDraggingElement(afterElement, container);
+        }  
     });
 }
 
