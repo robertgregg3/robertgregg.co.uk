@@ -977,7 +977,6 @@ function reorderCategoryLists() {
     draggingList(container);
 }
 
-// reoder categories DRAG and DROP
 function reorderCategoryListsMobile() {
     const draggables = document.querySelectorAll('.draggable-list');
     const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
@@ -999,15 +998,8 @@ function addRemoveDraggingClassesMobile(el){
 function draggingItem(container) {
     container.addEventListener('dragover', (e) => {
         e.preventDefault();
-        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
-        placeDraggingElement(afterElement, container);
-    });
-}
-
-function draggingList(container) {
-    container.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const afterElement = getDragListAfterElement(container, e.clientY);
+        const draggableElements = [...document.querySelectorAll('.draggable:not(.dragging)')];
+        const afterElement = getDragListAfterElement(draggableElements, e.clientY); 
         placeDraggingElement(afterElement, container);
     });
 }
@@ -1015,18 +1007,29 @@ function draggingList(container) {
 function draggingItemMobile(container) {
     container.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        for (var i=0; i < e.changedTouches.length; i++) {
-            const afterElement = placeElementWhereDragging(container, e.changedTouches[i].pageY); 
+        for (var i = 0; i < e.changedTouches.length; i++) {
+            const draggableElements = [...document.querySelectorAll('.draggable:not(.dragging)')];
+            const afterElement = getDragListAfterElement(draggableElements, e.changedTouches[i].pageY); 
             placeDraggingElement(afterElement, container);
         }
+    });
+}
+
+function draggingList(container) {
+    container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
+        const afterElement = getDragListAfterElement(draggableElements, e.clientY);
+        placeDraggingElement(afterElement, container);
     });
 }
 
 function draggingListMobile(container) {
      container.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        for (var i=0; i < e.changedTouches.length; i++) {
-            const afterElement = getDragListAfterElement(container, e.changedTouches[i].pageY);
+        for (var i = 0; i < e.changedTouches.length; i++) {
+            const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
+            const afterElement = getDragListAfterElement(draggableElements, e.changedTouches[i].pageY);
             placeDraggingElement(afterElement, container);
         }  
     });
@@ -1039,9 +1042,7 @@ function placeDraggingElement(afterElement, container){
     updateLS();
 }
 
-function placeElementWhereDragging(container, y) {
-    const draggableElements = [...document.querySelectorAll('.draggable:not(.dragging)')];
-    
+function getDragListAfterElement(draggableElements, y){
     return draggableElements.reduce((nearest, child) => {
         const box    = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;
@@ -1053,23 +1054,7 @@ function placeElementWhereDragging(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
-function getDragListAfterElement(container, y){
-    const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if(offset < 0 && offset > closest.offset){
-            return { offset: offset, element: child}
-        } else {
-            return closest;
-        }
-    }, { offset: Number.NEGATIVE_INFINITY }).element;
-}
-
-
 reorderItems();
 reorderItemsMobile();
 reorderCategoryLists();
 reorderCategoryListsMobile();
-
