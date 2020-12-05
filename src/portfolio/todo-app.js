@@ -605,6 +605,7 @@ function addTodo(el, todoCategoryName){
         todosUl.appendChild(todoItem);
 
         // remove the new line when enter is pressed on the main todo element
+        const toDoInputText    = todoItem.querySelector('.input-text');
         const closeTodoBtn     = todoItem.querySelector('.close-todo');
         const subtaskContainer = todoItem.querySelector('.subtasks');
         const subtaskInput     = todoItem.querySelector('.sub-task-item-input');
@@ -965,9 +966,9 @@ function dragItems() {
         });
     });
 
-    container.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
+    container.addEventListener('dragover', (touch) => {
+        touch.preventDefault();
+        const afterElement = placeElementWhereDragging(container, touch.pageY); // e.clientY shows the Y position of the mouse
         const draggable = document.querySelector('.dragging');
         if(afterElement == null ){
             container.appendChild(draggable);
@@ -992,8 +993,6 @@ function dragItems() {
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 }
-
-dragItems();
 
 function dragItemsMobile() {
     const draggables = document.querySelectorAll('.draggable');
@@ -1003,7 +1002,7 @@ function dragItemsMobile() {
         draggable.addEventListener('touchstart', () => {
             draggable.classList.add('dragging');
         });
-
+        
         draggable.addEventListener('touchend', () => {
             draggable.classList.remove('dragging');
         });
@@ -1011,14 +1010,16 @@ function dragItemsMobile() {
 
     container.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
-        const draggable = document.querySelector('.dragging');
-        if(afterElement == null ){
-            container.appendChild(draggable);
-            updateLS();
-        } else {
-            container.insertBefore(draggable, afterElement);
-            updateLS();
+        for (var i=0; i < e.changedTouches.length; i++) {
+            const afterElement = placeElementWhereDragging(container, e.changedTouches[i].pageY); 
+            const draggable = document.querySelector('.dragging');
+            if(afterElement == null ){
+                container.appendChild(draggable);
+                updateLS();
+            } else {
+                container.insertBefore(draggable, afterElement);
+                updateLS();
+            }
         }
     });
 
@@ -1037,13 +1038,12 @@ function dragItemsMobile() {
     }
 }
 
-dragItemsMobile();
 
 // reoder categories DRAG and DROP
 function reorderCategoryLists() {
     const draggableLists    = document.querySelectorAll('.draggable-list');
     const dragListContainer = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
-
+    
     draggableLists.forEach(dragList => {
         dragList.addEventListener('dragstart', () => {dragList.classList.add('dragging-list');});
         dragList.addEventListener('dragend',   () => {dragList.classList.remove('dragging-list');});
@@ -1060,20 +1060,64 @@ function reorderCategoryLists() {
             }
         })
     })
+    
+    function getDragListAfterElement(dragListContainer, y){
+        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > closest.offset){
+                return { offset: offset, element: child}
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+}
 
+// reoder categories DRAG and DROP
+function reorderCategoryListsMobile() {
+    const draggableLists    = document.querySelectorAll('.draggable-list');
+    const dragListContainer = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
+    
+    draggableLists.forEach(dragList => {
+        dragList.addEventListener('touchstart', () => {dragList.classList.add('dragging-list');});
+        dragList.addEventListener('touchend',   () => {dragList.classList.remove('dragging-list');});
+        dragListContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            for (var i=0; i < e.changedTouches.length; i++) {
+                const afterElement = getDragListAfterElement(dragListContainer, e.changedTouches[i].pageY);
+                const draggableList = document.querySelector('.dragging-list');
+                if(afterElement == null){
+                    dragListContainer.appendChild(draggableList);
+                    updateLS();
+                } else {
+                    dragListContainer.insertBefore(draggableList, afterElement);
+                    updateLS();
+                }
+              }  
+        });
+    });
+    
     function getDragListAfterElement(dragListContainer, y){
         const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
 
         return draggableElements.reduce((closest, child) => {
-                const box = child.getBoundingClientRect();
-                const offset = y - box.top - box.height / 2;
-                if(offset < 0 && offset > closest.offset){
-                    return { offset: offset, element: child}
-                } else {
-                    return closest;
-                }
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
-        }
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            console.log(y)
+            if(offset < 0 && offset > closest.offset){
+                return { offset: offset, element: child}
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
 }
 
+dragItems();
+dragItemsMobile();
 reorderCategoryLists();
+reorderCategoryListsMobile();
+
