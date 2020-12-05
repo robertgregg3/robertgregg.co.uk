@@ -542,8 +542,8 @@ form.addEventListener('submit', (e) => {
     addTodo();
     updateLS();
     countTodos();
-    dragItems();
-    dragItemsMobile();
+    reorderItems();
+    reorderItemsMobile();
 });
 
 // create todos from localStorage
@@ -953,7 +953,7 @@ function toolbarButtons(){
 
 toolbarButtons();
 
-function dragItems() {
+function reorderItems() {
     const draggables = document.querySelectorAll('.draggable');
     const container  = document.querySelector('#todos-ul:not(#todo-list-categories-ul)');
 
@@ -961,7 +961,7 @@ function dragItems() {
     draggingItem(container);
 }
 
-function dragItemsMobile() {
+function reorderItemsMobile() {
     const draggables = document.querySelectorAll('.draggable');
     const container  = document.getElementById('todos-ul');
 
@@ -969,8 +969,6 @@ function dragItemsMobile() {
     draggingItemMobile(container)
 }
 
-
-// reoder categories DRAG and DROP
 function reorderCategoryLists() {
     const draggables = document.querySelectorAll('.draggable-list');
     const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
@@ -980,26 +978,8 @@ function reorderCategoryLists() {
     container.addEventListener('dragover', (e) => {
         e.preventDefault();
         const afterElement = getDragListAfterElement(container, e.clientY);
-        const draggableList = document.querySelector('.dragging');
-        if(afterElement == null) container.appendChild(draggableList);
-        else container.insertBefore(draggableList, afterElement);
-        updateLS();
-    })
-
-    
-    function getDragListAfterElement(container, y){
-        const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
-        
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if(offset < 0 && offset > closest.offset){
-                return { offset: offset, element: child}
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
+        placeDraggingElement(afterElement, container);
+    });
 }
 
 // reoder categories DRAG and DROP
@@ -1013,26 +993,9 @@ function reorderCategoryListsMobile() {
         e.preventDefault();
         for (var i=0; i < e.changedTouches.length; i++) {
             const afterElement = getDragListAfterElement(container, e.changedTouches[i].pageY);
-            const draggableList = document.querySelector('.dragging');
-            if(afterElement == null) container.appendChild(draggableList);
-            else container.insertBefore(draggableList, afterElement);
-            updateLS();
+            placeDraggingElement(afterElement, container);
         }  
     });
-    
-    function getDragListAfterElement(dragListContainer, y){
-        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
-
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if(offset < 0 && offset > closest.offset){
-                return { offset: offset, element: child}
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
 }
 
 function addRemoveDraggingClasses(el){
@@ -1084,9 +1047,23 @@ function placeElementWhereDragging(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
+function getDragListAfterElement(container, y){
+    const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
 
-dragItems();
-dragItemsMobile();
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if(offset < 0 && offset > closest.offset){
+            return { offset: offset, element: child}
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+
+reorderItems();
+reorderItemsMobile();
 reorderCategoryLists();
 reorderCategoryListsMobile();
 
