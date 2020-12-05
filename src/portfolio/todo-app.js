@@ -958,20 +958,81 @@ function dragItems() {
     const container  = document.querySelector('#todos-ul:not(#todo-list-categories-ul)');
 
     draggables.forEach(draggable => addRemoveDraggingClasses(draggable));
+    draggingItem(container);
+}
 
+function dragItemsMobile() {
+    const draggables = document.querySelectorAll('.draggable');
+    const container  = document.getElementById('todos-ul');
+
+    draggables.forEach(draggable => addRemoveDraggingClassesMobile(draggable));
+    draggingItemMobile(container)
+}
+
+
+// reoder categories DRAG and DROP
+function reorderCategoryLists() {
+    const draggables = document.querySelectorAll('.draggable-list');
+    const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
+    
+    draggables.forEach(draggable => addRemoveDraggingClasses(draggable));
+    
     container.addEventListener('dragover', (e) => {
         e.preventDefault();
-        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
-        const draggable = document.querySelector('.dragging');
-        if(afterElement == null ){
-            container.appendChild(draggable);
-            updateLS();
-        } else {
-            container.insertBefore(draggable, afterElement);
-            updateLS();
-        }
-    });
+        const afterElement = getDragListAfterElement(container, e.clientY);
+        const draggableList = document.querySelector('.dragging');
+        if(afterElement == null) container.appendChild(draggableList);
+        else container.insertBefore(draggableList, afterElement);
+        updateLS();
+    })
 
+    
+    function getDragListAfterElement(container, y){
+        const draggableElements = [...document.querySelectorAll('.draggable-list:not(.dragging-list)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > closest.offset){
+                return { offset: offset, element: child}
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+}
+
+// reoder categories DRAG and DROP
+function reorderCategoryListsMobile() {
+    const draggables = document.querySelectorAll('.draggable-list');
+    const container  = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
+    
+    draggables.forEach(draggable => addRemoveDraggingClassesMobile(draggable));
+
+    container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        for (var i=0; i < e.changedTouches.length; i++) {
+            const afterElement = getDragListAfterElement(container, e.changedTouches[i].pageY);
+            const draggableList = document.querySelector('.dragging');
+            if(afterElement == null) container.appendChild(draggableList);
+            else container.insertBefore(draggableList, afterElement);
+            updateLS();
+        }  
+    });
+    
+    function getDragListAfterElement(dragListContainer, y){
+        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
+
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > closest.offset){
+                return { offset: offset, element: child}
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
 }
 
 function addRemoveDraggingClasses(el){
@@ -982,6 +1043,31 @@ function addRemoveDraggingClasses(el){
 function addRemoveDraggingClassesMobile(el){
     el.addEventListener('touchstart', () => el.classList.add('dragging'));
     el.addEventListener('touchend', ()   => el.classList.remove('dragging'));
+}
+
+function draggingItem(container) {
+    container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = placeElementWhereDragging(container, e.clientY); // e.clientY shows the Y position of the mouse
+        placeDraggingElement(afterElement, container);
+    });
+}
+
+function draggingItemMobile(container) {
+    container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        for (var i=0; i < e.changedTouches.length; i++) {
+            const afterElement = placeElementWhereDragging(container, e.changedTouches[i].pageY); 
+            placeDraggingElement(afterElement, container);
+        }
+    });
+}
+
+function placeDraggingElement(afterElement, container){
+    const draggable = document.querySelector('.dragging');
+    if(afterElement == null ) container.appendChild(draggable);
+    else container.insertBefore(draggable, afterElement);
+    updateLS();
 }
 
 function placeElementWhereDragging(container, y) {
@@ -998,104 +1084,6 @@ function placeElementWhereDragging(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
-function dragItemsMobile() {
-    const draggables = document.querySelectorAll('.draggable');
-    const container  = document.getElementById('todos-ul');
-
-    draggables.forEach(draggable => addRemoveDraggingClassesMobile(draggable));
-
-    container.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        for (var i=0; i < e.changedTouches.length; i++) {
-            const afterElement = placeElementWhereDragging(container, e.changedTouches[i].pageY); 
-            const draggable = document.querySelector('.dragging');
-            if(afterElement == null ){
-                container.appendChild(draggable);
-                updateLS();
-            } else {
-                container.insertBefore(draggable, afterElement);
-                updateLS();
-            }
-        }
-    });
-}
-
-
-
-// reoder categories DRAG and DROP
-function reorderCategoryLists() {
-    const draggables    = document.querySelectorAll('.draggable-list');
-    const dragListContainer = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
-    
-    draggables.forEach(draggable => {
-        addRemoveDraggingClasses(draggable)
-    });
-
-    dragListContainer.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const afterElement = getDragListAfterElement(dragListContainer, e.clientY);
-        const draggableList = document.querySelector('.dragging');
-        if(afterElement == null){
-            dragListContainer.appendChild(draggableList);
-            updateLS();
-        } else {
-            dragListContainer.insertBefore(draggableList, afterElement);
-            updateLS();
-        }
-    })
-
-    
-    function getDragListAfterElement(dragListContainer, y){
-        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
-        
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if(offset < 0 && offset > closest.offset){
-                return { offset: offset, element: child}
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-}
-
-// reoder categories DRAG and DROP
-function reorderCategoryListsMobile() {
-    const draggables    = document.querySelectorAll('.draggable-list');
-    const dragListContainer = document.querySelector('#todo-list-categories-ul:not(#todos-ul)');
-    
-    draggables.forEach(draggable => addRemoveDraggingClassesMobile(draggable));
-
-    dragListContainer.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        for (var i=0; i < e.changedTouches.length; i++) {
-            const afterElement = getDragListAfterElement(dragListContainer, e.changedTouches[i].pageY);
-            const draggableList = document.querySelector('.dragging');
-            if(afterElement == null){
-                dragListContainer.appendChild(draggableList);
-                updateLS();
-            } else {
-                dragListContainer.insertBefore(draggableList, afterElement);
-                updateLS();
-            }
-            }  
-    });
-    
-    function getDragListAfterElement(dragListContainer, y){
-        const draggableElements = [...dragListContainer.querySelectorAll('.draggable-list:not(.dragging-list)')];
-
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if(offset < 0 && offset > closest.offset){
-                return { offset: offset, element: child}
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-}
 
 dragItems();
 dragItemsMobile();
