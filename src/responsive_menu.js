@@ -40,20 +40,25 @@ function toggleNav() {
 	const toggleMiddleLine = document.querySelector('nav .nav__toggle__line-middle')
 	const toggleBottomLine = document.querySelector('nav .nav__toggle__line-bottom');
 	
-	navToggle.addEventListener('click', openMenu);
+	navToggle.addEventListener('click', toggleMenu);
 
 	if(getInTouchBtn){ // this button is just on the home page
 		getInTouchBtn.addEventListener('click', () => {
-			openMenu();
+			toggleMenu();
 			triggerContact();
+			nav.classList.add('get-in-touch-pressed');
 		});
 	}
 
-	function openMenu() {
+	function toggleMenu() {
 		nav.classList.toggle('display');
 		toggleTopLine.classList.toggle('nav__toggle__line-top--selected');
 		toggleBottomLine.classList.toggle('nav__toggle__line-bottom--selected');
 		toggleMiddleLine.classList.toggle('display');
+		if(nav.classList.contains('get-in-touch-pressed')){
+			triggerContact();
+			nav.classList.remove('get-in-touch-pressed');
+		}
 	};
 }
 
