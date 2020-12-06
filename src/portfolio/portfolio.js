@@ -25,7 +25,7 @@ const portfolioCategoryData = [
     'photoshop',
     'premiere-pro',
     'react',
-    'typescript',
+    // 'typescript',
     'uiux',
     'websites',
     'wordpress',
