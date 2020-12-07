@@ -3,7 +3,8 @@ import React from 'react';
 import { Paper, Typography } from '@material-ui/core';
 
 const VideoDetails = ({ video }) => {
-    if(!video) return <div>Loading</div>
+    if(!video) 
+        return <div style={{ padding: '3rem' }}>Loading</div>
 
     console.log(video)
     const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`
