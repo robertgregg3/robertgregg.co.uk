@@ -35,6 +35,16 @@ const portfolioCategoryData = [
 // portfolio Item
 const portfolioItemData = [
     {
+        title: 'youtube-clone-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        skill5: 'react',
+        details: 'A Youtube clone working with the Youtube API. Search for a video, see a list of related videos and choose to play the related videos which updates the main video section.  This is hosted on netlify.',
+        url: 'https://jovial-tereshkova-cabdea.netlify.app/'
+    }, 
+    {
         title: 'todo-app',
         skill1: 'front-end',
         skill2: 'html',
