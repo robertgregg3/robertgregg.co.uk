@@ -103,7 +103,6 @@ function createAcc(){
         createListPopup.classList.remove('create-list--hidden')
         createListPopup.style.marginTop = '0%';
         createAccPreviewFile();
-
     });
 }
 

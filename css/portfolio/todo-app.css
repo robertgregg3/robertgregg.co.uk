@@ -478,10 +478,7 @@ body{
 }
 
 .create-list--hidden {
-    width: 0px;
-    height: 0px;
     margin-left: -105%;
-    margin-top: 100% !important;
     transition: margin 500ms ease;
 }
 
