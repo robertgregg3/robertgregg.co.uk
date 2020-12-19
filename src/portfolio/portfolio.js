@@ -3,7 +3,6 @@
     2) add the images 
     3) add item to portfolioItemData
 */
-
 /*  Adding a new portfolio skill:
     1) add skill to portfolioCategoryData
     2) add a new skill number to both sections of addPortfolioItem
@@ -26,6 +25,7 @@ const portfolioCategoryData = [
     'photoshop',
     'premiere-pro',
     // 'typescript',
+    'socket-io',
     'uiux',
     'websites',
     'wordpress',
@@ -34,6 +34,15 @@ const portfolioCategoryData = [
 
 // portfolio Item
 const portfolioItemData = [
+    {
+        title: 'todo-app',
+        skill1: 'front-end',
+        skill2: 'html',
+        skill3: 'css3',
+        skill4: 'javascript',
+        details: 'Features: Multiple todo lists, todo items, subtasks, due dates, add a note, view all todos, view remaining, view completed, delete completed, reorder todos, reorder todo Lists, delete todod item, delete todo list, edit todo list names, edit todo item name, add favorite subtask, create account, edit email, upload profile pic, mobile responsive (portrait).',
+        url: '/portfolio/todo-app.html'
+    },    
     {
         title: 'youtube-clone-app',
         skill1: 'front-end',
@@ -45,14 +54,17 @@ const portfolioItemData = [
         url: 'https://jovial-tereshkova-cabdea.netlify.app/'
     }, 
     {
-        title: 'todo-app',
-        skill1: 'front-end',
-        skill2: 'html',
-        skill3: 'css3',
-        skill4: 'javascript',
-        details: 'Features: Multiple todo lists, todo items, subtasks, due dates, add a note, view all todos, view remaining, view completed, delete completed, reorder todos, reorder todo Lists, delete todod item, delete todo list, edit todo list names, edit todo item name, add favorite subtask, create account, edit email, upload profile pic, mobile responsive (portrait).',
-        url: '/portfolio/todo-app.html'
-    },    
+        title: 'whatsapp-clone',
+        skill1: 'back-end',
+        skill2: 'front-end',
+        skill3: 'html',
+        skill4: 'css3',
+        skill5: 'javascript',
+        skill6: 'react',
+        skill7: 'socket-io',
+        details: 'A Whatsapp clone giving you the ability to create contacts, create conversations and chat using React, HTML, CSS and Socket.io.  This is hosted on netlify.  To get started you can create  ausername and press "login".  Then open up a separate window and do teh same with a different name.  Your ID is on teh bottom left of teh screen when you log in. Use that to create a contact in the other open window. Then set up a conversation with that contact and chat away!',
+        url: 'https://naughty-nightingale-e95f44.netlify.app//'
+    }, 
     {
         title: 'recipe-app',
         skill1: 'front-end',

@@ -114,6 +114,11 @@
     background: url('../images/icons/backend.png');
 }
 
+.icon-socket-io {
+    background: url('../images/icons/socket-io.svg');
+    filter: invert(100%) sepia(99%) saturate(100%) hue-rotate(346deg) brightness(104%) contrast(98%);
+}
+
 .icon-linkedin {
     background: url('../images/icons/linkedin.svg');
     position: absolute;

@@ -246,6 +246,13 @@ body{
     color: #000000;
 }
 
+.pf-category:hover .icon-socket-io{
+    filter: none !important;
+}
+
+.pf-category-clicked .icon-socket-io{
+    filter: none !important;
+}
 
 /****** Popup info ******/
 
