@@ -71,7 +71,7 @@ function addMenuData(menuData) {
 			<div class="nav-popup-left">
 				<div class="rob-head-shot"><img src="/images/rob.jpg" /></div>
 				<div id="contact-icons">
-					<a href="https://github.com/robertgregg3"><i class="fab fa-github spring"></i></a>
+					<a href="https://github.com/robertgregg3"><i class="fab fa-github-square spring"></i></a>
 					<a href="https://www.linkedin.com/in/robert-gregg-b1a66a32/"><span class="spring icon-linkedin icon"></span></a>
 				</div>
 			</div>

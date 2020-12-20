@@ -126,10 +126,19 @@
     left: 3rem;
 }
 
-.fa-github {
-    font-size: 2.2rem;
+.fa-github-square {
+    font-size: 2.55rem;
     color: #fff;
+    margin-top: -2px;
+    margin-left: -0.7rem;
 }
+
+@media(max-width: 800px){
+    .fa-github-square {
+        margin-left: -0.4rem;
+    }
+}
+
 
 .icon-undefined {
     display: none !important;
