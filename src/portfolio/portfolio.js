@@ -63,7 +63,7 @@ const portfolioItemData = [
         skill6: 'react',
         skill7: 'socket-io',
         details: 'A Whatsapp clone giving you the ability to create contacts, create conversations and chat using React, HTML, CSS and Socket.io.  This is hosted on netlify.  To get started you can create  ausername and press "login".  Then open up a separate window and do teh same with a different name.  Your ID is on teh bottom left of teh screen when you log in. Use that to create a contact in the other open window. Then set up a conversation with that contact and chat away!',
-        url: 'https://naughty-nightingale-e95f44.netlify.app//'
+        url: 'https://naughty-nightingale-e95f44.netlify.app/'
     }, 
     {
         title: 'recipe-app',
