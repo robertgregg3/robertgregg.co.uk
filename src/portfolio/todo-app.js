@@ -355,6 +355,7 @@ function createList(todoCategoryName) {
             saveCategoryBtn.classList.remove('cat-hidden');
             editCategoryBtn.classList.add('cat-hidden');
             editListGetClassToRemove(selectedCategory);
+            categoryText.focus();
         });
 
         deleteCategoryBtn.addEventListener('click', (e) => {
@@ -731,6 +732,7 @@ function addTodo(el, todoCategoryName){
                 subtaskSaveBtn.classList.remove('hidden');
                 subtaskEditBtn.classList.add('hidden');
                 subtaskDeleteBtn.style.marginLeft = '1.05rem';
+                subtaskOutput.focus();
             });
             subtaskDeleteBtn.addEventListener('click', () => {
                 subtaskEl.remove();
