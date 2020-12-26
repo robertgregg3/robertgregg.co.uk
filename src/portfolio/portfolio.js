@@ -264,6 +264,14 @@ function addPortfolioCategory() {
     }  
 }
 
+function filterPortfolioItems(){
+    const pfFilterItems = document.querySelectorAll('.pf-item');
+
+    pfFilterItems.forEach(item => {
+      item.classList[!item.classList.contains(pfCategory.innerText.toLowerCase()) ? 'add' : 'remove']('hidden');
+    });   
+}
+
 function filterPortfolioItems(filterName){
     const allPFItems = document.getElementsByClassName('pf-item');
     for(let i=0; i<allPFItems.length; i++){

@@ -899,6 +899,11 @@ input[type="date"] {
   padding-left: 0.5rem;
 }
 
+.subtask-text {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 @media (max-width: 915px) {
   .subtask-text {
     width: 78%;

@@ -1,12 +1,3 @@
-/* Tests:
-    1) Create account > create list > refresh. 
-    2) edit email saves when refreshed
-    3) create multiple lists > add items for each > change name of a list > refresh 
-    4) Create subtasks and notes > refresh
-    5) Reorder Todos > refresh
-    6) Reorder lists > refresh
-    7) add subtasks, notes, due dates, favorite subtasks > refresh
-*/
 const mobileListBtn         = document.getElementById('mobile-todo-list-btn');
 const mobileListHeaderIcon  = mobileListBtn.querySelector('.icon');
 const mobileListHeaderIcon2 = mobileListBtn.querySelector('.icon-2');
