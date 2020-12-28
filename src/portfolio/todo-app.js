@@ -124,14 +124,10 @@ if(!todosFromLS && !todoCategoriesFromLS && !profileEmailFromLS){
 
 // create profile section
 function createProfile(createAccEmail){
-    if(profileImageFromLS)
-        profileImgUrl = profileImageFromLS;
+    if(profileImageFromLS) profileImgUrl = profileImageFromLS;
     
-    if(profileEmailFromLS) {
-        profileEmailText = profileEmailFromLS;
-    } else if(createAccEmail){
-        profileEmailText = createAccEmail.value;
-    } 
+    if(profileEmailFromLS) {   profileEmailText = profileEmailFromLS;
+    } else if(createAccEmail){ profileEmailText = createAccEmail.value; } 
         
     const profileEl = document.createElement('div');
     profileEl.classList.add('profile-container');
