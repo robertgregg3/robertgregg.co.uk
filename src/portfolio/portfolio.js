@@ -50,7 +50,7 @@ const portfolioItemData = [
         skill3: 'css3',
         skill4: 'javascript',
         skill5: 'react',
-        details: 'A Youtube clone working with the Youtube API. Search for a video, see a list of related videos and choose to play the related videos which updates the main video section.  This is hosted on netlify.',
+        details: 'A Youtube clone working with the Youtube API. Search for a video, see a list of related videos and choose to play the related videos which updates the main video section.  This is hosted on netlify and at the time of writing is only working on localhost',
         url: 'https://jovial-tereshkova-cabdea.netlify.app/'
     }, 
     {
