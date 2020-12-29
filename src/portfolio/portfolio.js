@@ -40,7 +40,7 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'javascript',
-        details: 'Features: Multiple todo lists, todo items, subtasks, due dates, add a note, view all todos, view remaining, view completed, delete completed, reorder todos, reorder todo Lists, delete todod item, delete todo list, edit todo list names, edit todo item name, add favorite subtask, create account, edit email, upload profile pic, mobile responsive (portrait).',
+        details: 'Multiple todo lists, todo items, subtasks, due dates, add a note, view all/remaining/completed todos, delete completed, reorder drag and drop,  item, delete todo list, edit todo/list names, add favorite subtask, create account, edit email, upload profile pic, mobile responsive',
         url: '/portfolio/todo-app.html'
     },    
     {
@@ -62,7 +62,7 @@ const portfolioItemData = [
         skill5: 'javascript',
         skill6: 'react',
         skill7: 'socket-io',
-        details: 'A Whatsapp clone giving you the ability to create contacts, create conversations and chat using React, HTML, CSS and Socket.io.  This is hosted on netlify.  To get started you can create  ausername and press "login".  Then open up a separate window and do teh same with a different name.  Your ID is on teh bottom left of teh screen when you log in. Use that to create a contact in the other open window. Then set up a conversation with that contact and chat away!',
+        details: 'A Whatsapp clone giving you the ability to create contacts, create conversations and chat using React, HTML, CSS and Socket.io.  This is hosted on netlify.  To get started you can create  ausername and press "login".  Then open up a separate window and do the same with a different name.  Your ID is on the bottom left of the screen when you log in. Use that to create a contact in the other open window. Then set up a conversation with that contact and chat away!',
         url: 'https://naughty-nightingale-e95f44.netlify.app/'
     }, 
     {
