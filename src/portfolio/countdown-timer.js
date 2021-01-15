@@ -1,6 +1,6 @@
 function countdown() {
     const today     = new Date();
-    const targetDay = new Date('2020-12-31T23:59:59');
+    const targetDay = new Date('2021-12-31T23:59:59');
 
     const totalSecs = (targetDay - today) / 1000;
 
