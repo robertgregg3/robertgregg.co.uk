@@ -1,145 +1,149 @@
 .spring:hover {
-    animation: none;
+  animation: none;
+}
+
+@keyframes spring {
+  0% {
+    transform: scale(1) translateY(0);
   }
-  
-  @keyframes spring { 
-    0% {
-      transform: scale(1) translateY(0); 
-    }
-    10% {
-      transform: scale(1.2, 0.6); 
-    }
-    30% { 
-      transform: scale(0.8, 1.1) translateY(-10px); 
-    }
-    50% { 
-      transform: scale(1) translateY(0); 
-    }
-    100% { 
-      transform: translateY(0); 
-    }
+  10% {
+    transform: scale(1.2, 0.6);
   }
-  
-  .spring {
-    animation: spring 2s;
-    animation-timing-function: ease;
-    animation-iteration-count: 1;
+  30% {
+    transform: scale(0.8, 1.1) translateY(-10px);
   }
+  50% {
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.spring {
+  animation: spring 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+}
 
 .icon {
-    width: 48px;
-    height: 48px;
-    background-repeat: no-repeat;
-    background-size: cover !important;
-    margin-right: 0.4rem;
+  width: 48px;
+  height: 48px;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  margin-right: 0.4rem;
 }
 
 .icon-html {
-    background: url('../images/icons/html-5.svg');
+  background: url("../images/icons/html-5.svg");
+}
+
+.icon-bootstrap {
+  background: url("../images/icons/bootstrap.svg");
 }
 
 .icon-css3 {
-    background: url('../images/icons/css3.svg');
+  background: url("../images/icons/css3.svg");
 }
 
 .icon-javascript {
-    background: url('../images/icons/javascript.svg');
+  background: url("../images/icons/javascript.svg");
 }
 
 .icon-wordpress {
-    background: url('../images/icons/wordpress.svg');
+  background: url("../images/icons/wordpress.svg");
 }
 
 .icon-angular {
-    background: url('../images/icons/angular.svg');
+  background: url("../images/icons/angular.svg");
 }
 
 .icon-nodejs {
-    background: url('../images/icons/nodejs.svg');
+  background: url("../images/icons/nodejs.svg");
 }
 
 .icon-photoshop {
-    background: url('../images/icons/photoshop.svg');
+  background: url("../images/icons/photoshop.svg");
 }
 
 .icon-premiere-pro {
-    background: url('../images/icons/premiere-pro.svg');
+  background: url("../images/icons/premiere-pro.svg");
 }
 
 .icon-react {
-    background: url('../images/icons/react.svg');
+  background: url("../images/icons/react.svg");
 }
 
 .icon-graphql {
-    background: url('../images/icons/graphql.svg');
+  background: url("../images/icons/graphql.svg");
 }
 
 .icon-php {
-    background: url('../images/icons/php.svg');
+  background: url("../images/icons/php.svg");
 }
 
 .icon-typescript {
-    background: url('../images/icons/typescript.svg');
+  background: url("../images/icons/typescript.svg");
 }
 
 .icon-mongodb {
-    background: url('../images/icons/mongodb.svg');
+  background: url("../images/icons/mongodb.svg");
 }
 
 .icon-mysql {
-    background: url('../images/icons/mysql.svg');
+  background: url("../images/icons/mysql.svg");
 }
 
 .icon-sprinkles {
-    background: url('../images/icons/sprinkles.svg');
+  background: url("../images/icons/sprinkles.svg");
 }
 
 .icon-uiux {
-    background: url('../images/icons/uiux.svg');
+  background: url("../images/icons/uiux.svg");
 }
 
 .icon-websites {
-    background: url('../images/icons/websites.svg');
+  background: url("../images/icons/websites.svg");
 }
 
 .icon-all {
-    background: url('../images/icons/all.svg');
+  background: url("../images/icons/all.svg");
 }
 
 .icon-front-end {
-    background: url('../images/icons/front-end.svg');
+  background: url("../images/icons/front-end.svg");
 }
 
 .icon-back-end {
-    background: url('../images/icons/backend.png');
+  background: url("../images/icons/backend.png");
 }
 
 .icon-socket-io {
-    background: url('../images/icons/socket-io.svg');
-    filter: invert(100%) sepia(99%) saturate(100%) hue-rotate(346deg) brightness(104%) contrast(98%);
+  background: url("../images/icons/socket-io.svg");
+  filter: invert(100%) sepia(99%) saturate(100%) hue-rotate(346deg)
+    brightness(104%) contrast(98%);
 }
 
 .icon-linkedin {
-    background: url('../images/icons/linkedin.svg');
-    position: absolute;
-    top: -0.4rem;
-    left: 3rem;
+  background: url("../images/icons/linkedin.svg");
+  position: absolute;
+  top: -0.4rem;
+  left: 3rem;
 }
 
 .fa-github-square {
-    font-size: 2.55rem;
-    color: #fff;
-    margin-top: -2px;
-    margin-left: -0.7rem;
+  font-size: 2.55rem;
+  color: #fff;
+  margin-top: -2px;
+  margin-left: -0.7rem;
 }
 
-@media(max-width: 800px){
-    .fa-github-square {
-        margin-left: -0.4rem;
-    }
+@media (max-width: 800px) {
+  .fa-github-square {
+    margin-left: -0.4rem;
+  }
 }
-
 
 .icon-undefined {
-    display: none !important;
+  display: none !important;
 }
