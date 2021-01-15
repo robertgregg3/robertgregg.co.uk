@@ -178,8 +178,7 @@ const portfolioItemData = [
         skill4: 'uiux',
         skill5: 'photoshop',
         skill6: 'premiere-pro',
-        skill7: 'wordpress',
-        skill8: 'websites',
+        skill7: 'websites',
         details: 'I have built and designed many sites but here are 4 examples.  This website was created with a wordpress theme but heavily customized to fit our UI UX needs. It includes connecting various 3rd party apps together.  This site is the sales page for the members area (members.howtostreetdance.com) where there are hundreds of courses and lesson that we created, filmed, edited and added to the site. The membership area uses a membership app combined with an email service provider which provides access through tags added upon signup/completion of the questionnaire. The platform is free at the time of writing so you can take a look. A theme was used for the initial setup and was then customized with css.',
         url: 'http://www.howtostreetdance.com'
     },
