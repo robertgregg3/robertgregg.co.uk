@@ -29,8 +29,7 @@ const portfolioCategoryData = [
     'socket-io',
     'uiux',
     'websites',
-    'wordpress',
-    // 'angular'
+    'wordpress'
 ]
 
 // portfolio Item
