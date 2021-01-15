@@ -226,7 +226,6 @@ const portfolioItemData = [
         skill6: 'typescript',
         skill7: 'nodejs',
         skill8: 'graphql',
-        skill9: 'mysql',
         details: 'I am at present working on some full stack projects which will be added here soon.',
         url: '#/'
     }
