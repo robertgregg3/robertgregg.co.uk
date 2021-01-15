@@ -29,7 +29,6 @@ const portfolioCategoryData = [
     'socket-io',
     'uiux',
     'websites',
-    'wordpress'
 ]
 
 // portfolio Item
@@ -192,8 +191,7 @@ const portfolioItemData = [
         skill4: 'uiux',
         skill5: 'photoshop',
         skill6: 'premiere-pro',
-        skill7: 'wordpress',
-        skill8: 'websites',
+        skill7: 'websites',
         details: 'This website was created with a wordpress drag and drop builder customized to fit our UI UX needs.  We added a woocommerce shop, payment providers, timetable for the classes run which was linked to the club management software.',
         url: 'http://www.s3studios.co.uk'
     },
@@ -205,8 +203,7 @@ const portfolioItemData = [
         skill4: 'uiux',
         skill5: 'photoshop',
         skill6: 'premiere-pro',
-        skill7: 'wordpress',
-        skill8: 'websites',  
+        skill7: 'websites',  
         details: 'This website was created with a wordpress theme. Dealing with the client from beginning to completion',
         url: 'http://www.bartonstein.co.uk' 
     },     
@@ -216,8 +213,7 @@ const portfolioItemData = [
         skill2: 'html',
         skill3: 'css3',
         skill4: 'uiux',
-        skill5: 'wordpress',
-        skill6: 'websites',
+        skill5: 'websites',
         details: 'This website was created with a wordpress theme. Dealing with the client from beginning to completion',
         url: 'http://www.takt.co.uk'    
     },
