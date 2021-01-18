@@ -182,7 +182,7 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   list-style: none;
-  padding: 4.5rem;
+  padding: 0rem 2.5rem 2rem;
   flex-wrap: wrap;
   height: 100%;
   align-content: center;
@@ -194,8 +194,8 @@ body {
   display: flex;
   font-size: 0.7rem;
   cursor: pointer;
-  width: 48px;
-  height: 48px;
+  width: 45px;
+  height: 45px;
   color: transparent;
   background-size: cover;
 }

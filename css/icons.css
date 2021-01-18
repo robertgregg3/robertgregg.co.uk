@@ -89,6 +89,7 @@
 .icon-mern {
   background: url("../images/icons/mern.png");
   width: 112px;
+  height: 30px;
 }
 
 .icon-mongodb {
