@@ -86,6 +86,11 @@
   background: url("../images/icons/typescript.svg");
 }
 
+.icon-mern {
+  background: url("../images/icons/mern.png");
+  width: 112px;
+}
+
 .icon-mongodb {
   background: url("../images/icons/mongodb.svg");
 }
@@ -129,6 +134,12 @@
   position: absolute;
   top: -0.4rem;
   left: 3rem;
+}
+
+.pf-tag.icon-mern {
+  width: 90px;
+  height: 29px;
+  margin-top: 11px;
 }
 
 .fa-github-square {
