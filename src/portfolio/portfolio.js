@@ -45,7 +45,7 @@ const portfolioItemData = [
     skill6: "react",
     skill7: "firebase",
     details:
-      "Amazon clone with google authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/22, 424, 24242), order history and more!",
+      "Amazon clone with google authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/24, 424, 24242), order history and more!",
     url: "https://clone-robg.web.app/",
   },
   {
