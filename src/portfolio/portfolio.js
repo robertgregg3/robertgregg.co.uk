@@ -116,6 +116,17 @@ const portfolioItemData = [
     url: "https://naughty-nightingale-e95f44.netlify.app/",
   },
   {
+    title: "react-movie-app",
+    skill1: "front-end",
+    skill2: "html",
+    skill3: "css3",
+    skill4: "javascript",
+    skill5: "react",
+    details:
+      "Built with REACT, this Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.",
+    url: "https://frosty-mahavira-354371.netlify.app/",
+  },
+  {
     title: "recipe-app",
     skill1: "front-end",
     skill2: "html",
@@ -142,7 +153,7 @@ const portfolioItemData = [
     skill3: "css3",
     skill4: "javascript",
     details:
-      "This Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.",
+      "Built with Vanilla Javascript, this Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.",
     url: "/portfolio/movie-app.html",
   },
   {
