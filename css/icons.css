@@ -34,30 +34,36 @@
   margin-right: 0.4rem;
 }
 
-.icon-html {
-  background: url("../images/icons/html-5.svg");
+.icon-angular {
+  background: url("../images/icons/angular.svg");
+}
+
+.icon-api {
+  background: url("../images/icons/api.svg");
 }
 
 .icon-bootstrap {
   background: url("../images/icons/bootstrap.svg");
 }
-
 .icon-css3 {
   background: url("../images/icons/css3.svg");
+}
+
+.icon-firebase {
+  background: url("../images/icons/firebase.svg");
+}
+
+.icon-graphql {
+  background: url("../images/icons/graphql.svg");
+}
+
+.icon-html {
+  background: url("../images/icons/html-5.svg");
 }
 
 .icon-javascript {
   background: url("../images/icons/javascript.svg");
 }
-
-.icon-wordpress {
-  background: url("../images/icons/wordpress.svg");
-}
-
-.icon-angular {
-  background: url("../images/icons/angular.svg");
-}
-
 .icon-material-ui {
   background: url("../images/icons/material-ui.png");
 }
@@ -70,6 +76,10 @@
   background: url("../images/icons/photoshop.svg");
 }
 
+.icon-php {
+  background: url("../images/icons/php.svg");
+}
+
 .icon-premiere-pro {
   background: url("../images/icons/premiere-pro.svg");
 }
@@ -78,20 +88,12 @@
   background: url("../images/icons/react.svg");
 }
 
-.icon-graphql {
-  background: url("../images/icons/graphql.svg");
-}
-
-.icon-php {
-  background: url("../images/icons/php.svg");
-}
-
 .icon-typescript {
   background: url("../images/icons/typescript.svg");
 }
 
-.icon-firebase {
-  background: url("../images/icons/firebase.svg");
+.icon-wordpress {
+  background: url("../images/icons/wordpress.svg");
 }
 
 .icon-mern {

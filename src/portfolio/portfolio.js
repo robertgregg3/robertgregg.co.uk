@@ -11,16 +11,16 @@
 // portfolioCategoryData
 const portfolioCategoryData = [
   "all",
+  "api",
   "back-end",
   "bootstrap",
   "css3",
   "front-end",
   "firebase",
-  "graphql",
   "html",
   "javascript",
   "material-ui",
-  "mern",
+  // "mern",
   "mongodb",
   //'mysql',
   "nodejs",
@@ -45,6 +45,7 @@ const portfolioItemData = [
     skill6: "react",
     skill7: "firebase",
     skill8: "material-ui",
+    skill9: "api",
     details:
       "Amazon clone with google authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/24, 424, 24242), order history and more!",
     url: "https://clone-robg.web.app/",
@@ -59,6 +60,7 @@ const portfolioItemData = [
     skill6: "react",
     skill7: "firebase",
     skill8: "material-ui",
+    skill9: "api",
     details:
       "A Whatsapp clone.  With google login authentication which when logged in gives you the ability to create chat rooms and anyone with that room ID can post. Real time database and server hosted with Firebase using the firebase API to pull and post data.",
     url: "https://whatsapp-clone-2-rob.web.app/",
@@ -85,6 +87,7 @@ const portfolioItemData = [
     skill8: "mern",
     skill9: "mongodb",
     skill10: "nodejs",
+    skill11: "api",
     details:
       "A video rental app with CRUD operations, using the Axios to add, delete, save or update a movie. React navigation routing, pagination, filtering, sorting and form validation, tohether with bootstrap styling",
     url: "https://cranky-feynman-18b47d.netlify.app",
@@ -97,6 +100,7 @@ const portfolioItemData = [
     skill4: "javascript",
     skill5: "react",
     skill6: "material-ui",
+    skill7: "api",
     details:
       "A Youtube clone working with the Youtube API via Axios. Search for a video, see a list of related videos and choose to play the related videos which updates the main video section.  This is hosted on netlify and at the time of writing is only working on localhost",
     url: "https://jovial-tereshkova-cabdea.netlify.app/",
@@ -108,6 +112,7 @@ const portfolioItemData = [
     skill3: "css3",
     skill4: "javascript",
     skill5: "react",
+    skill6: "api",
     details:
       "Built with REACT, this Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.",
     url: "https://frosty-mahavira-354371.netlify.app/",
@@ -118,6 +123,7 @@ const portfolioItemData = [
     skill2: "html",
     skill3: "css3",
     skill4: "javascript",
+    skill5: "api",
     details:
       "This recipe app uses a third-party API and allows users to save their favorite meals to the local storage (just for demo purposes). As well as add meals you can also remove them once added, and also search using the search bar",
     url: "/portfolio/recipe-app.html",
@@ -138,6 +144,7 @@ const portfolioItemData = [
     skill2: "html",
     skill3: "css3",
     skill4: "javascript",
+    skill5: "api",
     details:
       "Built with Vanilla Javascript, this Movie app uses a third-party API and allows users to search via the search bar for movies, and view the movie info.",
     url: "/portfolio/movie-app.html",
@@ -168,6 +175,7 @@ const portfolioItemData = [
     skill2: "html",
     skill3: "css3",
     skill4: "javascript",
+    skill5: "api",
     details:
       "Type in the username from someone on github and the page will show their profile along with their repos.",
     url: "/portfolio/github-profiles.html",
