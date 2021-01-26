@@ -28,7 +28,6 @@ const portfolioCategoryData = [
   "photoshop",
   "premiere-pro",
   "typescript",
-  "socket-io",
   "uiux",
   "websites",
 ];
@@ -47,6 +46,20 @@ const portfolioItemData = [
     details:
       "Amazon clone with google authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/24, 424, 24242), order history and more!",
     url: "https://clone-robg.web.app/",
+  },
+  {
+    title: "whatsapp-clone",
+    skill1: "back-end",
+    skill2: "bootstrap",
+    skill3: "front-end",
+    skill4: "html",
+    skill5: "css3",
+    skill6: "javascript",
+    skill7: "react",
+    skill8: "socket-io",
+    details:
+      "A Whatsapp clone.  With google login authentication which when logged in gives you the ability to create chat rooms and anyone with that room ID can post. Real time database and server hosted with Firebase using the firebase API to pull and post data.",
+    url: "https://whatsapp-clone-2-rob.web.app/",
   },
   {
     title: "todo-app",
@@ -75,22 +88,6 @@ const portfolioItemData = [
     url: "https://cranky-feynman-18b47d.netlify.app",
   },
   {
-    title: "exercise-tracker",
-    skill1: "back-end",
-    skill2: "bootstrap",
-    skill3: "front-end",
-    skill4: "html",
-    skill5: "css3",
-    skill6: "javascript",
-    skill7: "react",
-    skill8: "mern",
-    skill9: "mongodb",
-    skill10: "nodejs",
-    details:
-      "MERN: A simple CRUD application using axios to connect to the MongoDB database via the NodeJS server. Frontend built with React and styles with Bootstrap",
-    url: "https://pedantic-ride-3f3375.netlify.app/",
-  },
-  {
     title: "youtube-clone-app",
     skill1: "front-end",
     skill2: "html",
@@ -100,20 +97,6 @@ const portfolioItemData = [
     details:
       "A Youtube clone working with the Youtube API via Axios. Search for a video, see a list of related videos and choose to play the related videos which updates the main video section.  This is hosted on netlify and at the time of writing is only working on localhost",
     url: "https://jovial-tereshkova-cabdea.netlify.app/",
-  },
-  {
-    title: "whatsapp-clone",
-    skill1: "back-end",
-    skill2: "bootstrap",
-    skill3: "front-end",
-    skill4: "html",
-    skill5: "css3",
-    skill6: "javascript",
-    skill7: "react",
-    skill8: "socket-io",
-    details:
-      'A Whatsapp clone giving you the ability to create contacts, create conversations and chat using React, HTML, CSS and Socket.io.  This is hosted on netlify.  To get started you can create  ausername and press "login".  Then open up a separate window and do the same with a different name.  Your ID is on the bottom left of the screen when you log in. Use that to create a contact in the other open window. Then set up a conversation with that contact and chat away!',
-    url: "https://naughty-nightingale-e95f44.netlify.app/",
   },
   {
     title: "react-movie-app",
