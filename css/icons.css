@@ -58,6 +58,10 @@
   background: url("../images/icons/angular.svg");
 }
 
+.icon-material-ui {
+  background: url("../images/icons/material-ui.png");
+}
+
 .icon-nodejs {
   background: url("../images/icons/nodejs.svg");
 }
