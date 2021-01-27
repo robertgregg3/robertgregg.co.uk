@@ -66,6 +66,21 @@ const portfolioItemData = [
     url: "https://whatsapp-clone-2-rob.web.app/",
   },
   {
+    title: "facebook-clone",
+    skill1: "back-end",
+    skill2: "front-end",
+    skill3: "html",
+    skill4: "css3",
+    skill5: "javascript",
+    skill6: "react",
+    skill7: "firebase",
+    skill8: "material-ui",
+    skill9: "api",
+    details:
+      "A Facebook clone.  With google or Facebook login authentication which when logged in gives you the ability to create a post, upload an image and add it to the timeline. Real time database and server hosted with Firebase using the firebase API to pull and post data.",
+    url: "https://facebook-clone-rob.web.app/",
+  },
+  {
     title: "todo-app",
     skill1: "front-end",
     skill2: "html",
