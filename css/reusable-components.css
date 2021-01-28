@@ -12,6 +12,13 @@ body {
   line-height: 24px;
 }
 
+.standard {
+  color: #ffffff;
+  max-width: 600px;
+  padding: 2rem;
+  width: 100%;
+}
+
 .hero-container {
   display: flex;
   margin: auto;
