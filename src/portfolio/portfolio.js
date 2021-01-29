@@ -25,6 +25,7 @@ const portfolioCategoryData = [
   //'mysql',
   "nodejs",
   "react",
+  "redux",
   // 'php',
   "photoshop",
   "premiere-pro",
@@ -35,6 +36,22 @@ const portfolioCategoryData = [
 
 // portfolio Item
 const portfolioItemData = [
+  {
+    title: "linkedin-clone",
+    skill1: "back-end",
+    skill2: "front-end",
+    skill3: "html",
+    skill4: "css3",
+    skill5: "javascript",
+    skill6: "react",
+    skill7: "firebase",
+    skill8: "material-ui",
+    skill9: "api",
+    skill10: "redux",
+    details:
+      "LinkedIn clone with username/email authentication, hosted with Firebase realtime database, using Redux to connect the front end to the back end.",
+    url: "https://linkedin-clone-rob.web.app/",
+  },
   {
     title: "amazon-clone",
     skill1: "back-end",
@@ -47,7 +64,7 @@ const portfolioItemData = [
     skill8: "material-ui",
     skill9: "api",
     details:
-      "Amazon clone with google authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/24, 424, 24242), order history and more!",
+      "Amazon clone with username/email authentication, hosted with Firebase realtime database, shopping cart, payment processing (use stripe fake data: 4242 4242 4242 4242, 04/24, 424, 24242), order history and more!",
     url: "https://clone-robg.web.app/",
   },
   {

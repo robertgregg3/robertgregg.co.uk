@@ -88,6 +88,15 @@
   background: url("../images/icons/react.svg");
 }
 
+.icon-redux {
+  background: url("../images/icons/redux.png");
+  height: 43px;
+}
+
+.pf-tag.icon-redux {
+  height: 41px;
+}
+
 .icon-typescript {
   background: url("../images/icons/typescript.svg");
 }
