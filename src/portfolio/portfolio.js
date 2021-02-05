@@ -125,6 +125,18 @@ const portfolioItemData = [
     url: "https://cranky-feynman-18b47d.netlify.app",
   },
   {
+    title: "airbnb-clone",
+    skill1: "front-end",
+    skill2: "html",
+    skill3: "css3",
+    skill4: "javascript",
+    skill5: "react",
+    skill6: "material-ui",
+    details:
+      "An Airbnb clone, with a col date picker. React Router, material UI for styling",
+    url: "https://agitated-mestorf-055f15.netlify.app/",
+  },
+  {
     title: "youtube-clone-app",
     skill1: "front-end",
     skill2: "html",
