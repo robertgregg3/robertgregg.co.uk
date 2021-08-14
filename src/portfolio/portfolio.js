@@ -382,22 +382,22 @@ function filterPortfolioItems() {
   });
 }
 
-function filterPortfolioItems(filterName) {
-  const allPFItems = document.getElementsByClassName("pf-item");
-  for (let i = 0; i < allPFItems.length; i++) {
-    allPFItems[i].classList.add("hidden");
-  }
-  const allPFItemsToFilter = document.getElementsByClassName(filterName);
-  for (let i = 0; i < allPFItemsToFilter.length; i++) {
-    allPFItemsToFilter[i].classList.remove("hidden");
-  }
-}
+// function filterPortfolioItems(filterName) {
+//   const allPFItems = document.getElementsByClassName("pf-item");
+//   for (let i = 0; i < allPFItems.length; i++) {
+//     allPFItems[i].classList.add("hidden");
+//   }
+//   const allPFItemsToFilter = document.getElementsByClassName(filterName);
+//   for (let i = 0; i < allPFItemsToFilter.length; i++) {
+//     allPFItemsToFilter[i].classList.remove("hidden");
+//   }
+// }
 
 // function to add the portfolio items, getting the data from the array
 function addPortfolioItem() {
   for (let key in portfolioItemData) {
     // how to know which portfolio item ha sbeen clicked
-    const currentPfItemData = portfolioItemData[currentPfItem]; // index of the portfolioItemData
+    const currentPfItemData = portfolioItemData[currentPfItem]; // index of the portfolioItemData, currently at the first position (0)
     const pfItem = document.createElement("div"); // create a div
 
     let url = currentPfItemData.title.replace(/\s+/g, "").toLowerCase(); // remove spaces etc to make good URLS
@@ -412,8 +412,6 @@ function addPortfolioItem() {
         // if there is no element with the key of skill and the value of I then break. Otherwise:
         tagSkillsEl.push(`${currentPfItemData["skill" + i]}`); //  push that key to the empty tag array above
         pfItem.classList.add(`${currentPfItemData["skill" + i]}`); // add that skill as a class to the portfolio item
-      } else {
-        break;
       }
     }
 
