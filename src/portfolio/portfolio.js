@@ -370,28 +370,28 @@ function addPortfolioCategory() {
   }
 }
 
-function filterPortfolioItems() {
-  const pfFilterItems = document.querySelectorAll(".pf-item");
-
-  pfFilterItems.forEach((item) => {
-    item.classList[
-      !item.classList.contains(pfCategory.innerText.toLowerCase())
-        ? "add"
-        : "remove"
-    ]("hidden");
-  });
-}
-
 // function filterPortfolioItems(filterName) {
-//   const allPFItems = document.getElementsByClassName("pf-item");
-//   for (let i = 0; i < allPFItems.length; i++) {
-//     allPFItems[i].classList.add("hidden");
-//   }
-//   const allPFItemsToFilter = document.getElementsByClassName(filterName);
-//   for (let i = 0; i < allPFItemsToFilter.length; i++) {
-//     allPFItemsToFilter[i].classList.remove("hidden");
-//   }
+//   const pfFilterItems = document.querySelectorAll(".pf-item");
+
+//   pfFilterItems.forEach((item) => {
+//     item.classList[
+//       !item.classList.contains(filterName.innerText.toLowerCase())
+//         ? "add"
+//         : "remove"
+//     ]("hidden");
+//   });
 // }
+
+function filterPortfolioItems(filterName) {
+  const allPFItems = document.getElementsByClassName("pf-item");
+  for (let i = 0; i < allPFItems.length; i++) {
+    allPFItems[i].classList.add("hidden");
+  }
+  const allPFItemsToFilter = document.getElementsByClassName(filterName);
+  for (let i = 0; i < allPFItemsToFilter.length; i++) {
+    allPFItemsToFilter[i].classList.remove("hidden");
+  }
+}
 
 // function to add the portfolio items, getting the data from the array
 function addPortfolioItem() {
